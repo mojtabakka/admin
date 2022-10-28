@@ -1,13 +1,8 @@
-import { Button } from "react-bootstrap";
-
-function App() {
-  return (
-    <div className="App">
-      <Button as="a" variant="success">
-        Button as link
-      </Button>
-    </div>
-  );
-}
+import React from "react";
+// import MainLayout from './components/layout/mainLayout';
+import RoutesSite from "./routes";
+const App = () => {
+  return <RoutesSite />;
+};
 
 export default App;
