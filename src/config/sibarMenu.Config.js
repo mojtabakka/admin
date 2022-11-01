@@ -68,7 +68,7 @@ const items = [
   ]
 
   const colors = [
-    { backgroundColor: 'white', color: "#08A45C" },
+    { backgroundColor: 'white', color: "blue" },
     { backgroundColor: '#08A45C', color: "white" },
     { backgroundColor: 'red', color: "white" },
     { backgroundColor: 'purple', color: "blue" },

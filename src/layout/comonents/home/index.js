@@ -1,16 +1,16 @@
 import React from "react";
-// import Sidebar from '../../../nav/sidebar'
-// import HeaderSite from '../../../nav/headerSite'
+import { Sidebar, HeaderSite } from "components";
 
 const Home = ({ children }) => {
   return (
-    <div dir="rtl" className="flex">
-      hello
-      {/* <Sidebar />
-            <div className='flex-1 pr-2 pl-2 pt-1' >
-                <HeaderSite />
-                {children}
-            </div> */}
+    <div dir="rtl" className=" w-100 h-100 d-flex ">
+      <Sidebar />
+      <div className=" w-100 flex-grow-1">
+        <div>
+          <HeaderSite />
+        </div>
+        <div className="p-3"> {children}</div>
+      </div>
     </div>
   );
 };

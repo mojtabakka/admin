@@ -1,6 +1,6 @@
 import React from "react";
 
-const Private = ({}) => {
+const Private = () => {
   return <div>private</div>;
 };
 

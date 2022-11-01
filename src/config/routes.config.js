@@ -1,4 +1,4 @@
-import * as pages from "pages";
+// import * as pages from "pages";
 export const ROUTES_TYPES = {
   PROTECTED: "protected",
   PUBLIC: "public",
