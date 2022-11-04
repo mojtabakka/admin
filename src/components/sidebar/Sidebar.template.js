@@ -22,6 +22,7 @@ const SidebarTemplate = ({
         backgroundColor: "#85C9E8",
         display: "block",
         overflow: "auto",
+        color: "balck",
       }}
     >
       <div
@@ -32,7 +33,11 @@ const SidebarTemplate = ({
         <div
           onClick={OnOpneSidebar}
           className=" w-full cursor-pointer text-center rounded inline-block p-3 "
-          style={{ backgroundColor: "#08A45C" }}
+          style={{
+            backgroundColor: "#85C9E8",
+            border: "1px solid gray",
+            boxShadow: "1px solid black",
+          }}
         >
           <MdIcons.MdOutlineDoubleArrow
             style={{ transition: " 200ms linear" }}

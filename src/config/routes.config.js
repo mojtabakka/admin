@@ -1,4 +1,4 @@
-// import * as pages from "pages";
+import * as pages from "pages";
 export const ROUTES_TYPES = {
   PROTECTED: "protected",
   PUBLIC: "public",
@@ -16,25 +16,25 @@ export const RoutesConfig = [
     name: "home",
     // component : pages.Home,
     layout: {
-      type: "home",
+      type: "login",
     },
     type: ROUTES_TYPES.PRIVATE,
   },
   {
     path: PATHS.login,
     name: "login",
-    // component : pages.EnterPassword,
+    component : pages.Login,
     layout: {
-      type: "home",
+      type: "login",
     },
-    type: ROUTES_TYPES.PUBLIC,
+    type: ROUTES_TYPES.PRIVATE,
   },
   {
     path: PATHS.register,
     name: "login",
     // component : pages.EnterPassword,
     layout: {
-      type: "home",
+      type: "login",
     },
     type: ROUTES_TYPES.PUBLIC,
   },

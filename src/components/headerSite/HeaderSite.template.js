@@ -1,5 +1,5 @@
 import React from "react";
-import * as CgIcons from "react-icons/cg";
+// import * as CgIcons from "react-icons/cg";
 import * as MdIcons from "react-icons/md";
 // import { items } from "config/sibarMenu.config";
 // import DropDown from "../../dropdown";
@@ -16,35 +16,38 @@ import * as MdIcons from "react-icons/md";
 // };
 const HeaderSiteTemplate = ({ onAbort, hideDropDown, onShowDropDown }) => {
   return (
-    <div
-      className="p-3 rounded d-flex justify-content-between shadow shadow-white "
-      style={{
-        boxShadow: "2px 2px 10px gray",
-        color: "white",
-        backgroundColor: "#08A45C",
-      }}
-    >
-      <div>
-        hello
-        {/* <img width={90} src={logo} /> */}
-      </div>
-      <div>
-        <div
-          id="dropdownDefault"
-          onClick={onShowDropDown}
-          data-dropdown-toggle="dropdown"
-          type="button"
-        >
-          <span className="px-2">
-            <MdIcons.MdKeyboardArrowDown className="inline-block" />
-          </span>
-          <span className="inline-block">mojtaba Karimi</span>
-          <span className="w-10 p-2 h-10 rounded inline-block text-center">
-            {/* <CgIcons.CgProfile className=" h5  inline-block" /> */}
-          </span>
-        </div>
-        <div className={`${hideDropDown ? "hidden" : null}`} onAbort={onAbort}>
-          {/* <DropDown items={items} setting={setting} /> */}
+    <div className="px-2">
+      <div
+        className="p-3 rounded d-flex justify-content-between shadow shadow-white "
+        style={{
+          boxShadow: "2px 2px 10px gray",
+          color: "black",
+          fontWeight: "bold",
+          backgroundColor: "#85C9E8",
+        }}
+      >
+        <div>{/* <img width={90} src={logo} /> */}</div>
+        <div>
+          <div
+            id="dropdownDefault"
+            onClick={onShowDropDown}
+            data-dropdown-toggle="dropdown"
+            type="button"
+          >
+            <span className="px-2">
+              <MdIcons.MdKeyboardArrowDown className="inline-block" />
+            </span>
+            <span className="inline-block">mojtaba Karimi</span>
+            <span className="w-10 p-2 h-10 rounded inline-block text-center">
+              {/* <CgIcons.CgProfile className=" h5  inline-block" /> */}
+            </span>
+          </div>
+          <div
+            className={`${hideDropDown ? "hidden" : null}`}
+            onAbort={onAbort}
+          >
+            {/* <DropDown items={items} setting={setting} /> */}
+          </div>
         </div>
       </div>
     </div>
