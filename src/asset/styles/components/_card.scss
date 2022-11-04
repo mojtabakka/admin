@@ -1,0 +1,11 @@
+$card-background-color: var(--seed-white-color);
+$card-border-color: var(--seed-shadow-color);
+$card-shadow: var(--seed-box-shadow);
+
+.card {
+  &--full {
+    background-color: $card-background-color;
+    border-bottom: $card-border-color;
+    box-shadow: $card-shadow;
+  }
+}

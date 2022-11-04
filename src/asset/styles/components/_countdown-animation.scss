@@ -1,0 +1,14 @@
+$c: $shadow-color $primary-color;
+
+@keyframes arc {
+  0% {
+    stroke-dashoffset: 0
+  }
+}
+
+@keyframes col {
+  0% { stroke: nth($c, 1) }
+  60% { stroke: nth($c, 1) }
+  68% { stroke: nth($c, 2) }
+  100% { stroke: nth($c, 2) }
+}

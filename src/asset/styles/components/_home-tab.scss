@@ -1,0 +1,8 @@
+$margin-size: var(--seed-page-padding-size);
+
+.home-tab {
+  & > div.row,
+  & > div > div.row {
+    margin: $margin-size;
+  }
+}

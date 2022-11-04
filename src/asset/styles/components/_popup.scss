@@ -1,0 +1,35 @@
+$navbar-height: var(--f7-appbar-height);
+
+.popup {
+  & .navbar {
+    height: $navbar-height;
+  }
+
+  & .navbar.no-border {
+    & .navbar-bg::after {
+      content: none !important;
+    }
+  }
+
+  &.modal-in {
+    bottom: 0 !important;
+    //height: 97% !important;
+    top: initial !important;
+  }
+
+  @media all and (min-width: 551px) {
+    &.modal-in {
+      left: calc(50vw - 275px) !important;
+      margin: 0 !important;
+    }
+
+    &-backdrop {
+      transform: translate3d(calc(50vw - 275px), 100%, 0) !important;
+
+      &.backdrop-in {
+        transform: translate3d(calc(50vw - 275px), 0, 0) !important;
+      }
+    }
+  }
+}
+

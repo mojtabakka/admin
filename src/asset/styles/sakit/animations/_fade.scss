@@ -1,0 +1,41 @@
+$transition: .2s ease-in-out 0.5s;
+
+$opacity-values: (
+  "0": 0,
+  "01": 0.1,
+  "02": 0.2,
+  "03": 0.3,
+  "04": 0.4,
+  "05": 0.5,
+  "06": 0.6,
+  "07": 0.7,
+  "08": 0.8,
+  "09": 0.9,
+  "1": 1
+);
+
+.fade {
+  transition: opacity $transition;
+
+  &__in {
+    @extend .fade;
+    opacity: 0;
+
+    @each $opacity in map_keys($opacity-values) {
+      &--#{$opacity} {
+        opacity: map-get($opacity-values, $opacity) !important;
+      }
+    }
+  }
+
+  &__out {
+    @extend .fade;
+    opacity: 1;
+
+    @each $opacity in map_keys($opacity-values) {
+      &--#{$opacity} {
+        opacity: map-get($opacity-values, $opacity) !important;
+      }
+    }
+  }
+}

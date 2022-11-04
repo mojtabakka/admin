@@ -1,0 +1,92 @@
+$radius-sizes: (radius__remove: 0, radius__small: 4px, radius: 6px, radius__large: 8px, radius__xlarge: 10px, radius__circle: 500px);
+$border-color-default: $sakit-background-color;
+$border-types: ( dashed: dashed, solid: solid);
+$border-directions: ( top: top, right: right, left: left, bottom: bottom, );
+@mixin getBorderDirection($direction, $border-type, $border-color, $is-important: false) {
+    @if ($is-important==false) {
+        @if ($direction==top) {
+            border-top: 1px $border-type $border-color;
+        }
+        @else if ($direction==right) {
+            border-right: 1px $border-type $border-color;
+        }
+        @else if ($direction==left) {
+            border-left: 1px $border-type $border-color;
+        }
+        @else if ($direction==bottom) {
+            border-bottom: 1px $border-type $border-color;
+        }
+        @else {
+            border: 1px $border-type $border-color;
+        }
+    }
+    @else {
+        @if ($direction==top) {
+            border-top: 1px $border-type $border-color !important;
+        }
+        @else if ($direction==right) {
+            border-right: 1px $border-type $border-color !important;
+        }
+        @else if ($direction==left) {
+            border-left: 1px $border-type $border-color !important;
+        }
+        @else if ($direction==bottom) {
+            border-bottom: 1px $border-type $border-color !important;
+        }
+        @else {
+            border: 1px $border-type $border-color !important;
+        }
+    }
+}
+
+.border {
+    border: 1px solid;
+    &__default {
+        @extend .border;
+        border-color: $border-color-default;
+    }
+    @each $name in map-keys($radius-sizes) {
+        &__#{$name} {
+            border-radius: map_get($radius-sizes, $name);
+        }
+    }
+    @each $type in map-keys($border-types) {
+        &__#{$type} {
+            @include getBorderDirection('all', map-get($border-types, $type), $border-color-default);
+        }
+        @each $direction in map-keys($border-directions) {
+            &__#{$direction}__#{$type} {
+                @include getBorderDirection($direction, map-get($border-types, $type), $border-color-default);
+            }
+        }
+    }
+    &__remove {
+        border: unset;
+    }
+}
+
+.\!border {
+    border: 1px solid !important;
+    &__default {
+        @extend .\!border;
+        border-color: $border-color-default !important;
+    }
+    @each $name in map-keys($radius-sizes) {
+        &__#{$name} {
+            border-radius: map_get($radius-sizes, $name) !important;
+        }
+    }
+    @each $type in map-keys($border-types) {
+        &__#{$type} {
+            @include getBorderDirection('all', map-get($border-types, $type), $border-color-default, true);
+        }
+        @each $direction in map-keys($border-directions) {
+            &__#{$direction}__#{$type} {
+                @include getBorderDirection($direction, map-get($border-types, $type), $border-color-default, true);
+            }
+        }
+    }
+    &__remove {
+        border: unset !important;
+    }
+}

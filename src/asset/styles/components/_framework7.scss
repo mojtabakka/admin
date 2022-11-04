@@ -1,0 +1,23 @@
+$border-color: var(--seed-shadow-color);
+
+@media all and (min-width: 551px) {
+  body {
+    background: #f2f2f2 !important;
+  }
+}
+
+.framework7-root {
+  & > div.view-main {
+    @media all and (min-width: 551px) {
+      border-right: 2px solid $border-color;
+      border-left: 2px solid $border-color;
+    }
+  }
+
+  & > div {
+    @media all and (min-width: 551px) {
+      margin: auto;
+    }
+    max-width: 550px;
+  }
+}
