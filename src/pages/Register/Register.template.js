@@ -1,11 +1,11 @@
 import React from "react";
 import { Card } from "components";
 
-const LoginTemplate = () => {
+const RegisterTemplate = () => {
   return (
     <div className=" position-fixed w-100 h-100   rounded  flex__center  text__bold ">
       <Card
-        headerTitle="صفحه ورود"
+        headerTitle="صفحه ثبت نام"
         showFooter
         footer={() => (
           <button
@@ -27,29 +27,36 @@ const LoginTemplate = () => {
             type="password"
           />
         </div>
+        <div>
+          <label className="padding__10">تکرار رمز عبور </label>
+          <input
+            className=" text__right input__default  background__muted"
+            type="password"
+          />
+        </div>
       </Card>
       {/* <div className=" border__radius__large  background__white  ">
-        <div>
-          <div
-            className={`p-3  text__right  background__blue-muted ${style.header_border}`}
-          >
-            صفحه ورورد
-          </div>
-          <div className="border"></div>
+    <div>
+      <div
+        className={`p-3  text__right  background__blue-muted ${style.header_border}`}
+      >
+        صفحه ورورد
+      </div>
+      <div className="border"></div>
 
-          <div className=" text__right p-3  ">
+      <div className=" text__right p-3  ">
 
-            <div className="margin__top__20  text__center">
-              <button className="background__default rounded text__small border__remove padding__horizontal__20 padding__vertical__5 text__muted">
-                {" "}
-                ورود
-              </button>
-            </div>
-          </div>
+        <div className="margin__top__20  text__center">
+          <button className="background__default rounded text__small border__remove padding__horizontal__20 padding__vertical__5 text__muted">
+            {" "}
+            ورود
+          </button>
         </div>
-      </div> */}
+      </div>
+    </div>
+  </div> */}
     </div>
   );
 };
 
-export { LoginTemplate };
+export { RegisterTemplate };

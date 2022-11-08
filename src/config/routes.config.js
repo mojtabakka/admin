@@ -14,16 +14,16 @@ export const RoutesConfig = [
   {
     path: PATHS.home,
     name: "home",
-    // component : pages.Home,
+    component: pages.Home,
     layout: {
-      type: "login",
+      type: "home",
     },
     type: ROUTES_TYPES.PRIVATE,
   },
   {
     path: PATHS.login,
     name: "login",
-    component : pages.Login,
+    component: pages.Login,
     layout: {
       type: "login",
     },
@@ -31,8 +31,8 @@ export const RoutesConfig = [
   },
   {
     path: PATHS.register,
-    name: "login",
-    // component : pages.EnterPassword,
+    name: "register",
+    component: pages.Register,
     layout: {
       type: "login",
     },
