@@ -6,15 +6,19 @@ import { LoginTemplate } from "./Login.template";
 import { login } from "redux/actions/Auth.action";
 const LoginPage = (props) => {
   const navigate = useNavigate();
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const { login } = props;
     try {
       const data = {
         email: "mojtaba.karimi.mo@gmail.com",
         password: "123456",
       };
-      const result = login(data);
-    } catch (error) {}
+       login(data);
+      // navigate(PATHS.home);
+    } catch (error) {
+      
+      console.log("error", error);
+    }
   };
   return <LoginTemplate onLogin={handleLogin} />;
 };

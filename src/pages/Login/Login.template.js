@@ -13,8 +13,11 @@ const LoginTemplate = ({ onLogin }) => {
           footer={() => <Button onClick={onLogin}>ورود</Button>}
         >
           <div>
-            <label className="padding__10  text__bold">نام کاربری </label>
-            <input className=" text__right input__default  background__muted" />
+            <label className="padding__10  text__bold">ایمیل </label>
+            <input
+              type="email"
+              className=" text__right input__default  background__muted"
+            />
           </div>
           <div>
             <label className="padding__10">رمز عبور </label>
