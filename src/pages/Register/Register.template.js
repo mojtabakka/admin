@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { PATHS } from "config/routes.config";
 import { NAME, EMAIL, PASSWORD, CONFIRM_PASSWORD } from "./Register.config";
 
-const RegisterTemplate = ({ onRegister }) => {
+const RegisterTemplate = ({ onRegister, isLoading }) => {
   return (
     <div className=" position-fixed w-100 h-100   rounded  flex__center  text__bold ">
       <form onSubmit={onRegister}>
@@ -14,7 +14,9 @@ const RegisterTemplate = ({ onRegister }) => {
             showFooter
             footer={() => (
               <>
-                <Button type="submit">ثبت نام</Button>
+                <Button type="submit" isLoading={isLoading}>
+                  ثبت نام
+                </Button>
               </>
             )}
           >

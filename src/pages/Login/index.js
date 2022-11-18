@@ -1,26 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PATHS } from "config/routes.config";
 import { LoginTemplate } from "./Login.template";
 import { login } from "redux/actions/Auth.action";
+import { ErrorBoundary } from "components";
+
 const LoginPage = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const handleLogin = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const { login } = props;
     try {
-      const data = {
-        email: "mojtaba.karimi.mo@gmail.com",
-        password: "123456",
-      };
-       login(data);
-      // navigate(PATHS.home);
+      setIsLoading(true);
+      const form = new FormData(e.target);
+      const data = Object.fromEntries(form);
+      await login(data);
+      navigate(PATHS.home);
     } catch (error) {
-      
-      console.log("error", error);
+    } finally {
+      setIsLoading(false);
     }
   };
-  return <LoginTemplate onLogin={handleLogin} />;
+  return (
+    <ErrorBoundary>
+      <LoginTemplate onSubmit={handleSubmit} isLoading={isLoading} />
+    </ErrorBoundary>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => ({

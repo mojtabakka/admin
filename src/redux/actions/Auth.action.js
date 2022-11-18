@@ -7,7 +7,7 @@ export function login(data) {
       .then((response) => {
         console.log(response);
         const access_tokn = response.data.token;
-        console.log(access_tokn);
+        console.log('tkkkekjl;aksjdflkajsdf;lkjasdflkjas;dflj;alskfj;aflsdkj',access_tokn);
         localStorage.setItem("access_tokn", access_tokn);
         return response;
       })

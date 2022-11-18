@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const HomeTemplate = () => {
-  return (
-    <div>Hello</div>
-  )
-}
+  return <></>;
+};
 
-export {HomeTemplate}
+export { HomeTemplate };

@@ -9,7 +9,9 @@ const authApis = {
     return new Promise(function (resolve, reject) {
       http
         .post(LOGIN__POST__LOGIN, data)
-        .then((response) => resolve(response.data))
+        .then((response) => {
+          return resolve(response.data);
+        })
         .catch((error) => reject(error));
     });
   },

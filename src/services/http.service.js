@@ -1,6 +1,12 @@
 import axios from "axios";
-import { BASE_URL, AXIOS_TIMEdOUT } from "config/variables.config";
+import { toast } from "react-toastify";
+import {
+  BASE_URL,
+  AXIOS_TIMEdOUT,
+  ACCESS_TOKEN,
+} from "config/variables.config";
 import { DONT_NEEDED_URLS_FOR_AUTHENTICATION } from "config/url.config";
+
 class httpService {
   constructor() {
     axios.defaults.baseURL = BASE_URL;
@@ -13,15 +19,32 @@ class httpService {
           }
         );
 
-        if (checkExist.length == 0)
+        if (checkExist.length === 0)
           config.headers.Authorization = `Bearer ${JSON.parse(
-            localStorage.getItem("access_tokn")
+            localStorage.getItem(ACCESS_TOKEN)
           )}`;
         return config;
       },
       function (error) {
         // Do something with request error
         return Promise.reject(error);
+      }
+    );
+    axios.interceptors.response.use(
+      (res) => {
+        toast(res.data.message, {
+          autoClose: 2000,
+          type: toast.TYPE.SUCCESS,
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
+        return res;
+      },
+      (error) => {
+        toast(error.response.data.message, {
+          autoClose: 2000,
+          type: toast.TYPE.ERROR,
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       }
     );
   }

@@ -9,7 +9,9 @@ export const PATHS = {
   home: "/",
   login: "/login",
   register: "/register",
+  createProduct: "/create-product",
 };
+
 export const RoutesConfig = [
   {
     path: PATHS.home,
@@ -20,19 +22,32 @@ export const RoutesConfig = [
     },
     type: ROUTES_TYPES.PRIVATE,
   },
+
+  {
+    path: PATHS.createProduct,
+    name: "createProduct",
+    component: pages.CreateProduct,
+    layout: {
+      type: "home",
+    },
+    type: ROUTES_TYPES.PRIVATE,
+  },
+
   {
     path: PATHS.login,
     name: "login",
     component: pages.Login,
+    ifIsLoginGoBack: true,
     layout: {
       type: "login",
     },
-    type: ROUTES_TYPES.PRIVATE,
+    type: ROUTES_TYPES.PUBLIC,
   },
   {
     path: PATHS.register,
     name: "register",
     component: pages.Register,
+    ifIsLoginGoBack: true,
     layout: {
       type: "login",
     },

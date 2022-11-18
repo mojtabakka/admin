@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { colors } from "config/sibarMenu.config";
 import * as MdIcons from "react-icons/md";
 
 const SidebarItem = ({
-  onOpenSidebar,
-  icon,
-  label,
-  items,
-  depthStep = 10,
   depth = 0,
+  depthStep = 10,
+  icon,
+  items,
+  label,
+  onOpenSidebar,
+  path,
   sidebarStatus = false,
   ...rest
 }) => {
@@ -40,27 +42,29 @@ const SidebarItem = ({
           }}
           className={`p-3 rounded justify-content-between d-flex`}
         >
-          <div>
-            <span
-              className={`p text-center inline-block ${
-                sidebarStatus
-                  ? "inline-block  px-2 h4 "
-                  : "h1 inline-block d-flex"
-              } `}
-              style={{ transition: "200ms linear" }}
-            >
-              {icon}
-            </span>
-            <span
-              className={` ${
-                sidebarStatus
-                  ? "text-base font-weight-bold"
-                  : "font-weight-bold"
-              } `}
-            >
-              {label}
-            </span>
-          </div>
+          <Link to={path}>
+            <div>
+              <span
+                className={`p text-center inline-block ${
+                  sidebarStatus
+                    ? "inline-block  px-2 h4 "
+                    : "h1 inline-block d-flex"
+                } `}
+                style={{ transition: "200ms linear" }}
+              >
+                {icon}
+              </span>
+              <span
+                className={` ${
+                  sidebarStatus
+                    ? "text-base font-weight-bold"
+                    : "font-weight-bold"
+                } `}
+              >
+                {label}
+              </span>
+            </div>
+          </Link>
           {Array.isArray(items) ? (
             <div
               onClick={() => {
