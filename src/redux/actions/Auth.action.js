@@ -5,9 +5,7 @@ export function login(data) {
     return api
       .login(data)
       .then((response) => {
-        console.log(response);
         const access_tokn = response.data.token;
-        console.log('tkkkekjl;aksjdflkajsdf;lkjasdflkjas;dflj;alskfj;aflsdkj',access_tokn);
         localStorage.setItem("access_tokn", access_tokn);
         return response;
       })
@@ -23,3 +21,14 @@ export function register(data) {
       .catch((error) => Promise.reject(error));
   };
 }
+
+export function logout(data) {
+  return () => {
+    return api
+      .logout(data)
+      .then((response) => response)
+      .catch((error) => Promise.reject(error));
+  };
+}
+
+

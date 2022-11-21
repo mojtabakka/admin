@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const renderDom = () => {

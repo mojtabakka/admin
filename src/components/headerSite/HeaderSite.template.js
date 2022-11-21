@@ -14,7 +14,12 @@ import * as MdIcons from "react-icons/md";
 //   backgroundColor: "#08A45C",
 //   textColor: "white",
 // };
-const HeaderSiteTemplate = ({ onAbort, hideDropDown, onShowDropDown }) => {
+const HeaderSiteTemplate = ({
+  hideDropDown,
+  onAbort,
+  onLogout,
+  onShowDropDown,
+}) => {
   return (
     <div className="px-2">
       <div
@@ -37,7 +42,9 @@ const HeaderSiteTemplate = ({ onAbort, hideDropDown, onShowDropDown }) => {
             <span className="px-2">
               <MdIcons.MdKeyboardArrowDown className="inline-block" />
             </span>
-            <span className="inline-block">mojtaba Karimi</span>
+            <span className="inline-block" onClick={onLogout}>
+              mojtaba Karimi
+            </span>
             <span className="w-10 p-2 h-10 rounded inline-block text-center">
               {/* <CgIcons.CgProfile className=" h5  inline-block" /> */}
             </span>

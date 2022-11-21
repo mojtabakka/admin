@@ -7,12 +7,13 @@ const ButtonTemplate = ({
   type = "button",
   isLoading = false,
 }) => {
-  console.log(isLoading);
+  const disable = isLoading ? true : false;
   return (
     <button
       onClick={onClick}
       type={type}
-      className=" border-0 rounded  px-4 py-2 text__2xsmall background__blue-muted"
+      className=" border-0 rounded  px-4 py-2 text__2xsmall background__blue-muted "
+      disabled={disable}
     >
       <div>
         {isLoading ? (

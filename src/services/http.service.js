@@ -18,11 +18,10 @@ class httpService {
             return item.url.trim() === config.url.trim();
           }
         );
-
-        if (checkExist.length === 0)
-          config.headers.Authorization = `Bearer ${JSON.parse(
-            localStorage.getItem(ACCESS_TOKEN)
-          )}`;
+        if (checkExist.length == 0) {
+          const token = `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`;
+          config.headers.Authorization = token;
+        }
         return config;
       },
       function (error) {
@@ -32,7 +31,7 @@ class httpService {
     );
     axios.interceptors.response.use(
       (res) => {
-        toast(res.data.message, {
+        toast(res?.data.message, {
           autoClose: 2000,
           type: toast.TYPE.SUCCESS,
           position: toast.POSITION.BOTTOM_LEFT,

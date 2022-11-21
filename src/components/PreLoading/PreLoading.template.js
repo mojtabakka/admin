@@ -2,7 +2,6 @@ import React from "react";
 import { Spinner } from "react-bootstrap";
 
 const PreLoadingTemplate = ({ isLoading = false }) => {
-  console.log(isLoading);
   return (
     <>
       {isLoading && (
