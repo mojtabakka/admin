@@ -1,19 +1,45 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
+import { Button, Card, PreLoading } from "components";
+import { PATHS } from "config/routes.config";
+import { PASSWORD, EMAIL } from "./Login.config";
 
-const LoginTemplate = () => {
+const LoginTemplate = ({ onSubmit, isLoading }) => {
   return (
-    <div className=" position-fixed w-100 text-center" style={{ top: "30%" }}>
-      <Card bg="Light" >
-        <Card.Body>
-          <Card.Title>Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-        </Card.Body>
-      </Card>
+    <div className=" flex__center   text__bold w-100 vh-100 ">
+      <div>
+        <form onSubmit={onSubmit}>
+          <Card
+            headerTitle="صفحه ورود"
+            showFooter
+            footer={() => (
+              <Button isLoading={isLoading} type="submit">
+                ورود
+              </Button>
+            )}
+          >
+            <div>
+              <label className="padding__10  text__bold">ایمیل </label>
+              <input
+                name={EMAIL}
+                type="email"
+                className=" text__right input__default  background__muted"
+              />
+            </div>
+            <div>
+              <label className="padding__10">رمز عبور </label>
+              <input
+                name={PASSWORD}
+                className=" text__right input__default  background__muted"
+                type="password"
+              />
+            </div>
+          </Card>
+        </form>
+        <div className="text-center p-2  text-decoration-underline text-black">
+          <Link to={PATHS.register}>ثبت نام</Link>
+        </div>
+      </div>
     </div>
   );
 };

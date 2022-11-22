@@ -1,0 +1,24 @@
+$border-color: var(--seed-shadow-color);
+$space-size: 10px;
+
+.transfer {
+  & > div {
+    margin: 0 calc(var(--seed-space-size) * 2);
+
+    &:not(:last-child) {
+      border-bottom: 1px dashed $border-color;
+    }
+
+    &:first-of-type {
+      padding-bottom: $space-size;
+    }
+
+    &:nth-of-type(2) {
+      padding: $space-size 0;
+    }
+
+    &:last-of-type {
+      padding-top: $space-size;
+    }
+  }
+}

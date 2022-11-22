@@ -1,0 +1,23 @@
+.ios .list {
+  & ul {
+    background-color: transparent;
+
+    &::after, &::before {
+      content: none;
+    }
+  }
+
+  & .list-group {
+    & .list-group-title {
+      padding: 0 12px;
+
+      & > span {
+        @include primary-font-family('bold');
+        color: inherit !important;
+      }
+    }
+    & > ul:after {
+      content: initial;
+    }
+  }
+}

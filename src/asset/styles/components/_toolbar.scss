@@ -1,0 +1,44 @@
+$border-color: var(--seed-shadow-color);
+$shadow-color-rgb: var(--seed-shadow-color-rgb);
+
+.toolbar-bottom {
+  box-shadow: 0 -18px 28px -17px rgba($shadow-color-rgb, 0.09);
+  position: relative;
+
+  &:before {
+    background-color: $border-color;
+    top: 0;
+    left: 0;
+    content: '';
+    height: 1px;
+    position: absolute;
+    width: 100%;
+    transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)));
+  }
+
+  &.home-tabbar {
+    & .tabbar-label {
+      color: inherit !important;
+    }
+  }
+}
+
+.tabbar-labels {
+  & .tabbar-label {
+    @include primary-font-family('medium');
+    font-weight: normal;
+    display: inline-block;
+    padding: 8px 0 0;
+  }
+
+  & .tab-link {
+    justify-content: normal;
+    padding-top: 8px !important;
+
+    &-active .tabbar-label {
+      @include primary-font-family('bold');
+      font-weight: bolder;
+    }
+  }
+}
+

@@ -1,0 +1,80 @@
+@import "colors";
+@import "sizes";
+@import "sakit/style";
+@import "mixins/index";
+@import "components/index";
+html {
+    // font-size: 62.5%;
+}
+
+html,
+body,
+main {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    @include primary-font-family('medium');
+    transition: background .4s linear;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @include primary-font-family('medium');
+    font-weight: normal;
+    letter-spacing: initial;
+}
+
+p,
+span,
+a,
+legend,
+textarea,
+li {
+    @include primary-font-family();
+}
+
+a {
+    text-decoration: none;
+}
+
+p,
+span {
+    color: $dark-color;
+}
+
+label {
+    @include primary-font-family();
+}
+
+input[type=number],
+input[type=tel] {
+    @include secondary-font-family('bold');
+}
+
+input[type=password] {
+    @include password-font-family();
+    font-size: 25px !important;
+    letter-spacing: 4px;
+}
+
+button,
+a.button {
+    @include primary-font-family('medium');
+    font-size: 1.4rem;
+}
+
+figure {
+    margin: 0;
+}
+
+body>main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}

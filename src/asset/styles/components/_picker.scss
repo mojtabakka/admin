@@ -1,0 +1,25 @@
+$picker-blur: var(--seed-blur);
+$picker-transition: var(--seed-transition);
+
+.picker.picker-sheet {
+  z-index: 13000;
+}
+
+.picker-backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(#fff, .4);
+  backdrop-filter: blur($picker-blur);
+  z-index: 12999;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity $picker-transition;
+
+  &-in {
+    visibility: visible;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,10 @@
+.appbar {
+  @media all and (min-width: 551px) {
+    max-width: 550px !important;
+    transform: translate3d(calc(50vw - 275px), 0, 0) !important;
+  }
+
+  & + .view {
+    height: 100% !important;
+  }
+}

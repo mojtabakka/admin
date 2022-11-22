@@ -1,0 +1,36 @@
+$active-gray-background-color: lighten($shadow-color, 5%);
+$active-light-gray-background-color: lighten($shadow-color, 15%);
+$gray-color: $light-dark-color;
+
+.button {
+  &.color-gray {
+    box-shadow: initial !important;
+    color: $gray-color;
+
+    &.active-state {
+      background-color: $active-gray-background-color
+    }
+  }
+
+  &.color-light-gray {
+    box-shadow: initial !important;
+    color: $gray-color;
+
+    &.active-state {
+      background-color: $active-light-gray-background-color
+    }
+  }
+
+  &_primary--selected {
+    background-color: var(--f7-button-pressed-bg-color,rgba(var(--f7-theme-color-rgb),.15));
+    color: var(--f7-button-pressed-text-color, var(--f7-button-text-color,var(--f7-theme-color)))
+  }
+
+  &.color-default {
+    box-shadow: initial !important;
+  }
+
+  &.icon {
+    min-height: var(--f7-input-height);
+  }
+}

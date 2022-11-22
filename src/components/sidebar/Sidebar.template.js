@@ -19,7 +19,6 @@ const SidebarTemplate = ({
       style={{
         boxShadow: "-2px -2px 10px gray",
         transition: "200ms ease-in-out",
-        backgroundColor: "#85C9E8",
         display: "block",
         overflow: "auto",
         color: "balck",
@@ -28,15 +27,15 @@ const SidebarTemplate = ({
       <div
         className={`${
           SidebarStatus ? "w-10 " : "w-100"
-        } h-100   transition shadow overflow-hidden  bg-gray-100 text-white `}
+        } h-100   transition shadow overflow-hidden  bg-gray-100 text-white background__white `}
+        style={{ boxShadow: "-2px -2px 10px red" }}
       >
         <div
           onClick={OnOpneSidebar}
-          className=" w-full cursor-pointer text-center rounded inline-block p-3 "
+          className="  text-center rounded inline-block p-3 background__blue-muted text__black "
           style={{
-            backgroundColor: "#85C9E8",
-            border: "1px solid gray",
-            boxShadow: "1px solid black",
+            boxShadow: "5px 5px 10px gray",
+            cursor: "pointer",
           }}
         >
           <MdIcons.MdOutlineDoubleArrow
@@ -46,16 +45,18 @@ const SidebarTemplate = ({
             }  transform-gpu"`}
           />
         </div>
-        {items.map((sidebarItem, index) => (
-          <SidebarItem
-            onOpenSidebar={onOpneSidebarFromChild}
-            sidebarStatus={SidebarStatus}
-            key={`${sidebarItem.name}${index}`}
-            depthStep={depthStep}
-            depth={depth}
-            {...sidebarItem}
-          />
-        ))}
+        <div className="margin__top__10">
+          {items.map((sidebarItem, index) => (
+            <SidebarItem
+              onOpenSidebar={onOpneSidebarFromChild}
+              sidebarStatus={SidebarStatus}
+              key={`${sidebarItem.name}${index}`}
+              depthStep={depthStep}
+              depth={depth}
+              {...sidebarItem}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

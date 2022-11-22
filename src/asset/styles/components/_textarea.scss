@@ -1,0 +1,47 @@
+$textarea-fill-bgc: lighten(saturate(adjust-hue($shadow-color, 250), 12.50), 10.59);
+$textarea-default-bgc: $white-color;
+$textarea-space-size: 8px;
+
+.textarea {
+  border-radius: var(--f7-input-outline-border-radius) !important;
+  box-sizing: border-box;
+
+  & .item-input, & .item-inner {
+    padding: 0 !important;
+  }
+
+  & .item-inner {
+    padding: $textarea-space-size ($textarea-space-size * 2) !important;
+    &:after {
+      content: none !important;
+    }
+  }
+
+  & .item-input {
+    @extend .textarea;
+    background-color: $textarea-fill-bgc !important;
+    border: 1px solid transparent;
+
+    &-wrap {
+      flex-direction: row !important;
+    }
+  }
+
+  & textarea {
+    direction: rtl;
+    padding: 0;
+    font-size: 1.5rem;
+    line-height: initial !important;
+
+    &.resizable {
+      max-height: 125px;
+      height: var(--f7-textarea-height);
+    }
+  }
+
+  & .input-clear-button {
+    right: auto;
+    left: 0;
+    top: calc(var(--f7-textarea-height) / 2);
+  }
+}

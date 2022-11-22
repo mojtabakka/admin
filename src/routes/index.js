@@ -11,7 +11,6 @@ const RoutesSite = () => {
         component = <Private {...item}> {item.component} </Private>;
         break;
       case ROUTES_TYPES.PUBLIC:
-        console.log(item);
         component = <Public {...item}>{item.component} </Public>;
         break;
       case ROUTES_TYPES.PROTECTED:

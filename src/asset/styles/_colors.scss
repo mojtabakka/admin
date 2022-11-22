@@ -1,0 +1,97 @@
+$background-color: #f2f2f2;
+$dark-color: #050505;
+$error-color: #d93025;
+$gold-color: #f3af31;
+$light-dark-color: #65676a;
+$primary-color: #00913E;
+$light-primary-color: lighten(desaturate(adjust-hue($primary-color, 10), 19.90), 10.98);
+$primary-color-rgb: 0,
+145,
+62;
+$secondary-color: #007834;
+$dark-secondary-color: #03612a;
+$shadow-color: #cccccc;
+$shadow-color-rgb: 204,
+204,
+204;
+$white-color: #fff;
+$contacts-list-title-bg-color: lighten(saturate(adjust-hue($background-color, 130), 30.00), 1.18);
+$secondary-color-dark: #02343b;
+$title-color: #2E343E;
+$text-color: #6F7782;
+$error-title-color: #43587b;
+$error-text-color: #546887;
+$light-text-color: #f0f2f6;
+$muted-color: #999;
+$light-muted-color: #E7EBED;
+$high-priority: #FF4073;
+//$shadow-color: rgba(64, 78, 110, .14);
+$low-priority: #2ED4B3;
+$medium-priority: #FF9E14;
+$high-priority: #FF4073;
+$danger-color: #f54c62;
+$draft-color: #3088d4;
+$success-color: #12a066;
+$success-color-rgb: 18,
+160,
+102;
+$warning-color: #ffa626;
+$warning-color-rgb: 255,
+166,
+38;
+:root {
+    --seed-background-color: #{$background-color};
+    --seed-box-shadow: 0 18px 28px -17px #{$shadow-color};
+    --seed-dark-color: #{$dark-color};
+    --seed-error-color: #{$error-color};
+    --seed-gold-color: #{$gold-color};
+    --seed-primary-color: #{$primary-color};
+    --seed-light-dark-color: #{$light-dark-color};
+    --seed-light-primary-color: #{$light-primary-color};
+    --seed-secondary-color: #{$secondary-color};
+    --seed-dark-secondary-color: #{$dark-secondary-color};
+    --seed-shadow-color: #{$shadow-color};
+    --seed-white-color: #{$white-color};
+    --f7-appbar-bg-color-rgb: #{$primary-color-rgb};
+    --f7-block-title-text-color: #{$dark-color};
+    --f7-button-raised-box-shadow: 0 14px 28px -17px #{$primary-color};
+    --f7-contacts-list-title-bg-color: #{$contacts-list-title-bg-color};
+    --f7-contacts-list-title-text-color: #{$secondary-color};
+    --f7-input-text-color: #{$dark-color};
+    --f7-label-focused-text-color: #{$primary-color};
+    --f7-label-text-color: #{$light-dark-color};
+    --f7-list-item-border-color: #{rgba($light-dark-color, .25)};
+    --f7-page-bg-color: #{$background-color};
+    --f7-preloader-modal-bg-color: #{$white-color};
+    --f7-progressbar-bg-color: #{rgba($gold-color, .2)};
+    --f7-progressbar-progress-color: #{$gold-color};
+    --f7-tabbar-link-inactive-color: #{$light-dark-color};
+    --skeleton-color: #{$background-color};
+    --f7-bars-bg-color-rgb: 255, 255, 255;
+    --f7-notification-box-shadow: 0px 5px 25px -10px rgba(0, 0, 0, 0.3);
+    --f7-button-raised-pressed-box-shadow: 0 14px 25px 8px rgba(58, 210, 159, 0.28);
+    --f7-dialog-title-text-color: #464646;
+    --f7-sortable-handler-color: #dedede;
+    --f7-theme-color: #14b573;
+    --f7-theme-color-rgb: 20, 181, 115;
+    --f7-theme-color-shade: #00b068;
+    --f7-theme-color-tint: #1ad288;
+    --seed-bars-bg-color-light: #00bd82;
+    --seed-bars-bg-color-dark: #00a25f;
+    --seed-block-title-color: #1c9b65;
+    --seed-block-title-color-rgb: 28, 155, 101;
+    --seed-card-footer-color: #0f8052;
+    --seed-input-text-color: #464646;
+    --seed-popup-background: #eff7f3;
+    --seed-success-color: #12a066;
+    --seed-success-color-rgb: 18, 160, 102;
+    --seed-warning-color: #ffa626;
+    --seed-warning-color-rgb: 255, 166, 38;
+    --seed-tag-bg-color-rgb: 41, 206, 159;
+    --seed-widget-list-border-color: #e8e8e8;
+}
+
+.color-gray {
+    --f7-theme-color: rgba(#{$shadow-color-rgb}, 0.35);
+    --f7-theme-color-rgb: #{$shadow-color-rgb};
+}

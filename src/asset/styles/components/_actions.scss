@@ -1,0 +1,13 @@
+.actions {
+  @media all and (min-width: 551px) {
+
+    &-backdrop {
+      left: calc(50vw - 275px) !important;
+    }
+
+    &-modal {
+      width: 550px !important;
+      left: calc(50vw - 275px) !important;
+    }
+  }
+}

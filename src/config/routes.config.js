@@ -9,30 +9,45 @@ export const PATHS = {
   home: "/",
   login: "/login",
   register: "/register",
+  createProduct: "/create-product",
 };
+
 export const RoutesConfig = [
   {
     path: PATHS.home,
     name: "home",
-    // component : pages.Home,
+    component: pages.Home,
     layout: {
-      type: "login",
+      type: "home",
     },
     type: ROUTES_TYPES.PRIVATE,
   },
+
+  {
+    path: PATHS.createProduct,
+    name: "createProduct",
+    component: pages.CreateProduct,
+    layout: {
+      type: "home",
+    },
+    type: ROUTES_TYPES.PRIVATE,
+  },
+
   {
     path: PATHS.login,
     name: "login",
-    component : pages.Login,
+    component: pages.Login,
+    ifIsLoginGoBack: true,
     layout: {
       type: "login",
     },
-    type: ROUTES_TYPES.PRIVATE,
+    type: ROUTES_TYPES.PUBLIC,
   },
   {
     path: PATHS.register,
-    name: "login",
-    // component : pages.EnterPassword,
+    name: "register",
+    component: pages.Register,
+    ifIsLoginGoBack: true,
     layout: {
       type: "login",
     },
