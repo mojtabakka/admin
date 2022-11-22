@@ -18,7 +18,7 @@ class httpService {
             return item.url.trim() === config.url.trim();
           }
         );
-        if (checkExist.length == 0) {
+        if (checkExist.length === 0) {
           const token = `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`;
           config.headers.Authorization = token;
         }
@@ -44,6 +44,7 @@ class httpService {
           type: toast.TYPE.ERROR,
           position: toast.POSITION.BOTTOM_LEFT,
         });
+        return error;
       }
     );
   }

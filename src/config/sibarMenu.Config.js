@@ -52,7 +52,7 @@ const items = [
 ];
 
 const colors = [
-  { backgroundColor: "white", color: "blue" },
+  { backgroundColor: "#85C9E8", color: "blue" },
   { backgroundColor: "#08A45C", color: "white" },
   { backgroundColor: "red", color: "white" },
   { backgroundColor: "purple", color: "blue" },

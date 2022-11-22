@@ -5,8 +5,18 @@ export function createProduct(data) {
     return api
       .createProduct(data)
       .then((response) => {
-        const access_tokn = response.data.token;
-        localStorage.setItem("access_tokn", access_tokn);
+        return response;
+      })
+      .catch((error) => Promise.reject(error));
+  };
+}
+
+
+export function getProducts(data) {
+  return () => {
+    return api
+      .getProducts(data)
+      .then((response) => {
         return response;
       })
       .catch((error) => Promise.reject(error));

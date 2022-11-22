@@ -5,10 +5,9 @@ export const LOGIN__POST__LOGIN = "/auth/login";
 export const REGISTER__POST__REGISTER = "/auth/register";
 export const LOGOUT__POST__LOGOUT = "/auth/logout";
 
-
 // product controller
 
-export const NEW__PRODUCT__POST="/product/"
+export const PRODUCT = "/product/product";
 export const DONT_NEEDED_URLS_FOR_AUTHENTICATION = () => [
   { url: "/auth" + PATHS.login },
   { url: "/auth" + PATHS.register },

@@ -1,6 +1,11 @@
 import React from "react";
+import { Avatar, Button, Popover } from "@mui/material";
+import { PERSONAL__PROPERTIES } from "./HeaderSite.config";
 // import * as CgIcons from "react-icons/cg";
+import EditIcon from "@mui/icons-material/Edit";
+import LogoutIcon from "@mui/icons-material/Logout";
 import * as MdIcons from "react-icons/md";
+import { useState } from "react";
 // import { items } from "config/sibarMenu.config";
 // import DropDown from "../../dropdown";
 // import logo from "../../../asset/logo/abank-logo.6cb94f8f.png";
@@ -20,18 +25,28 @@ const HeaderSiteTemplate = ({
   onLogout,
   onShowDropDown,
 }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
   return (
     <div className="px-2">
       <div
-        className="p-3 rounded d-flex justify-content-between shadow shadow-white "
+        className="p-3 rounded d-flex justify-content-between   background__blue-muted text__bold "
         style={{
-          boxShadow: "2px 2px 10px gray",
-          color: "black",
-          fontWeight: "bold",
-          backgroundColor: "#85C9E8",
+          boxShadow: "-3px 3px 7px gray",
         }}
       >
-        <div>{/* <img width={90} src={logo} /> */}</div>
+        <div>سایت تستی</div>
+        <div>فروشگاه دوربین</div>
         <div>
           <div
             id="dropdownDefault"
@@ -39,12 +54,44 @@ const HeaderSiteTemplate = ({
             data-dropdown-toggle="dropdown"
             type="button"
           >
-            <span className="px-2">
-              <MdIcons.MdKeyboardArrowDown className="inline-block" />
+            <span
+              className="px-2"
+              aria-describedby={id}
+              variant="contained"
+              onClick={handleClick}
+            >
+              <span>
+                <MdIcons.MdKeyboardArrowDown className="inline-block" />
+                مجتبی کریمی
+              </span>
+              <span></span>
             </span>
-            <span className="inline-block" onClick={onLogout}>
-              mojtaba Karimi
-            </span>
+
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <div className="p-4 background__muted">
+                <div className="text-center pb-4 cursor__pointer">
+                  <span className="!text__bold ">ویرایش</span>
+                  <span className="px-2">
+                    <EditIcon />
+                  </span>
+                </div>
+                <div className="text-center cursor__pointer" onClick={onLogout}>
+                  <span className="px-2">خروج</span>
+                  <span>
+                    <LogoutIcon />
+                  </span>
+                </div>
+              </div>
+            </Popover>
             <span className="w-10 p-2 h-10 rounded inline-block text-center">
               {/* <CgIcons.CgProfile className=" h5  inline-block" /> */}
             </span>

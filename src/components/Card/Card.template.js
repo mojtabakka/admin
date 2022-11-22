@@ -9,11 +9,14 @@ const CardTemplate = ({
   children,
 }) => {
   return (
-    <div className=" border__radius__large  background__white">
+    <div
+      className=" border__radius__large  background__white  "
+      style={{ boxShadow: "-3px 5px 7px gray" }}
+    >
       <div>
         {showHeader && (
           <div
-            className={`p-3  text__right  background__blue-muted ${style.header_border}`}
+            className={`p-2  text__right  background__blue-muted  ${style.header_border}`}
           >
             {headerTitle}
           </div>
