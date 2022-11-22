@@ -25,7 +25,6 @@ class httpService {
         return config;
       },
       function (error) {
-        // Do something with request error
         return Promise.reject(error);
       }
     );
@@ -54,16 +53,17 @@ class httpService {
   }
 
   post(address, data, config) {
-    // config = config || { headers: { "content-type": "application/json" } };
+    // config = config || { headers: { "content-type": "applicaxtion/json" } };
     return axios.post(address, data, config);
   }
 
-  delete(address, config) {
+  delete(address, data, config) {
     config = config || { headers: { "content-type": "application/json" } };
-    return axios.delete(address, config);
+    return axios.delete(address, { data });
   }
 
   patch(address, data, config) {
+    console.log({ data });
     config = config || { headers: { "content-type": "application/json" } };
     return axios.patch(address, data, config);
   }

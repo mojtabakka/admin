@@ -11,11 +11,21 @@ export function createProduct(data) {
   };
 }
 
-
 export function getProducts(data) {
   return () => {
     return api
       .getProducts(data)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => Promise.reject(error));
+  };
+}
+
+export function deleteProduct(id) {
+  return () => {
+    return api
+      .deleteProduct(id)
       .then((response) => {
         return response;
       })

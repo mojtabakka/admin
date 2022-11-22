@@ -22,6 +22,17 @@ const authApis = {
         .catch((error) => reject(error));
     });
   },
+
+  deleteProduct(id) {
+    return new Promise(function (resolve, reject) {
+      http
+        .delete(PRODUCT, id)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
 };
 
 export default authApis;
