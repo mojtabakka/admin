@@ -6,13 +6,14 @@ const ButtonTemplate = ({
   onClick,
   type = "button",
   isLoading = false,
+  className,
 }) => {
   const disable = isLoading ? true : false;
   return (
     <button
       onClick={onClick}
       type={type}
-      className=" border-0 rounded  px-4 py-2 text__2xsmall background__blue-muted "
+      className={` border-0 rounded  px-3 py-1 text__2xsmall background__blue-muted  ${className} `}
       disabled={disable}
     >
       <div>

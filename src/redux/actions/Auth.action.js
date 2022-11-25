@@ -5,8 +5,7 @@ export function login(data) {
     return api
       .login(data)
       .then((response) => {
-        const access_tokn = response.data.token;
-        localStorage.setItem("access_tokn", access_tokn);
+        localStorage.setItem("user", JSON.stringify(response.data));
         return response;
       })
       .catch((error) => Promise.reject(error));
@@ -30,5 +29,3 @@ export function logout(data) {
       .catch((error) => Promise.reject(error));
   };
 }
-
-

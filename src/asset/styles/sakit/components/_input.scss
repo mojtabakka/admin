@@ -22,7 +22,6 @@ $input-sizes: ( small: 30px, medium: 40px, large: 55px);
         &__#{$color} {
             @extend .input;
             &:focus {
-                outline: none;
                 border-color: map_get($input-colors, $color);
             }
         }

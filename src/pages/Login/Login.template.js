@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, PreLoading } from "components";
+import { Button, Card } from "components";
 import { PATHS } from "config/routes.config";
 import { PASSWORD, EMAIL } from "./Login.config";
 

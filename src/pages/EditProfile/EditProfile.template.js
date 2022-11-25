@@ -1,31 +1,28 @@
 import React from "react";
 import { Button, Card } from "components";
-import { Link } from "react-router-dom";
-import { PATHS } from "config/routes.config";
+import { Grid } from "@mui/material";
 import {
   NAME,
   lAST_NAME,
   EMAIL,
-  PASSWORD,
-  CONFIRM_PASSWORD,
   NATIONAL_CODE,
   PHONE_NUMBER,
   USERNAME,
-} from "./Register.config";
-import { Grid } from "@mui/material";
+} from "./EditProfile.config";
 
-const RegisterTemplate = ({ onRegister, isLoading }) => {
+const EditProfileTemplate = ({ onEdit, isLoading, user }) => {
+  console.log(USERNAME);
   return (
-    <div className=" position-fixed w-100 h-100   rounded  flex__center  text__bold ">
-      <form onSubmit={onRegister}>
+    <div className=" ">
+      <form onSubmit={onEdit}>
         <div>
           <Card
-            headerTitle="صفحه ثبت نام"
+            headerTitle="ویرایش اطلاعات کاربر"
             showFooter
             footer={() => (
               <>
                 <Button type="submit" isLoading={isLoading}>
-                  ثبت نام
+                  ویرایش
                 </Button>
               </>
             )}
@@ -38,6 +35,7 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
                     tabIndex={1}
                     className=" text__right input__default  background__muted"
                     name={NAME}
+                    defaultValue={user[NAME]}
                   />
                 </div>
 
@@ -47,6 +45,7 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
                     tabIndex={2}
                     className=" text__right input__default  background__muted"
                     name={lAST_NAME}
+                    defaultValue={user[lAST_NAME]}
                   />
                 </div>
 
@@ -56,24 +55,29 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
                     tabIndex={3}
                     className=" text__right input__default  background__muted"
                     name={NATIONAL_CODE}
+                    defaultValue={user[NATIONAL_CODE]}
+                    type="number"
                   />
                 </div>
+              </Grid>
+              <Grid item xs={6}>
                 <div className="py-1">
                   <label>شماره تماس</label>
                   <input
                     tabIndex={4}
                     className=" text__right input__default  background__muted"
                     name={PHONE_NUMBER}
+                    defaultValue={user[PHONE_NUMBER]}
+                    type="number"
                   />
                 </div>
-              </Grid>
-              <Grid item xs={6}>
                 <div className="py-1">
                   <label>نام کاربری </label>
                   <input
                     tabIndex={5}
                     className=" text__right input__default  background__muted"
                     name={USERNAME}
+                    defaultValue={user[USERNAME]}
                   />
                 </div>
                 <div className="py-1">
@@ -82,37 +86,16 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
                     tabIndex={6}
                     className=" text__right input__default  background__muted"
                     name={EMAIL}
-                  />
-                </div>
-                <div className="py-1">
-                  <label>رمز عبور </label>
-                  <input
-                    tabIndex={7}
-                    className=" text__right input__default  background__muted"
-                    type="password"
-                    name={PASSWORD}
-                  />
-                </div>
-                <div className="py-2">
-                  <label>تکرار رمز عبور </label>
-                  <input
-                    tabIndex={8}
-                    className=" text__right input__default  background__muted"
-                    type="password"
-                    name={CONFIRM_PASSWORD}
+                    defaultValue={user[EMAIL]}
                   />
                 </div>
               </Grid>
             </Grid>
           </Card>
-
-          <div className="text-center p-2  text-decoration-underline text-black">
-            <Link to={PATHS.login}> ورود</Link>
-          </div>
         </div>
       </form>
     </div>
   );
 };
 
-export { RegisterTemplate };
+export { EditProfileTemplate };

@@ -9,7 +9,8 @@ const Public = ({ component: Component, layout, ifIsLoginGoBack }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem(ACCESS_TOKEN);
+    const user = localStorage.getItem("user");
+    const token = JSON.parse(user)?.token;
     if (ifIsLoginGoBack && token && jwtDecode(token).exp > Date.now() / 1000)
       navigate(PATHS.home);
   });

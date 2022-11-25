@@ -1,7 +1,5 @@
-import React from "react";
-
 const HomeTemplate = () => {
-  return ;
+  return;
 };
 
 export { HomeTemplate };
