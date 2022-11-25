@@ -1,11 +1,13 @@
 import React from "react";
-import { Avatar, Button, Popover } from "@mui/material";
-import { PERSONAL__PROPERTIES } from "./HeaderSite.config";
+import { Popover } from "@mui/material";
+// import { PERSONAL__PROPERTIES } from "./HeaderSite.config";
 // import * as CgIcons from "react-icons/cg";
 import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import * as MdIcons from "react-icons/md";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { PATHS } from "config/routes.config";
 // import { items } from "config/sibarMenu.config";
 // import DropDown from "../../dropdown";
 // import logo from "../../../asset/logo/abank-logo.6cb94f8f.png";
@@ -24,6 +26,7 @@ const HeaderSiteTemplate = ({
   onAbort,
   onLogout,
   onShowDropDown,
+  user,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -40,10 +43,8 @@ const HeaderSiteTemplate = ({
   return (
     <div className="px-2">
       <div
-        className="p-3 rounded d-flex justify-content-between   background__blue-muted text__bold "
-        style={{
-          boxShadow: "-3px 3px 7px gray",
-        }}
+        className="p-3 rounded d-flex justify-content-between   background__white text__bold "
+        style={{ boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)" }}
       >
         <div>سایت تستی</div>
         <div>فروشگاه دوربین</div>
@@ -62,7 +63,8 @@ const HeaderSiteTemplate = ({
             >
               <span>
                 <MdIcons.MdKeyboardArrowDown className="inline-block" />
-                مجتبی کریمی
+                <span> {user.name}</span>
+                <span> {user.lastName} </span>
               </span>
               <span></span>
             </span>
@@ -79,10 +81,12 @@ const HeaderSiteTemplate = ({
             >
               <div className="p-4 background__muted">
                 <div className="text-center pb-4 cursor__pointer">
-                  <span className="!text__bold ">ویرایش</span>
-                  <span className="px-2">
-                    <EditIcon />
-                  </span>
+                  <Link to={PATHS.editProfile}>
+                    <span className="!text__bold ">ویرایش</span>
+                    <span className="px-2">
+                      <EditIcon />
+                    </span>
+                  </Link>
                 </div>
                 <div className="text-center cursor__pointer" onClick={onLogout}>
                   <span className="px-2">خروج</span>

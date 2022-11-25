@@ -7,25 +7,25 @@ const CardTemplate = ({
   showFooter = false,
   footer,
   children,
+  className,
 }) => {
   return (
     <div
-      className=" border__radius__large  background__white  "
-      style={{ boxShadow: "-3px 5px 7px gray" }}
+      className={` border__radius__large  background__white ${className} `}
+      style={{ boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)" }}
     >
       <div>
         {showHeader && (
-          <div
-            className={`p-2  text__right  background__blue-muted  ${style.header_border}`}
-          >
+          <div className={`p-2  text__right    ${style.header_border}`}>
             {headerTitle}
           </div>
         )}
+        <div className="border width__expand "></div>
         <div className=" text__right p-3   ">{children}</div>
         {showFooter && (
           <>
             <div className="border width__expand margin__top__25"></div>
-            <div className="p-3">{footer()}</div>
+            <div className="p-3 text__left">{footer()}</div>
           </>
         )}
       </div>

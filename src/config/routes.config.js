@@ -10,6 +10,7 @@ export const PATHS = {
   login: "/login",
   register: "/register",
   createProduct: "/create-product",
+  editProfile: "/edit-profile",
 };
 
 export const RoutesConfig = [
@@ -32,7 +33,16 @@ export const RoutesConfig = [
     },
     type: ROUTES_TYPES.PRIVATE,
   },
-
+  {
+    path: PATHS.editProfile,
+    name: "edit-profile",
+    component: pages.EditProfile,
+    ifIsLoginGoBack: true,
+    layout: {
+      type: "home",
+    },
+    type: ROUTES_TYPES.PRIVATE,
+  },
   {
     path: PATHS.login,
     name: "login",
@@ -45,7 +55,7 @@ export const RoutesConfig = [
   },
   {
     path: PATHS.register,
-    name: "register",
+    name: "register ",
     component: pages.Register,
     ifIsLoginGoBack: true,
     layout: {

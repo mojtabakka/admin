@@ -33,6 +33,17 @@ const authApis = {
         .catch((error) => reject(error));
     });
   },
+
+  editProduct(data) {
+    return new Promise(function (resolve, reject) {
+      http
+        .patch(PRODUCT, data)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
 };
 
 export default authApis;

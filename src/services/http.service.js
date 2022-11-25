@@ -1,10 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import {
-  BASE_URL,
-  AXIOS_TIMEdOUT,
-  ACCESS_TOKEN,
-} from "config/variables.config";
+import { BASE_URL, AXIOS_TIMEdOUT } from "config/variables.config";
 import { DONT_NEEDED_URLS_FOR_AUTHENTICATION } from "config/url.config";
 
 class httpService {
@@ -19,7 +15,8 @@ class httpService {
           }
         );
         if (checkExist.length === 0) {
-          const token = `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`;
+          const user = localStorage.getItem("user");
+          const token = `Bearer ${JSON.parse(user)?.token}`;
           config.headers.Authorization = token;
         }
         return config;
@@ -63,8 +60,7 @@ class httpService {
   }
 
   patch(address, data, config) {
-    console.log({ data });
-    config = config || { headers: { "content-type": "application/json" } };
+    // config = config || { headers: { "content-type": "application/json" } };
     return axios.patch(address, data, config);
   }
 

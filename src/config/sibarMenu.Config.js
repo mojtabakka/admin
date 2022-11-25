@@ -11,8 +11,8 @@ export const PATHS = {
 };
 const items = [
   {
-    name: "home",
-    label: "Home",
+    name: "محصولات",
+    label: "محصولات",
     icon: <AiIcons.AiFillHome />,
     path: PATHS.createProduct,
   },
