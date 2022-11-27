@@ -8,16 +8,16 @@ import {
   NATIONAL_CODE,
   PHONE_NUMBER,
   USERNAME,
+  
 } from "./EditProfile.config";
 
 const EditProfileTemplate = ({ onEdit, isLoading, user }) => {
-  console.log(USERNAME);
   return (
     <div className=" ">
       <form onSubmit={onEdit}>
         <div>
           <Card
-            headerTitle="ویرایش اطلاعات کاربر"
+            showHeader={false}
             showFooter
             footer={() => (
               <>
