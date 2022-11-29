@@ -1,6 +1,7 @@
 import { Avatar } from "@mui/material";
 import React from "react";
 import style from "./Card.module.scss";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 const CardTemplate = ({
   showHeader = true,
@@ -10,6 +11,10 @@ const CardTemplate = ({
   children,
   className,
   avatar,
+  onChangeFile,
+  fileInputRef,
+  onClickInputFile,
+  fileUpload = false,
 }) => {
   return (
     <div
@@ -37,9 +42,27 @@ const CardTemplate = ({
             >
               <Avatar
                 alt={avatar?.alt}
-                src={avatar?.img}
+                src={avatar?.src}
                 sx={{ width: 70, height: 70 }}
-              />
+              >
+                {!avatar?.src && fileUpload && (
+                  <>
+                    <div
+                      onClick={onClickInputFile}
+                      className="w-100 h-100 text__black flex__center"
+                    >
+                      <CameraAltIcon className="w-100 h-75" />
+                    </div>
+                    <input
+                      type="file"
+                      name="myImage"
+                      onChange={onChangeFile}
+                      className={style.file_input}
+                      ref={fileInputRef}
+                    />
+                  </>
+                )}
+              </Avatar>
             </div>
           )}
         </div>

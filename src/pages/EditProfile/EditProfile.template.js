@@ -8,17 +8,19 @@ import {
   NATIONAL_CODE,
   PHONE_NUMBER,
   USERNAME,
-  
 } from "./EditProfile.config";
 
-const EditProfileTemplate = ({ onEdit, isLoading, user }) => {
+const EditProfileTemplate = ({ onEdit, isLoading, user, onChangeFile }) => {
   return (
-    <div className=" ">
+    <div className="mt-5 ">
       <form onSubmit={onEdit}>
         <div>
           <Card
+            avatar={{ src: null }}
+            fileUpload={true}
             showHeader={false}
             showFooter
+            onChangeFile={onChangeFile}
             footer={() => (
               <>
                 <Button type="submit" isLoading={isLoading}>

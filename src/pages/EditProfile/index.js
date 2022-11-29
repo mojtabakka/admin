@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { EditProfileTemplate } from "./EditProfile.template";
 import { ErrorBoundary } from "components";
-import { getUser, updateUser } from "redux/actions/User.action";
+import {
+  getUser,
+  updateUser,
+  uploadUserImage,
+} from "redux/actions/User.action";
 
 const EditProfilePage = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +21,6 @@ const EditProfilePage = (props) => {
     try {
       const user = await getUser();
       setUser(user.data);
-      console.log(user.data);
     } catch (error) {
       console.log("eeror", error);
     } finally {
@@ -25,7 +28,6 @@ const EditProfilePage = (props) => {
     }
   };
   const handleEdit = async (e) => {
-    console.log(e.target);
     const { updateUser } = props;
     setIsLoading(true);
     e.preventDefault();
@@ -39,6 +41,15 @@ const EditProfilePage = (props) => {
       setIsLoading(false);
     }
   };
+
+  const handleChangeFile = async (e) => {
+    const { uploadUserImage } = props;
+    const formData = new FormData();
+    formData.append("photo", e.target.files[0]);
+    console.log(formData);
+
+    await uploadUserImage(formData);
+  };
   return (
     <ErrorBoundary>
       <EditProfileTemplate
@@ -46,6 +57,7 @@ const EditProfilePage = (props) => {
         isLoading={isLoading}
         user={user}
         onEdit={handleEdit}
+        onChangeFile={handleChangeFile}
       />
     </ErrorBoundary>
   );
@@ -54,6 +66,7 @@ const EditProfilePage = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   getUser: () => dispatch(getUser()),
   updateUser: (data) => dispatch(updateUser(data)),
+  uploadUserImage: (data) => dispatch(uploadUserImage(data)),
 });
 const EditProfile = connect(null, mapDispatchToProps)(EditProfilePage);
 export { EditProfile };

@@ -50,7 +50,7 @@ class httpService {
   }
 
   post(address, data, config) {
-    // config = config || { headers: { "content-type": "applicaxtion/json" } };
+    // config = { headers: { "Content-Type": "application/json" } };
     return axios.post(address, data, config);
   }
 
