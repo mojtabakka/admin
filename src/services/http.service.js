@@ -5,7 +5,7 @@ import { DONT_NEEDED_URLS_FOR_AUTHENTICATION } from "config/url.config";
 
 class httpService {
   constructor() {
-    axios.defaults.baseURL = BASE_URL;
+    axios.defaults.baseURL = BASE_URL + "api";
     axios.defaults.timeout = AXIOS_TIMEdOUT;
     axios.interceptors.request.use(
       (config) => {
@@ -27,11 +27,12 @@ class httpService {
     );
     axios.interceptors.response.use(
       (res) => {
-        toast(res?.data.message, {
-          autoClose: 2000,
-          type: toast.TYPE.SUCCESS,
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
+        if (res.config.method !== "get")
+          toast(res?.data.message, {
+            autoClose: 2000,
+            type: toast.TYPE.SUCCESS,
+            position: toast.POSITION.BOTTOM_LEFT,
+          });
         return res;
       },
       (error) => {

@@ -6,11 +6,14 @@ import {
   getUser,
   updateUser,
   uploadUserImage,
+  getUserPhoto,
 } from "redux/actions/User.action";
+import { BASE_URL } from "config/variables.config";
 
 const EditProfilePage = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState({});
+  const [profileImage, setProfileImage] = useState(null);
   useEffect(() => {
     getLoginUser();
   }, []);
@@ -21,6 +24,7 @@ const EditProfilePage = (props) => {
     try {
       const user = await getUser();
       setUser(user.data);
+      user.data?.avatar && setProfileImage(BASE_URL + user.data?.avatar);
     } catch (error) {
       console.log("eeror", error);
     } finally {
@@ -43,11 +47,9 @@ const EditProfilePage = (props) => {
   };
 
   const handleChangeFile = async (e) => {
-    const { uploadUserImage } = props;
+    const { uploadUserImage, getUserPhoto } = props;
     const formData = new FormData();
     formData.append("photo", e.target.files[0]);
-    console.log(formData);
-
     await uploadUserImage(formData);
   };
   return (
@@ -56,6 +58,7 @@ const EditProfilePage = (props) => {
         {...props}
         isLoading={isLoading}
         user={user}
+        profileImage={profileImage}
         onEdit={handleEdit}
         onChangeFile={handleChangeFile}
       />
@@ -67,6 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
   getUser: () => dispatch(getUser()),
   updateUser: (data) => dispatch(updateUser(data)),
   uploadUserImage: (data) => dispatch(uploadUserImage(data)),
+  getUserPhoto: () => dispatch(getUserPhoto()),
 });
 const EditProfile = connect(null, mapDispatchToProps)(EditProfilePage);
 export { EditProfile };

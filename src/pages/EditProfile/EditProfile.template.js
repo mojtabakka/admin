@@ -10,13 +10,19 @@ import {
   USERNAME,
 } from "./EditProfile.config";
 
-const EditProfileTemplate = ({ onEdit, isLoading, user, onChangeFile }) => {
+const EditProfileTemplate = ({
+  isLoading,
+  onChangeFile,
+  onEdit,
+  profileImage,
+  user,
+}) => {
   return (
     <div className="mt-5 ">
       <form onSubmit={onEdit}>
         <div>
           <Card
-            avatar={{ src: null }}
+            avatar={{ src: profileImage }}
             fileUpload={true}
             showHeader={false}
             showFooter
