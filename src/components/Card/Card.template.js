@@ -38,7 +38,7 @@ const CardTemplate = ({
           {avatar && (
             <div
               style={{ border: "5px solid white" }}
-              className="border__radius__circle"
+              className="border__radius__circle cursor__pointer"
             >
               <Avatar
                 alt={avatar?.alt}
