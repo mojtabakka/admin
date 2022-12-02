@@ -10,15 +10,23 @@ import {
   USERNAME,
 } from "./EditProfile.config";
 
-const EditProfileTemplate = ({ onEdit, isLoading, user }) => {
-  console.log(USERNAME);
+const EditProfileTemplate = ({
+  isLoading,
+  onChangeFile,
+  onEdit,
+  avatar,
+  user,
+}) => {
   return (
-    <div className=" ">
+    <div className="mt-5 ">
       <form onSubmit={onEdit}>
         <div>
           <Card
-            headerTitle="ویرایش اطلاعات کاربر"
+            avatar={{ ...avatar }}
+            fileUpload={true}
+            showHeader={false}
             showFooter
+            onChangeFile={onChangeFile}
             footer={() => (
               <>
                 <Button type="submit" isLoading={isLoading}>

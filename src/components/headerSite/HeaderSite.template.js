@@ -5,9 +5,7 @@ import { Popover } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from "@mui/icons-material/Logout";
 import * as MdIcons from "react-icons/md";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { PATHS } from "config/routes.config";
 // import { items } from "config/sibarMenu.config";
 // import DropDown from "../../dropdown";
 // import logo from "../../../asset/logo/abank-logo.6cb94f8f.png";
@@ -27,19 +25,12 @@ const HeaderSiteTemplate = ({
   onLogout,
   onShowDropDown,
   user,
+  onEdit,
+  onPopoverClick,
+  anchorEl,
+  onClosePopover,
+  open,
 }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
   return (
     <div className="px-2">
       <div
@@ -57,9 +48,9 @@ const HeaderSiteTemplate = ({
           >
             <span
               className="px-2"
-              aria-describedby={id}
+              aria-describedby={open ? "simple-popover" : undefined}
               variant="contained"
-              onClick={handleClick}
+              onClick={onPopoverClick}
             >
               <span>
                 <MdIcons.MdKeyboardArrowDown className="inline-block" />
@@ -70,18 +61,21 @@ const HeaderSiteTemplate = ({
             </span>
 
             <Popover
-              id={id}
+              id={open ? "simple-popover" : undefined}
               open={open}
               anchorEl={anchorEl}
-              onClose={handleClose}
+              onClose={onClosePopover}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "left",
               }}
             >
-              <div className="p-4 background__muted">
-                <div className="text-center pb-4 cursor__pointer">
-                  <Link to={PATHS.editProfile}>
+              <div className="py-4 background__white">
+                <div
+                  className=" text__right pb-4 cursor__pointer px-3"
+                  onClick={onEdit}
+                >
+                  <Link>
                     <span className="!text__bold ">ویرایش</span>
                     <span className="px-2">
                       <EditIcon />

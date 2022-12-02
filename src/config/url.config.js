@@ -10,6 +10,8 @@ export const PRODUCT = "/product/product";
 
 //user controller
 export const USER = "/user/user";
+export const UPLOAD_USER_IMG = "/user/upload-image";
+export const GET_USER_IMG = "/user/user-image";
 export const DONT_NEEDED_URLS_FOR_AUTHENTICATION = () => [
   { url: "/auth" + PATHS.login },
   { url: "/auth" + PATHS.register },

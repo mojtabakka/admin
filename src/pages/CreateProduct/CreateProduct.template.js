@@ -4,11 +4,15 @@ import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, Card, ConfirmModal } from "components";
 import { LENZ, BORD } from "./CreateProduct.config";
+import style from "./CreateProduct.module.scss";
 import { Edit } from "./components";
 const CreateProductTemplate = ({
   columns,
+  fileInputRef,
   isLoading,
   items,
+  onChangeFile,
+  onClickInputFile,
   onCloseConfirmModal,
   onCloseModal,
   onDisagree,
@@ -26,6 +30,22 @@ const CreateProductTemplate = ({
           <Card headerTitle="ایجاد محصول جدید" className=" height__85__vh">
             <form onSubmit={onSubmit}>
               <div>
+                <div className="py-1">
+                  <label>عکس</label>
+                  <div
+                    onClick={onClickInputFile}
+                    className="cursor__pointer background__muted padding__10 rounded border border-dark"
+                  >
+                    عکس مورد نظر را انتخاب کنید
+                  </div>
+                  <input
+                    type="file"
+                    name="myImage"
+                    onChange={onChangeFile}
+                    className={style.file_input}
+                    ref={fileInputRef}
+                  />
+                </div>
                 <div className="py-1">
                   <label>برد </label>
                   <input
