@@ -14,7 +14,7 @@ const EditProfileTemplate = ({
   isLoading,
   onChangeFile,
   onEdit,
-  profileImage,
+  avatar,
   user,
 }) => {
   return (
@@ -22,7 +22,7 @@ const EditProfileTemplate = ({
       <form onSubmit={onEdit}>
         <div>
           <Card
-            avatar={{ src: profileImage }}
+            avatar={{ ...avatar }}
             fileUpload={true}
             showHeader={false}
             showFooter

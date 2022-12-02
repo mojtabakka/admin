@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { ErrorBoundary } from "components";
 import {
@@ -20,10 +20,16 @@ const CreateProductComponent = (props) => {
   const [openBackDrop, setOpenBackDrop] = useState(false);
   const [productInfo, setProductInfo] = useState({});
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const fileInputRef = useRef();
 
   useEffect(() => {
     getAllProducts();
   }, []);
+
+  const handleClickInputFile = () => {
+    fileInputRef.current.click();
+  };
+
   const handleSubmit = async (e) => {
     try {
       setOpenBackDrop(true);
@@ -146,26 +152,33 @@ const CreateProductComponent = (props) => {
       setOpenConfirmModal(false);
     }
   };
+  const handleChangeFile = (e) => {
+    const formData = new FormData();
+    formData.append("photo", e.target.files[0]);
+  };
   return (
     <ErrorBoundary>
       <CreateProductTemplate
         {...props}
         columns={columns}
+        fileInputRef={fileInputRef}
         isLoading={isLoading}
         items={items}
         open={open}
         openBackDrop={openBackDrop}
+        openConfirmModal={openConfirmModal}
         productInfo={productInfo}
+        onClickInputFile={handleClickInputFile}
         onCloseConfirmModal={handleCloseConfirmModal}
         onCloseModal={handleCloseModal}
+        onDisagree={handleDisagree}
         onEdit={handleEdit}
         onOpenModal={handleOpen}
         onSubmit={handleSubmit}
-        openConfirmModal={openConfirmModal}
-        onDisagree={handleDisagree}
+        onChangeFile={handleChangeFile}
       />
     </ErrorBoundary>
-);
+  );
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Divider } from "@mui/material";
 import React from "react";
 import style from "./Card.module.scss";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -30,44 +30,54 @@ const CardTemplate = ({
             <div className="border width__expand  "></div>
           </>
         )}
-
         <div
           className=" position-absolute w-100 flex__center   border__white"
           style={{ top: "-40px" }}
         >
           {avatar && (
-            <div
-              style={{ border: "5px solid white" }}
-              className="border__radius__circle cursor__pointer"
-            >
-              <Avatar
-                alt={avatar?.alt}
-                src={avatar?.src}
-                sx={{ width: 70, height: 70 }}
+            <div className="flex__column">
+              <div
+                style={{ border: "5px solid white" }}
+                className="border__radius__circle cursor__pointer"
+                onClick={onClickInputFile}
               >
-                {!avatar?.src && fileUpload && (
-                  <>
-                    <div
-                      onClick={onClickInputFile}
-                      className="w-100 h-100 text__black flex__center"
-                    >
-                      <CameraAltIcon className="w-100 h-75" />
-                    </div>
-                    <input
-                      type="file"
-                      name="myImage"
-                      onChange={onChangeFile}
-                      className={style.file_input}
-                      ref={fileInputRef}
-                    />
-                  </>
+                <Avatar
+                  alt={avatar?.alt}
+                  src={avatar?.src}
+                  sx={{ width: 70, height: 70 }}
+                >
+                  {!avatar?.src && fileUpload && (
+                    <>
+                      {!avatar?.src && (
+                        <div
+                          onClick={onClickInputFile}
+                          className="w-100 h-100 text__black flex__center"
+                        >
+                          <CameraAltIcon className="w-100 h-75" />
+                        </div>
+                      )}
+                    </>
+                  )}
+                </Avatar>
+                {fileUpload && (
+                  <input
+                    type="file"
+                    name="myImage"
+                    onChange={onChangeFile}
+                    className={style.file_input}
+                    ref={fileInputRef}
+                  />
                 )}
-              </Avatar>
+              </div>
+              {avatar?.title && (
+                <div className="text__center text__muted  ">
+                  {avatar?.title}
+                </div>
+              )}
             </div>
           )}
         </div>
-
-        <div className={`z${avatar && " padding__top__30"}`}>
+        <div className={`z${avatar && " padding__top__50"}`}>
           <div className=" text__right p-3 margin__vertical__10  ">
             {children}
           </div>

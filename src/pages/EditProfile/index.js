@@ -13,7 +13,7 @@ import { BASE_URL } from "config/variables.config";
 const EditProfilePage = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState({});
-  const [profileImage, setProfileImage] = useState(null);
+  const [avatar, setAvatar] = useState(null);
   useEffect(() => {
     getLoginUser();
   }, []);
@@ -21,10 +21,18 @@ const EditProfilePage = (props) => {
   const getLoginUser = async () => {
     setIsLoading(true);
     const { getUser } = props;
+
     try {
-      const user = await getUser();
-      setUser(user.data);
-      user.data?.avatar && setProfileImage(BASE_URL + user.data?.avatar);
+      const result = await getUser();
+      const user = result.data;
+      setUser({ ...user });
+      if (user.avatar) {
+        const avatar = {
+          title: user?.name + " " + user?.lastName,
+          src: BASE_URL + user?.avatar,
+        };
+        setAvatar({ ...avatar });
+      }
     } catch (error) {
       console.log("eeror", error);
     } finally {
@@ -47,10 +55,15 @@ const EditProfilePage = (props) => {
   };
 
   const handleChangeFile = async (e) => {
-    const { uploadUserImage, getUserPhoto } = props;
+    const { uploadUserImage } = props;
     const formData = new FormData();
     formData.append("photo", e.target.files[0]);
-    await uploadUserImage(formData);
+    try {
+      await uploadUserImage(formData);
+      getLoginUser();
+    } catch (error) {
+      console.log("error", error);
+    }
   };
   return (
     <ErrorBoundary>
@@ -58,7 +71,7 @@ const EditProfilePage = (props) => {
         {...props}
         isLoading={isLoading}
         user={user}
-        profileImage={profileImage}
+        avatar={avatar}
         onEdit={handleEdit}
         onChangeFile={handleChangeFile}
       />
