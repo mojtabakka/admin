@@ -1,8 +1,11 @@
 import http from "services/http.service";
-import { PRODUCT } from "config/url.config";
+import { PRODUCT, UPLOAD_PRODUCT_IMAGE_POST } from "config/url.config";
 
 const authApis = {
   createProduct(data) {
+    // const config = {
+    //   headers: { "content-type": "multipart/form-data" },
+    // };
     return new Promise(function (resolve, reject) {
       http
         .post(PRODUCT, data)
@@ -38,6 +41,17 @@ const authApis = {
     return new Promise(function (resolve, reject) {
       http
         .patch(PRODUCT, data)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  uploadProductImage(data) {
+    return new Promise(function (resolve, reject) {
+      http
+        .post(UPLOAD_PRODUCT_IMAGE_POST, data)
         .then((response) => {
           return resolve(response.data);
         })

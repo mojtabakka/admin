@@ -7,7 +7,7 @@ const Edit = (props) => {
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
     props.onEdit(data);
-  };
+  };  
   return <EditTemplate {...props} onEdit={hnadleEdit} />;
 };
 

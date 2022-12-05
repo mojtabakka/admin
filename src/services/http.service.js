@@ -51,6 +51,9 @@ class httpService {
   }
 
   post(address, data, config) {
+    console.log(address);
+    console.log(data);
+    console.log("cofig", config);
     // config = { headers: { "Content-Type": "application/json" } };
     return axios.post(address, data, config);
   }

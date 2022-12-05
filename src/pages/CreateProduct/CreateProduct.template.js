@@ -6,6 +6,7 @@ import { Button, Card, ConfirmModal } from "components";
 import { LENZ, BORD } from "./CreateProduct.config";
 import style from "./CreateProduct.module.scss";
 import { Edit } from "./components";
+import UploadIcon from "@mui/icons-material/Upload";
 const CreateProductTemplate = ({
   columns,
   fileInputRef,
@@ -21,7 +22,9 @@ const CreateProductTemplate = ({
   open,
   openBackDrop,
   openConfirmModal,
+  photo,
   productInfo,
+  photoforShow,
 }) => {
   return (
     <div className=" text__center">
@@ -36,11 +39,23 @@ const CreateProductTemplate = ({
                     onClick={onClickInputFile}
                     className="cursor__pointer background__muted padding__10 rounded border border-dark"
                   >
-                    عکس مورد نظر را انتخاب کنید
+                    <div className="flex__space-between flex__center">
+                      <span>عکس مورد نظر را انتخاب کنید</span>
+                      {!photoforShow ? (
+                        <UploadIcon />
+                      ) : (
+                        <img
+                          src={photoforShow}
+                          width={50}
+                          height={50}
+                          className="border__radius__large"
+                        />
+                      )}
+                    </div>
                   </div>
                   <input
                     type="file"
-                    name="myImage"
+                    name="photo"
                     onChange={onChangeFile}
                     className={style.file_input}
                     ref={fileInputRef}

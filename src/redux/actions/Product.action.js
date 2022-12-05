@@ -23,7 +23,6 @@ export function getProducts(data) {
 }
 
 export function deleteProduct(id) {
-
   return () => {
     return api
       .deleteProduct(id)
@@ -38,6 +37,17 @@ export function editProduct(data) {
   return () => {
     return api
       .editProduct(data)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => Promise.reject(error));
+  };
+}
+
+export function uploadProductImage(data) {
+  return () => {
+    return api
+      .uploadProductImage(data)
       .then((response) => {
         return response;
       })

@@ -6,12 +6,13 @@ import {
   deleteProduct,
   editProduct,
   getProducts,
+  uploadProductImage,
 } from "redux/actions/Product.action";
-import { BORD, LENZ, FIELDS } from "./CreateProduct.config";
+import { BORD, LENZ, FIELDS, PHOTO } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
-// import DeleteIcon from "@mui/icons-material/Delete";
-
+import { BASE_URL } from "config/variables.config";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 const CreateProductComponent = (props) => {
   const [columns, setColumns] = useState([]);
   const [isLoading, setIsloading] = useState(false);
@@ -20,6 +21,8 @@ const CreateProductComponent = (props) => {
   const [openBackDrop, setOpenBackDrop] = useState(false);
   const [productInfo, setProductInfo] = useState({});
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [photoforShow, setPhotoforShow] = useState(null);
   const fileInputRef = useRef();
 
   useEffect(() => {
@@ -38,8 +41,12 @@ const CreateProductComponent = (props) => {
       e.preventDefault();
       const form = new FormData(e.target);
       const data = Object.fromEntries(form);
+      data.photo = photo;
       await createProduct(data);
       getAllProducts();
+      e.target.reset();
+      setPhoto(null);
+      setPhotoforShow(null);
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -50,6 +57,29 @@ const CreateProductComponent = (props) => {
   const getAllProducts = async () => {
     const { getProducts } = props;
     const columns = [
+      {
+        field: "photo",
+        sortable: false,
+        headerName: "عکس",
+        renderCell: (params) => {
+          if (params.row?.photo) {
+            return (
+              <img
+                src={BASE_URL + params.row.photo}
+                width={50}
+                height={50}
+                className="border__radius__circle"
+              />
+            );
+          } else {
+            return (
+              <div className="text__center text__muted  padding__10 border border__radius__circle background__blue-muted">
+                <PersonOutlineIcon />
+              </div>
+            );
+          }
+        },
+      },
       { field: FIELDS.BORD, headerName: "نام برد", width: 150 },
       { field: FIELDS.LENZ, headerName: "نام لنز", width: 150 },
       {
@@ -93,6 +123,7 @@ const CreateProductComponent = (props) => {
           id: item._id,
           [BORD]: item.bord,
           [LENZ]: item.lenz,
+          [PHOTO]: item.photo,
         };
       });
       setItems(data);
@@ -152,9 +183,22 @@ const CreateProductComponent = (props) => {
       setOpenConfirmModal(false);
     }
   };
-  const handleChangeFile = (e) => {
-    const formData = new FormData();
-    formData.append("photo", e.target.files[0]);
+  const handleChangeFile = async (e) => {
+    const { uploadProductImage } = props;
+    try {
+      if (e.target.files[0]) {
+        setOpenBackDrop(true);
+        const formData = new FormData();
+        formData.append("photo", e.target.files[0]);
+        const uploadedPhoto = await uploadProductImage(formData);
+        setPhoto(uploadedPhoto.data.src);
+        setPhotoforShow(BASE_URL + uploadedPhoto.data.src);
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setOpenBackDrop(false);
+    }
   };
   return (
     <ErrorBoundary>
@@ -168,6 +212,8 @@ const CreateProductComponent = (props) => {
         openBackDrop={openBackDrop}
         openConfirmModal={openConfirmModal}
         productInfo={productInfo}
+        photo={photo}
+        photoforShow={photoforShow}
         onClickInputFile={handleClickInputFile}
         onCloseConfirmModal={handleCloseConfirmModal}
         onCloseModal={handleCloseModal}
@@ -186,6 +232,7 @@ const mapDispatchToProps = (dispatch) => ({
   getProducts: () => dispatch(getProducts()),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
   editProduct: (data) => dispatch(editProduct(data)),
+  uploadProductImage: (data) => dispatch(uploadProductImage(data)),
 });
 
 const CreateProduct = connect(null, mapDispatchToProps)(CreateProductComponent);
