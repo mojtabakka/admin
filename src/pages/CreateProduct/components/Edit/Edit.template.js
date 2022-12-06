@@ -1,5 +1,5 @@
 import React from "react";
-import { FormModal } from "components";
+import { FileInput, FormModal } from "components";
 import { LENZ, BORD } from "../../CreateProduct.config";
 
 const EditTemplate = ({
@@ -8,6 +8,9 @@ const EditTemplate = ({
   productInfo,
   onEdit,
   isLoading,
+  onChangeFile,
+  photo,
+  onCanclePhtoto,
 }) => {
   return (
     <FormModal
@@ -17,6 +20,11 @@ const EditTemplate = ({
       isLoading={isLoading}
       title="ویرایش"
     >
+      <FileInput
+        onChange={onChangeFile}
+        photo={photo}
+        onCancle={onCanclePhtoto}
+      />
       <div className="py-1">
         <label>نام برد </label>
         <input

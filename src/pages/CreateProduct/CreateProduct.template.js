@@ -2,18 +2,15 @@ import React from "react";
 import { Backdrop, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, Card, ConfirmModal } from "components";
+import { Button, Card, ConfirmModal, FileInput } from "components";
 import { LENZ, BORD } from "./CreateProduct.config";
-import style from "./CreateProduct.module.scss";
 import { Edit } from "./components";
-import UploadIcon from "@mui/icons-material/Upload";
 const CreateProductTemplate = ({
   columns,
-  fileInputRef,
   isLoading,
   items,
+  onCanclePhtoto,
   onChangeFile,
-  onClickInputFile,
   onCloseConfirmModal,
   onCloseModal,
   onDisagree,
@@ -24,7 +21,6 @@ const CreateProductTemplate = ({
   openConfirmModal,
   photo,
   productInfo,
-  photoforShow,
 }) => {
   return (
     <div className=" text__center">
@@ -33,7 +29,12 @@ const CreateProductTemplate = ({
           <Card headerTitle="ایجاد محصول جدید" className=" height__85__vh">
             <form onSubmit={onSubmit}>
               <div>
-                <div className="py-1">
+                <FileInput
+                  onChange={onChangeFile}
+                  photo={photo}
+                  onCancle={onCanclePhtoto}
+                />
+                {/* <div className="py-1">
                   <label>عکس</label>
                   <div
                     onClick={onClickInputFile}
@@ -44,12 +45,21 @@ const CreateProductTemplate = ({
                       {!photoforShow ? (
                         <UploadIcon />
                       ) : (
-                        <img
-                          src={photoforShow}
-                          width={50}
-                          height={50}
-                          className="border__radius__large"
-                        />
+                        <div className=" position-relative">
+                          <img
+                            src={photoforShow}
+                            width={50}
+                            height={50}
+                            className="border__radius__large"
+                          />
+                          <div
+                            className=" position-absolute"
+                            style={{ top: "-7px", left: "-7px" }}
+                            onClick={onClickCancleUploadImage}
+                          >
+                            <CancelIcon />
+                          </div>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -60,7 +70,7 @@ const CreateProductTemplate = ({
                     className={style.file_input}
                     ref={fileInputRef}
                   />
-                </div>
+                </div> */}
                 <div className="py-1">
                   <label>برد </label>
                   <input

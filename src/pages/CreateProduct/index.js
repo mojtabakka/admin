@@ -22,7 +22,6 @@ const CreateProductComponent = (props) => {
   const [productInfo, setProductInfo] = useState({});
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [photo, setPhoto] = useState(null);
-  const [photoforShow, setPhotoforShow] = useState(null);
   const fileInputRef = useRef();
 
   useEffect(() => {
@@ -46,7 +45,6 @@ const CreateProductComponent = (props) => {
       getAllProducts();
       e.target.reset();
       setPhoto(null);
-      setPhotoforShow(null);
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -183,22 +181,25 @@ const CreateProductComponent = (props) => {
       setOpenConfirmModal(false);
     }
   };
-  const handleChangeFile = async (e) => {
+  const handleChangeFile = async (file) => {
     const { uploadProductImage } = props;
     try {
-      if (e.target.files[0]) {
+      if (file) {
         setOpenBackDrop(true);
         const formData = new FormData();
-        formData.append("photo", e.target.files[0]);
+        formData.append("photo", file);
         const uploadedPhoto = await uploadProductImage(formData);
         setPhoto(uploadedPhoto.data.src);
-        setPhotoforShow(BASE_URL + uploadedPhoto.data.src);
       }
     } catch (error) {
       console.log("error", error);
     } finally {
       setOpenBackDrop(false);
     }
+  };
+
+  const handleCanclePhoto = () => {
+    setPhoto(null);
   };
   return (
     <ErrorBoundary>
@@ -213,7 +214,6 @@ const CreateProductComponent = (props) => {
         openConfirmModal={openConfirmModal}
         productInfo={productInfo}
         photo={photo}
-        photoforShow={photoforShow}
         onClickInputFile={handleClickInputFile}
         onCloseConfirmModal={handleCloseConfirmModal}
         onCloseModal={handleCloseModal}
@@ -222,6 +222,7 @@ const CreateProductComponent = (props) => {
         onOpenModal={handleOpen}
         onSubmit={handleSubmit}
         onChangeFile={handleChangeFile}
+        onCanclePhtoto={handleCanclePhoto}
       />
     </ErrorBoundary>
   );
