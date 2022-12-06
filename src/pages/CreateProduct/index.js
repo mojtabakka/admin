@@ -13,6 +13,8 @@ import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
 import { BASE_URL } from "config/variables.config";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 const CreateProductComponent = (props) => {
   const [columns, setColumns] = useState([]);
   const [isLoading, setIsloading] = useState(false);
@@ -90,8 +92,9 @@ const CreateProductComponent = (props) => {
             edit(params.row);
           };
           return (
-            <Button onClick={onClick} variant="outlined">
-              ویرایش
+            <Button onClick={onClick}>
+              <EditIcon />
+              <div className="padding__horizontal__5"> ویرایش </div>
             </Button>
           );
         },
@@ -106,8 +109,9 @@ const CreateProductComponent = (props) => {
             deleteItem(params.row);
           };
           return (
-            <Button onClick={onClick} variant="outlined" color="error">
-              حذف
+            <Button onClick={onClick} color="error">
+              <DeleteIcon />
+              <div className="padding__horizontal__10"> حذف</div>
             </Button>
           );
         },
