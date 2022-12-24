@@ -13,30 +13,32 @@ const FormModalTemplate = ({
 }) => {
   return (
     <Modal open={open} onClose={onClose}>
-      <Box>
-        <div className="w-100 vh-100 flex__center margin__top__20 h-100 bg-black">
-          <div className="w-50 text-center ">
-            <Card headerTitle={title}>
-              <form onSubmit={onSubmit} className="white-100">
-                {children}
-                <div className="text__left margin__horizontal__20 margin__vertical__20">
-                  <Button
-                    isLoading={isLoading}
-                    variant="danger"
-                    className="mx-3"
-                    onClick={onClose}
-                  >
-                    انصراف
-                  </Button>
-                  <Button type="submit" isLoading={isLoading}>
-                    تایید
-                  </Button>
-                </div>
-              </form>
-            </Card>
-          </div>
-        </div>
-      </Box>
+      <div className="w-full h-screen  text-center  flex  content-center  items-center">
+        <span className=" text-center  w-full ">
+          <Card headerTitle={title} className=" w-1/2 inline-block">
+            <form onSubmit={onSubmit} className="white-100">
+              {children}
+              <div className="text__left margin__horizontal__20 margin__vertical__20">
+                <Button
+                  isLoading={isLoading}
+                  variant="danger"
+                  className="mx-3"
+                  onClick={onClose}
+                >
+                  انصراف
+                </Button>
+                <Button type="submit" isLoading={isLoading}>
+                  تایید
+                </Button>
+              </div>
+            </form>
+          </Card>
+        </span>
+      </div>
+
+      {/* <div class="flex items-center align-middle ...">
+        <div class="flex-1 w-full text-center">lskjfl;akjsf;lj</div>
+      </div> */}
     </Modal>
   );
 };

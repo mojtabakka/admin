@@ -4,15 +4,12 @@ import { Provider } from "react-redux";
 import RoutesSite from "./routes";
 import { store } from "redux/store";
 import { ToastContainer } from "react-toastify";
-import { ThemeProvider } from "react-bootstrap";
 const App = () => {
   return (
-    <ThemeProvider>
-      <Provider store={store}>
-        <ToastContainer />
-        <RoutesSite />
-      </Provider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ToastContainer />
+      <RoutesSite />
+    </Provider>
   );
 };
 

@@ -18,7 +18,7 @@ const CardTemplate = ({
 }) => {
   return (
     <div
-      className={`position-relative border__radius__large  background__white ${className}  `}
+      className={`position-relative rounded   bg-white ${className}  `}
       style={{ boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)" }}
     >
       <div>

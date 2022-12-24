@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner } from "react-bootstrap";
+import { Spinner } from "components/Spinner";
 
 const ButtonTemplate = ({
   children = null,
@@ -13,7 +13,7 @@ const ButtonTemplate = ({
     <button
       onClick={onClick}
       type={type}
-      className={` border-0 rounded  px-3 py-1 text__2xsmall background__blue-muted  ${className} `}
+      className={`  bg-blue-300 rounded  px-4 py-2  text-sm ${className} `}
       disabled={disable}
     >
       <div>

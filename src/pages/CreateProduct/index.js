@@ -17,13 +17,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 const CreateProductComponent = (props) => {
   const [columns, setColumns] = useState([]);
+  const [formInputs, setFormInputs] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [openBackDrop, setOpenBackDrop] = useState(false);
-  const [productInfo, setProductInfo] = useState({});
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [openInputModal, setOpenInputModal] = useState(false);
   const [photo, setPhoto] = useState(null);
+  const [productInfo, setProductInfo] = useState({});
   const fileInputRef = useRef();
 
   useEffect(() => {
@@ -36,16 +38,35 @@ const CreateProductComponent = (props) => {
 
   const handleSubmit = async (e) => {
     try {
+      const features = [];
       setOpenBackDrop(true);
       const { createProduct } = props;
       setIsloading(true);
       e.preventDefault();
       const form = new FormData(e.target);
       const data = Object.fromEntries(form);
+      const dataChangedToArray = Object.entries(data);
+      const dataMaped = dataChangedToArray.map(([key, value]) => {
+        const searchedValue = key.search("_feature");
+        if (searchedValue !== -1) {
+          return { title: key, value };
+        }
+      });
+
+      const dataFiltered = dataMaped.filter((item) => {
+        const searchedValue = item?.title.search("_feature");
+        if (searchedValue) {
+          return item;
+        }
+      });
+
+      data.features = dataFiltered;
       data.photo = photo;
+      console.log(data);
       await createProduct(data);
       getAllProducts();
       e.target.reset();
+
       setPhoto(null);
     } catch (error) {
       console.log("error", error);
@@ -205,6 +226,18 @@ const CreateProductComponent = (props) => {
   const handleCanclePhoto = () => {
     setPhoto(null);
   };
+
+  const handleOpenAddInputModal = () => {
+    setOpenInputModal(true);
+  };
+  const handleSubmitAddInput = (data) => {
+    formInputs.push(data);
+    setFormInputs(formInputs);
+    setOpenInputModal(false);
+  };
+  const handleCloseAddInput = () => {
+    setOpenInputModal(false);
+  };
   return (
     <ErrorBoundary>
       <CreateProductTemplate
@@ -216,17 +249,22 @@ const CreateProductComponent = (props) => {
         open={open}
         openBackDrop={openBackDrop}
         openConfirmModal={openConfirmModal}
-        productInfo={productInfo}
+        openInputModal={openInputModal}
         photo={photo}
+        productInfo={productInfo}
+        formInputs={formInputs}
+        onCanclePhtoto={handleCanclePhoto}
+        onChangeFile={handleChangeFile}
         onClickInputFile={handleClickInputFile}
+        onCloseAddInput={handleCloseAddInput}
         onCloseConfirmModal={handleCloseConfirmModal}
         onCloseModal={handleCloseModal}
         onDisagree={handleDisagree}
         onEdit={handleEdit}
+        onOpenAddInputModal={handleOpenAddInputModal}
         onOpenModal={handleOpen}
         onSubmit={handleSubmit}
-        onChangeFile={handleChangeFile}
-        onCanclePhtoto={handleCanclePhoto}
+        onSubmitAddInput={handleSubmitAddInput}
       />
     </ErrorBoundary>
   );
