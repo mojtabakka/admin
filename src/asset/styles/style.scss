@@ -1,13 +1,35 @@
-@import "colors";
-@import "sizes";
-@import "sakit/style";
-@import "mixins/index";
-@import "components/index";
+// @import "colors";
+// @import "sizes";
+// @import "sakit/style";
+// @import "mixins/index";
+// @import "components/index";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 5px;
+}
+
+ ::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+ ::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: #92C5FD;
+}
+
+ ::-webkit-scrollbar-thumb:hover {}
+
 html {
     // font-size: 62.5%;
+}
+
+@font-face {
+    font-family: shabnam;
+    src: url(../fonts/vazir/vazir-thin.woff2);
 }
 
 html,
@@ -15,10 +37,11 @@ body,
 main {
     height: 100%;
     min-height: 100%;
+    background: #F1F1F1;
 }
 
 body {
-    @include primary-font-family('medium');
+    font-family: shabnam;
     transition: background .4s linear;
 }
 
@@ -28,7 +51,7 @@ h3,
 h4,
 h5,
 h6 {
-    @include primary-font-family('medium');
+    // @include primary-font-family('medium');
     font-weight: normal;
     letter-spacing: initial;
 }
@@ -39,7 +62,7 @@ a,
 legend,
 textarea,
 li {
-    @include primary-font-family();
+    // @include primary-font-family();
 }
 
 a {
@@ -48,27 +71,27 @@ a {
 
 p,
 span {
-    color: $dark-color;
+    // color: $dark-color;
 }
 
 label {
-    @include primary-font-family();
+    // @include primary-font-family();
 }
 
 input[type=number],
 input[type=tel] {
-    @include secondary-font-family('bold');
+    // @include secondary-font-family('bold');
 }
 
 input[type=password] {
-    @include password-font-family();
+    // @include password-font-family();
     font-size: 25px !important;
     letter-spacing: 4px;
 }
 
 button,
 a.button {
-    @include primary-font-family('medium');
+    // @include primary-font-family('medium');
     font-size: 1.4rem;
 }
 

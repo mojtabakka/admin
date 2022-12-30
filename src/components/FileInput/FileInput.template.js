@@ -16,19 +16,22 @@ const FileInputTemplate = ({
         <label>عکس</label>
         <div
           onClick={onClickInputFile}
-          className="cursor__pointer background__muted padding__10 rounded border border-dark"
+          className=" cursor-pointer bg-blue-300 text-white  p-2 rounded border border-dark"
         >
-          <div className="flex__space-between flex__center">
-            <span>عکس مورد نظر را انتخاب کنید</span>
+          <div className="  justify-between flex items-center ">
+            <span className="text-white font-bold">
+              عکس مورد نظر را انتخاب کنید
+            </span>
             {!photo ? (
               <UploadIcon />
             ) : (
               <div className=" position-relative">
                 <img
+                  alt={photo}
                   src={BASE_URL + photo}
                   width={50}
                   height={50}
-                  className="border__radius__large"
+                  className=" rounded-full"
                 />
                 <div
                   className=" position-absolute"

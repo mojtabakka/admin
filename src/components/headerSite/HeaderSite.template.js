@@ -34,7 +34,7 @@ const HeaderSiteTemplate = ({
   return (
     <div className="px-2">
       <div
-        className=" p-3 rounded flex  justify-between  bg-blue-300 font-black  items-center "
+        className=" p-3 rounded flex  justify-between bg-white font-black  items-center "
         style={{ boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)" }}
       >
         <div>سایت تستی</div>

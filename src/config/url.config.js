@@ -7,6 +7,7 @@ export const LOGOUT__POST__LOGOUT = "/auth/logout";
 
 // product controller
 export const PRODUCT = "/product/product";
+export const GET_PRODUCT = "/product/product/:id";
 export const UPLOAD_PRODUCT_IMAGE_POST = "/product/upload-product-image";
 
 //user controller

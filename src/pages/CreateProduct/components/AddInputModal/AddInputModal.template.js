@@ -11,8 +11,8 @@ const AddInputModalTemplate = ({ open, onCloseModal, onSubmit, isLoading }) => {
       isLoading={isLoading}
       title="افزودن فیلد"
     >
-      <div>
-        <label className=" mb-2 block">نام فیلد </label>
+      <div className="text-right">
+        <label className="  px-2 block">نام فیلد </label>
         <TextField
           tabIndex={1}
           className=" text-right  w-full"

@@ -51,10 +51,7 @@ class httpService {
   }
 
   post(address, data, config) {
-    console.log(address);
-    console.log(data);
-    console.log("cofig", config);
-    // config = { headers: { "Content-Type": "application/json" } };
+    config = { headers: { "Content-Type": "application/json" } };
     return axios.post(address, data, config);
   }
 
@@ -64,7 +61,7 @@ class httpService {
   }
 
   patch(address, data, config) {
-    // config = config || { headers: { "content-type": "application/json" } };
+    config = config || { headers: { "content-type": "application/json" } };
     return axios.patch(address, data, config);
   }
 

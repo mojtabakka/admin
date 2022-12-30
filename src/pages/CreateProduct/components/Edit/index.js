@@ -9,6 +9,23 @@ const EditComponent = (props) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
+    const dataChangedToArray = Object.entries(data);
+    const dataMaped = dataChangedToArray.map(([key, value]) => {
+      const searchedValue = key.search("_feature");
+      if (searchedValue !== -1) {
+        return { title: key, value: value };
+      }
+    });
+
+    const dataFiltered = dataMaped.filter((item) => {
+      const searchedValue = item?.title.search("_feature");
+      if (searchedValue) {
+        item.title = item?.title.replace("_feature", "");
+        return item;
+      }
+    });
+
+    data.features = dataFiltered;
     data.photo = photo;
     props.onEdit(data);
   };

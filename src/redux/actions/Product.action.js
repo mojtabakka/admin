@@ -22,6 +22,17 @@ export function getProducts(data) {
   };
 }
 
+export function getProduct(id) {
+  return () => {
+    return api
+      .getProduct(id)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => Promise.reject(error));
+  };
+}
+
 export function deleteProduct(id) {
   return () => {
     return api

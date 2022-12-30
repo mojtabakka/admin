@@ -18,7 +18,7 @@ const FormModalTemplate = ({
           <Card headerTitle={title} className=" w-1/2 inline-block">
             <form onSubmit={onSubmit} className="white-100">
               {children}
-              <div className="text__left margin__horizontal__20 margin__vertical__20">
+              <div className="text-left mx-2 mt-4">
                 <Button
                   isLoading={isLoading}
                   variant="danger"

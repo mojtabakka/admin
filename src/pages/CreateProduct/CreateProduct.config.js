@@ -5,8 +5,8 @@ export const PHOTO = "photo";
 export const PRICE_FOR_USER = "priceForUser";
 export const PRICE_FOR_WORKMATE = "priceForWorkmate";
 export const EXIST = "exist";
-export const WARRANTY = "Warranty";
+export const WARRANTY = "warranty";
+export const NUMBER_OF_EXIST = "numberOfExist";
 export const FIELDS = {
-  BORD: "bord",
-  LENZ: "lenz",
+  MODEL: "model",
 };

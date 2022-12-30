@@ -18,40 +18,43 @@ const CardTemplate = ({
 }) => {
   return (
     <div
-      className={`position-relative rounded   bg-white ${className}  `}
+      className={` relative  rounded   bg-white  ${className}  `}
       style={{ boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)" }}
     >
       <div>
         {showHeader && (
           <>
-            <div className={`p-2  text__right  ${style.header_border}`}>
+            <div
+              className={`p-2 text-right font-black  ${style.header_border}`}
+            >
               {headerTitle}
             </div>
-            <div className="border width__expand  "></div>
+            <div className="border w-full  "></div>
           </>
         )}
         <div
-          className=" position-absolute w-100 flex__center   border__white"
+          className="  w-full   absolute w-100 flex  items-center"
           style={{ top: "-40px" }}
         >
           {avatar && (
-            <div className="flex__column">
-              <div
-                style={{ border: "5px solid white" }}
-                className="border__radius__circle cursor__pointer"
+            <div className="flex-col w-full text-center">
+              <span
+                className=" rounded-full cursor-pointer"
                 onClick={onClickInputFile}
               >
                 <Avatar
                   alt={avatar?.alt}
                   src={avatar?.src}
                   sx={{ width: 70, height: 70 }}
+                  className="inline-block"
+                  style={{ border: "5px solid  white" }}
                 >
                   {!avatar?.src && fileUpload && (
                     <>
                       {!avatar?.src && (
                         <div
                           onClick={onClickInputFile}
-                          className="w-100 h-100 text__black flex__center"
+                          className="w-100 h-100 font-black flex items-center"
                         >
                           <CameraAltIcon className="w-100 h-75" />
                         </div>
@@ -68,24 +71,22 @@ const CardTemplate = ({
                     ref={fileInputRef}
                   />
                 )}
-              </div>
+              </span>
               {avatar?.title && (
-                <div className="text__center text__muted  ">
+                <div className="text-center  text-gray-500  ">
                   {avatar?.title}
                 </div>
               )}
             </div>
           )}
         </div>
-        <div className={`z${avatar && " padding__top__50"}`}>
-          <div className=" text__right p-3 margin__vertical__10  ">
-            {children}
-          </div>
+        <div className={`${avatar && " pt-14"}`}>
+          <div className=" text-right p-3  my-4  ">{children}</div>
         </div>
         {showFooter && (
           <>
-            <div className="border width__expand margin__top__25"></div>
-            <div className="p-3 text__left">{footer()}</div>
+            <div className="border w-full mt-5"></div>
+            <div className="p-3 text-left">{footer()}</div>
           </>
         )}
       </div>

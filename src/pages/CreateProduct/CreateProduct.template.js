@@ -16,6 +16,7 @@ import {
   MODEL,
   PRICE_FOR_USER,
   PRICE_FOR_WORKMATE,
+  NUMBER_OF_EXIST,
 } from "./CreateProduct.config";
 import { AddInputModal, Edit } from "./components";
 const CreateProductTemplate = ({
@@ -41,10 +42,10 @@ const CreateProductTemplate = ({
   formInputs,
 }) => {
   return (
-    <div className=" text-center">
-      <div className=" flex justify-between w-full ">
-        <div className="w-full p-2 h-screen">
-          <Card headerTitle="ایجاد محصول جدید" className=" h-full">
+    <div className="text-center mt-6">
+      <div className=" flex justify-between w-full h-screen  rounded-lg ">
+        <div className="w-full p-2 h-5/6   overflow-scroll bg-white rounded">
+          <Card headerTitle="ایجاد محصول جدید" className="">
             <form onSubmit={onSubmit}>
               <div>
                 <FileInput
@@ -53,17 +54,16 @@ const CreateProductTemplate = ({
                   onCancle={onCanclePhtoto}
                 />
 
-                <div className="py-2 w-full">
-                  <label>مدل </label>
+                <div className="py-2 w-full text-right ">
+                  <label className=" my-2 px-2">مدل </label>
                   <TextField
-                    tabIndex={1}
                     className=" text-right  w-full"
                     name={MODEL}
                     size="small"
                   />
                 </div>
 
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center ">
                   <div className="w-full">
                     <div className="border-t-2 border-blue-300"></div>
                   </div>
@@ -75,12 +75,11 @@ const CreateProductTemplate = ({
                   </div>
                 </div>
                 {formInputs.map((item) => (
-                  <div className="py-2">
-                    <label className=" inline-block mb-2 text-blue-300 font-black">
+                  <div className="py-2  text-right ">
+                    <label className=" px-2  inline-block mb-2 text-blue-300 font-black">
                       {item.title}
                     </label>
                     <TextField
-                      tabIndex={1}
                       className=" text-right  w-full border-blue-300"
                       name={item.title + "_feature"}
                       size="small"
@@ -107,45 +106,52 @@ const CreateProductTemplate = ({
                   <div className=" border-t-2"></div>
                 </div>
 
-                <div className="py-2">
-                  <label>قیمت برای کاربر </label>
+                <div className="py-2  text-right ">
+                  <label className="px-2">قیمت برای کاربر </label>
                   <TextField
-                    tabIndex={1}
                     className=" text-right   w-full"
                     name={PRICE_FOR_USER}
                     size="small"
                   />
                 </div>
 
-                <div className="py-2">
-                  <label>قیمت برای همکار </label>
+                <div className="py-2  text-right ">
+                  <label className="px-2">قیمت برای همکار </label>
                   <TextField
-                    tabIndex={1}
                     className=" text-right   w-full"
                     name={PRICE_FOR_WORKMATE}
                     size="small"
                   />
                 </div>
-                <div className="py-2">
-                  <label>گارانتی </label>
+                <div className="py-2  text-right ">
+                  <label className="px-2">گارانتی </label>
                   <TextField
-                    tabIndex={1}
                     className=" text__right   w-full"
                     name={WARRANTY}
                     size="small"
                   />
                 </div>
 
-                <div className="py-2">
-                  <label>وضعیت موجودی </label>
+                <div className="py-2  text-right ">
+                  <label className="px-2">وضعیت موجودی </label>
                   <Select name={EXIST} className="w-full" size="small" ƒ>
                     <MenuItem value={true}>موجود است</MenuItem>
                     <MenuItem value={false}>موجود نیست</MenuItem>
                   </Select>
                 </div>
+
+                <div className="py-2  text-right ">
+                  <label className="px-2">تعداد موجودی </label>
+                  <TextField
+                    className=" text__right   w-full"
+                    name={NUMBER_OF_EXIST}
+                    size="small"
+                    type="number"
+                  />
+                </div>
               </div>
 
-              <div className="text__left margin__horizontal__5 margin__vertical__20">
+              <div className=" text-left  mx-2  my-4">
                 <Button type="submit" isLoading={isLoading}>
                   تایید
                 </Button>
@@ -153,9 +159,9 @@ const CreateProductTemplate = ({
             </form>
           </Card>
         </div>
-        <div className="w-full p-2 vh-100">
-          <Card headerTitle="لیست محصولات" className="height__85__vh">
-            <Box sx={{ height: "75vh", width: "100%" }}>
+        <div className="w-full p-2 h-5/6   bg-white mx-2  rounded-lg">
+          <Card headerTitle="لیست محصولات" >
+            <Box sx={{ height: "70.5vh", width: "100%" }}>
               <DataGrid columns={columns} rows={items} />
             </Box>
           </Card>

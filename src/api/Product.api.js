@@ -1,5 +1,5 @@
 import http from "services/http.service";
-import { PRODUCT, UPLOAD_PRODUCT_IMAGE_POST } from "config/url.config";
+import { PRODUCT, UPLOAD_PRODUCT_IMAGE_POST ,GET_PRODUCT} from "config/url.config";
 
 const authApis = {
   createProduct(data) {
@@ -15,10 +15,23 @@ const authApis = {
         .catch((error) => reject(error));
     });
   },
+
   getProducts() {
     return new Promise(function (resolve, reject) {
       http
         .get(PRODUCT)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  getProduct(id) {
+    return new Promise(function (resolve, reject) {
+      http
+
+        .get(GET_PRODUCT.replace(":id", id))
         .then((response) => {
           return resolve(response.data);
         })

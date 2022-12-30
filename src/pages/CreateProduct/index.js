@@ -5,10 +5,11 @@ import {
   createProduct,
   deleteProduct,
   editProduct,
+  getProduct,
   getProducts,
   uploadProductImage,
 } from "redux/actions/Product.action";
-import { BORD, LENZ, FIELDS, PHOTO } from "./CreateProduct.config";
+import { BORD, LENZ, FIELDS, PHOTO, MODEL } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
 import { BASE_URL } from "config/variables.config";
@@ -49,20 +50,21 @@ const CreateProductComponent = (props) => {
       const dataMaped = dataChangedToArray.map(([key, value]) => {
         const searchedValue = key.search("_feature");
         if (searchedValue !== -1) {
-          return { title: key, value };
+          return { title: key, value: value };
         }
       });
 
       const dataFiltered = dataMaped.filter((item) => {
         const searchedValue = item?.title.search("_feature");
         if (searchedValue) {
+          item.title = item?.title.replace("_feature", "");
           return item;
         }
       });
+      delete data.updatedAt;
 
       data.features = dataFiltered;
       data.photo = photo;
-      console.log(data);
       await createProduct(data);
       getAllProducts();
       e.target.reset();
@@ -101,8 +103,7 @@ const CreateProductComponent = (props) => {
           }
         },
       },
-      { field: FIELDS.BORD, headerName: "نام برد", width: 150 },
-      { field: FIELDS.LENZ, headerName: "نام لنز", width: 150 },
+      { field: FIELDS.MODEL, headerName: "مدل", width: 150 },
       {
         field: "edit",
         sortable: false,
@@ -144,8 +145,7 @@ const CreateProductComponent = (props) => {
       const data = products.data.map((item) => {
         return {
           id: item._id,
-          [BORD]: item.bord,
-          [LENZ]: item.lenz,
+          [MODEL]: item.model,
           [PHOTO]: item.photo,
         };
       });
@@ -158,9 +158,15 @@ const CreateProductComponent = (props) => {
     }
   };
 
-  const edit = (row) => {
-    setProductInfo(row);
-    setOpen(true);
+  const edit = async (row) => {
+    const { getProduct } = props;
+    try {
+      const product = await getProduct(row.id);
+      setProductInfo(product.data);
+      setOpen(true);
+    } catch (error) {
+      console.log("erroe", error);
+    }
   };
   const deleteItem = (item) => {
     setProductInfo(item);
@@ -177,7 +183,7 @@ const CreateProductComponent = (props) => {
     const { editProduct } = props;
     const mainData = {
       ...data,
-      id: productInfo.id,
+      id: productInfo._id,
     };
     try {
       await editProduct(mainData);
@@ -273,8 +279,10 @@ const CreateProductComponent = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   createProduct: (data) => dispatch(createProduct(data)),
   getProducts: () => dispatch(getProducts()),
+  getProduct: (id) => dispatch(getProduct(id)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
   editProduct: (data) => dispatch(editProduct(data)),
+
   uploadProductImage: (data) => dispatch(uploadProductImage(data)),
 });
 
