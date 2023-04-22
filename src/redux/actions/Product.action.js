@@ -44,10 +44,10 @@ export function deleteProduct(id) {
   };
 }
 
-export function editProduct(data) {
+export function editProduct(data, id) {
   return () => {
     return api
-      .editProduct(data)
+      .editProduct(data, id)
       .then((response) => {
         return response;
       })

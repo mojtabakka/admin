@@ -8,3 +8,4 @@ export { ConfirmModal } from "./ConfirmModal";
 export { FormModal } from "./FormModal";
 export { FileInput } from "./FileInput";
 export { Spinner } from "./Spinner";
+export { Input } from "./Input";

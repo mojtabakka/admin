@@ -15,25 +15,34 @@ const EditComponent = (props) => {
       if (searchedValue !== -1) {
         return { title: key, value: value };
       }
+      return;
     });
-
     const dataFiltered = dataMaped.filter((item) => {
-      const searchedValue = item?.title.search("_feature");
+      const searchedValue = item?.title?.search("_feature");
       if (searchedValue) {
         item.title = item?.title.replace("_feature", "");
         return item;
       }
+      return;
     });
 
     data.features = dataFiltered;
     data.photo = photo;
-    props.onEdit(data);
+    const mainData = {};
+    Object.keys(data).forEach(function (key, index) {
+      console.log(key.search("_feature"));
+      if (key.search("_feature") !== -1) {
+        return;
+      }
+      mainData[key] = data[key];
+      return;
+    });
+    props.onEdit(mainData);
   };
 
   const handleChangeFile = async (file) => {
     const { uploadProductImage } = props;
     const formData = new FormData();
-    formData.append("photo", file);
     const uploadedPhoto = await uploadProductImage(formData);
     setPhoto(uploadedPhoto.data.src);
   };

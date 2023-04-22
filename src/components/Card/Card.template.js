@@ -18,16 +18,16 @@ const CardTemplate = ({
 }) => {
   return (
     <div
-      className={` relative  rounded   bg-white  ${className}  `}
+      className={` relative  rounded   bg-white   ${className}  `}
       style={{ boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)" }}
     >
       <div>
         {showHeader && (
           <>
             <div
-              className={`p-2 text-right font-black  ${style.header_border}`}
+              className={`p-2 text-right text-lg font-black    ${style.header_border}`}
             >
-              {headerTitle}
+              <span className=" font-black text-black">{headerTitle}</span>
             </div>
             <div className="border w-full  "></div>
           </>
@@ -56,7 +56,7 @@ const CardTemplate = ({
                           onClick={onClickInputFile}
                           className="w-100 h-100 font-black flex items-center"
                         >
-                          <CameraAltIcon className="w-100 h-75" />
+                          <CameraAltIcon className="w-100 h-75 mt-4 mr-4" />
                         </div>
                       )}
                     </>
@@ -85,7 +85,7 @@ const CardTemplate = ({
         </div>
         {showFooter && (
           <>
-            <div className="border w-full mt-5"></div>
+            {/* <div className="border w-full mt-5"></div> */}
             <div className="p-3 text-left">{footer()}</div>
           </>
         )}

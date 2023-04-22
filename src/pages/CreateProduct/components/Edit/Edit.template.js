@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FileInput, FormModal } from "components";
+import { FileInput, FormModal } from "components";
 import {
   WARRANTY,
   EXIST,
@@ -7,7 +7,7 @@ import {
   PRICE_FOR_USER,
   PRICE_FOR_WORKMATE,
 } from "../../CreateProduct.config";
-import { MenuItem, Modal, Select, TextField } from "@mui/material";
+import { MenuItem, Select, TextField } from "@mui/material";
 
 const EditTemplate = ({
   open,
@@ -19,7 +19,6 @@ const EditTemplate = ({
   photo,
   onCanclePhtoto,
 }) => {
-  console.log(productInfo);
   return (
     <FormModal
       open={open}

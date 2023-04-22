@@ -65,11 +65,12 @@ const CreateProductComponent = (props) => {
 
       data.features = dataFiltered;
       data.photo = photo;
-      await createProduct(data);
-      getAllProducts();
-      e.target.reset();
-
-      setPhoto(null);
+      const result = await createProduct(data);
+      if (result) {
+        getAllProducts();
+        e.target.reset();
+        setPhoto(null);
+      }
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -79,6 +80,7 @@ const CreateProductComponent = (props) => {
   };
   const getAllProducts = async () => {
     const { getProducts } = props;
+
     const columns = [
       {
         field: "photo",
@@ -144,7 +146,7 @@ const CreateProductComponent = (props) => {
       const products = await getProducts();
       const data = products.data.map((item) => {
         return {
-          id: item._id,
+          id: item.id,
           [MODEL]: item.model,
           [PHOTO]: item.photo,
         };
@@ -162,7 +164,11 @@ const CreateProductComponent = (props) => {
     const { getProduct } = props;
     try {
       const product = await getProduct(row.id);
-      setProductInfo(product.data);
+      const info = {
+        ...product.data,
+        features: JSON.parse(product.data.features),
+      };
+      setProductInfo(info);
       setOpen(true);
     } catch (error) {
       console.log("erroe", error);
@@ -183,10 +189,9 @@ const CreateProductComponent = (props) => {
     const { editProduct } = props;
     const mainData = {
       ...data,
-      id: productInfo._id,
     };
     try {
-      await editProduct(mainData);
+      await editProduct(mainData, productInfo.id);
       getAllProducts();
     } catch (error) {
       console.log("error", error);
@@ -203,7 +208,7 @@ const CreateProductComponent = (props) => {
     setOpenBackDrop(true);
     const { deleteProduct } = props;
     try {
-      await deleteProduct({ id: productInfo.id });
+      await deleteProduct(productInfo.id);
       getAllProducts();
     } catch (error) {
       console.log("error", error);
@@ -281,7 +286,7 @@ const mapDispatchToProps = (dispatch) => ({
   getProducts: () => dispatch(getProducts()),
   getProduct: (id) => dispatch(getProduct(id)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
-  editProduct: (data) => dispatch(editProduct(data)),
+  editProduct: (data, id) => dispatch(editProduct(data, id)),
 
   uploadProductImage: (data) => dispatch(uploadProductImage(data)),
 });

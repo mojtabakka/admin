@@ -1,5 +1,9 @@
 import http from "services/http.service";
-import { PRODUCT, UPLOAD_PRODUCT_IMAGE_POST ,GET_PRODUCT} from "config/url.config";
+import {
+  PRODUCT,
+  UPLOAD_PRODUCT_IMAGE_POST,
+  GET_PRODUCT,
+} from "config/url.config";
 
 const authApis = {
   createProduct(data) {
@@ -42,7 +46,7 @@ const authApis = {
   deleteProduct(id) {
     return new Promise(function (resolve, reject) {
       http
-        .delete(PRODUCT, id)
+        .delete(GET_PRODUCT.replace(":id", id))
         .then((response) => {
           return resolve(response.data);
         })
@@ -50,10 +54,10 @@ const authApis = {
     });
   },
 
-  editProduct(data) {
+  editProduct(data, id) {
     return new Promise(function (resolve, reject) {
       http
-        .patch(PRODUCT, data)
+        .put(GET_PRODUCT.replace(":id", id), data)
         .then((response) => {
           return resolve(response.data);
         })
@@ -64,7 +68,11 @@ const authApis = {
   uploadProductImage(data) {
     return new Promise(function (resolve, reject) {
       http
-        .post(UPLOAD_PRODUCT_IMAGE_POST, data)
+        .post(UPLOAD_PRODUCT_IMAGE_POST, data, {
+          headers: {
+            "Content-Type": "multipart/form-data; boundary=something",
+          },
+        })
         .then((response) => {
           return resolve(response.data);
         })

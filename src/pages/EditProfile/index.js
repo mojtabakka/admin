@@ -45,6 +45,7 @@ const EditProfilePage = (props) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
+    delete data.myImage; 
     try {
       await updateUser(data);
     } catch (error) {

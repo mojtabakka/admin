@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card } from "components";
+import { Button, Card, Input } from "components";
 import { Grid } from "@mui/material";
 
 import {
@@ -19,7 +19,7 @@ const EditProfileTemplate = ({
   user,
 }) => {
   return (
-    <div className="mt-5 ">
+    <div className="mt-14 ">
       <form onSubmit={onEdit}>
         <div>
           <Card
@@ -39,30 +39,30 @@ const EditProfileTemplate = ({
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <div className="py-1">
-                  <label>نام </label>
-                  <input
+                  <Input
+                    label={"نام"}
+                    className="w-1/2"
                     tabIndex={1}
-                    className=" text__right input__default  background__muted"
                     name={NAME}
                     defaultValue={user[NAME]}
                   />
                 </div>
 
                 <div className="py-1">
-                  <label>نام خانوادگی </label>
-                  <input
+                  <Input
+                    label={"نام خانوادگی"}
+                    className="w-1/2"
                     tabIndex={2}
-                    className=" text__right input__default  background__muted"
                     name={lAST_NAME}
                     defaultValue={user[lAST_NAME]}
                   />
                 </div>
 
                 <div className="py-1">
-                  <label>شماره ملی</label>
-                  <input
+                  <Input
+                    label={"شماره ملی"}
                     tabIndex={3}
-                    className=" text__right input__default  background__muted"
+                    className="w-1/2"
                     name={NATIONAL_CODE}
                     defaultValue={user[NATIONAL_CODE]}
                     type="number"
@@ -71,29 +71,30 @@ const EditProfileTemplate = ({
               </Grid>
               <Grid item xs={6}>
                 <div className="py-1">
-                  <label>شماره تماس</label>
-                  <input
+                  <Input
+                    label="شماره تماس"
                     tabIndex={4}
-                    className=" text__right input__default  background__muted"
+                    className="w-1/2"
                     name={PHONE_NUMBER}
                     defaultValue={user[PHONE_NUMBER]}
                     type="number"
                   />
                 </div>
                 <div className="py-1">
-                  <label>نام کاربری </label>
-                  <input
+                  <Input
+                    label={"نام کاربری"}
                     tabIndex={5}
-                    className=" text__right input__default  background__muted"
+                    className="w-1/2"
                     name={USERNAME}
                     defaultValue={user[USERNAME]}
                   />
                 </div>
                 <div className="py-1">
-                  <label>ایمیل</label>
-                  <input
+                  
+                  <Input
+                  label={"ایمیل"}
                     tabIndex={6}
-                    className=" text__right input__default  background__muted"
+                    className="w-1/2"
                     name={EMAIL}
                     defaultValue={user[EMAIL]}
                   />
