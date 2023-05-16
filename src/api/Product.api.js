@@ -1,8 +1,15 @@
 import http from "services/http.service";
-import { PRODUCT } from "config/url.config";
+import {
+  PRODUCT,
+  UPLOAD_PRODUCT_IMAGE_POST,
+  GET_PRODUCT,
+} from "config/url.config";
 
 const authApis = {
   createProduct(data) {
+    // const config = {
+    //   headers: { "content-type": "multipart/form-data" },
+    // };
     return new Promise(function (resolve, reject) {
       http
         .post(PRODUCT, data)
@@ -12,6 +19,7 @@ const authApis = {
         .catch((error) => reject(error));
     });
   },
+
   getProducts() {
     return new Promise(function (resolve, reject) {
       http
@@ -23,10 +31,11 @@ const authApis = {
     });
   },
 
-  deleteProduct(id) {
+  getProduct(id) {
     return new Promise(function (resolve, reject) {
       http
-        .delete(PRODUCT, id)
+
+        .get(GET_PRODUCT.replace(":id", id))
         .then((response) => {
           return resolve(response.data);
         })
@@ -34,10 +43,36 @@ const authApis = {
     });
   },
 
-  editProduct(data) {
+  deleteProduct(id) {
     return new Promise(function (resolve, reject) {
       http
-        .patch(PRODUCT, data)
+        .delete(GET_PRODUCT.replace(":id", id))
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  editProduct(data, id) {
+    return new Promise(function (resolve, reject) {
+      http
+        .put(GET_PRODUCT.replace(":id", id), data)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  uploadProductImage(data) {
+    return new Promise(function (resolve, reject) {
+      http
+        .post(UPLOAD_PRODUCT_IMAGE_POST, data, {
+          headers: {
+            "Content-Type": "multipart/form-data; boundary=something",
+          },
+        })
         .then((response) => {
           return resolve(response.data);
         })

@@ -22,8 +22,18 @@ export function getProducts(data) {
   };
 }
 
-export function deleteProduct(id) {
+export function getProduct(id) {
+  return () => {
+    return api
+      .getProduct(id)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => Promise.reject(error));
+  };
+}
 
+export function deleteProduct(id) {
   return () => {
     return api
       .deleteProduct(id)
@@ -34,10 +44,21 @@ export function deleteProduct(id) {
   };
 }
 
-export function editProduct(data) {
+export function editProduct(data, id) {
   return () => {
     return api
-      .editProduct(data)
+      .editProduct(data, id)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => Promise.reject(error));
+  };
+}
+
+export function uploadProductImage(data) {
+  return () => {
+    return api
+      .uploadProductImage(data)
       .then((response) => {
         return response;
       })

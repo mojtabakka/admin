@@ -1,80 +1,180 @@
 import React from "react";
-import { Backdrop, CircularProgress } from "@mui/material";
+import {
+  Backdrop,
+  CircularProgress,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, Card, ConfirmModal } from "components";
-import { LENZ, BORD } from "./CreateProduct.config";
-import style from "./CreateProduct.module.scss";
-import { Edit } from "./components";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { Button, Card, ConfirmModal, FileInput } from "components";
+import {
+  DELIVERY_METHOD,
+  EXIST,
+  MODEL,
+  NUMBER_OF_EXIST,
+  PRICE_FOR_USER,
+  PRICE_FOR_WORKMATE,
+  WARRANTY,
+} from "./CreateProduct.config";
+import { AddInputModal, Edit } from "./components";
 const CreateProductTemplate = ({
   columns,
-  fileInputRef,
+  formInputs,
   isLoading,
   items,
+  open,
+  photo,
+  productInfo,
+  onCanclePhtoto,
   onChangeFile,
-  onClickInputFile,
+  onCloseAddInput,
   onCloseConfirmModal,
   onCloseModal,
   onDisagree,
   onEdit,
+  onOpenAddInputModal,
   onSubmit,
-  open,
+  onSubmitAddInput,
   openBackDrop,
   openConfirmModal,
-  productInfo,
+  openInputModal,
 }) => {
   return (
-    <div className=" text__center">
-      <div className=" flex__space-between w-100 vh-100">
-        <div className="w-75 p-2 vh-100">
-          <Card headerTitle="ایجاد محصول جدید" className=" height__85__vh">
-            <form onSubmit={onSubmit}>
-              <div>
-                <div className="py-1">
-                  <label>عکس</label>
-                  <div
-                    onClick={onClickInputFile}
-                    className="cursor__pointer background__muted padding__10 rounded border border-dark"
-                  >
-                    عکس مورد نظر را انتخاب کنید
-                  </div>
-                  <input
-                    type="file"
-                    name="myImage"
+    <div className="text-center mt-6 p-2">
+      <div className=" flex justify-between w-full h-screen  rounded-lg  ">
+        <div className="w-full  h-5/6   p-2  bg-white rounded">
+          <div className=" h-full  overflow-scroll w-full">
+            <Card headerTitle="ایجاد محصول جدید" className="">
+              <form onSubmit={onSubmit}>
+                <div>
+                  <FileInput
                     onChange={onChangeFile}
-                    className={style.file_input}
-                    ref={fileInputRef}
+                    photo={photo}
+                    onCancle={onCanclePhtoto}
                   />
-                </div>
-                <div className="py-1">
-                  <label>برد </label>
-                  <input
-                    tabIndex={1}
-                    className=" text__right input__default  background__muted"
-                    name={BORD}
-                  />
+
+                  <div className="py-2 w-full text-right ">
+                    <label className=" my-2 px-2">مدل </label>
+                    <TextField
+                      className=" text-right  w-full"
+                      name={MODEL}
+                      size="small"
+                    />
+                  </div>
+
+                  <div className="flex justify-center items-center ">
+                    <div className="w-full">
+                      <div className="border-t-2 border-blue-300"></div>
+                    </div>
+                    <div className="w-full text-center  text-blue-300">
+                      ویژگی های محصول
+                    </div>
+                    <div className="w-full">
+                      <div className=" border-t-2 border-blue-300"></div>
+                    </div>
+                  </div>
+                  {formInputs.map((item) => (
+                    <div className="py-2  text-right ">
+                      <label className=" px-2  inline-block mb-2 text-blue-300 font-black">
+                        {item.title}
+                      </label>
+                      <TextField
+                        className=" text-right  w-full border-blue-300"
+                        name={item.title + "_feature"}
+                        size="small"
+                      />
+                    </div>
+                  ))}
+
+                  <div className="flex justify-center items-center">
+                    <div className="w-full">
+                      <div className="border-t-2 border-blue-300"></div>
+                    </div>
+                    <div
+                      className="w-10 p-2 text-center cursor-pointer"
+                      onClick={onOpenAddInputModal}
+                    >
+                      <AiOutlinePlusCircle />
+                    </div>
+                    <div className="w-full">
+                      <div className=" border-t-2 border-blue-300"></div>
+                    </div>
+                  </div>
+
+                  <div className="w-full">
+                    <div className=" border-t-2"></div>
+                  </div>
+
+                  <div className="py-2  text-right ">
+                    <label className="px-2">قیمت برای کاربر </label>
+                    <TextField
+                      className=" text-right   w-full"
+                      name={PRICE_FOR_USER}
+                      size="small"
+                    />
+                  </div>
+
+                  <div className="py-2  text-right ">
+                    <label className="px-2">قیمت برای همکار </label>
+                    <TextField
+                      className=" text-right   w-full"
+                      name={PRICE_FOR_WORKMATE}
+                      size="small"
+                    />
+                  </div>
+                  <div className="py-2  text-right ">
+                    <label className="px-2">گارانتی </label>
+                    <TextField
+                      className=" text__right   w-full"
+                      name={WARRANTY}
+                      size="small"
+                    />
+                  </div>
+
+                  <div className="py-2  text-right ">
+                    <label className="px-2">وضعیت موجودی </label>
+                    <Select name={EXIST} className="w-full" size="small" ƒ>
+                      <MenuItem value={true}>موجود است</MenuItem>
+                      <MenuItem value={false}>موجود نیست</MenuItem>
+                    </Select>
+                  </div>
+
+                  <div className="py-2  text-right ">
+                    <label className="px-2">تعداد موجودی </label>
+                    <TextField
+                      className=" text__right   w-full"
+                      name={NUMBER_OF_EXIST}
+                      size="small"
+                      type="number"
+                    />
+                  </div>
+
+                  <div className="py-2  text-right ">
+                    <label className="px-2">روش ارسال </label>
+                    <TextField
+                      className=" text__right   w-full"
+                      name={DELIVERY_METHOD}
+                      size="small"
+                      type="text"
+                    />
+                  </div>
                 </div>
 
-                <div className="py-3">
-                  <label>لنز </label>
-                  <input
-                    tabIndex={1}
-                    className=" text__right input__default  background__muted"
-                    name={LENZ}
-                  />
+                <div className=" text-left  mx-2  my-4">
+                  <Button type="submit" isLoading={isLoading}>
+                    تایید
+                  </Button>
                 </div>
-              </div>
-              <div className="text__left margin__horizontal__5 margin__vertical__20">
-                <Button type="submit" isLoading={isLoading}>
-                  تایید
-                </Button>
-              </div>
-            </form>
-          </Card>
+              </form>
+            </Card>
+          </div>
         </div>
-        <div className="w-100 p-2 vh-100">
-          <Card headerTitle="لیست محصولات" className="height__85__vh">
-            <Box sx={{ height: "75vh", width: "100%" }}>
+        <div className="w-full p-2 h-5/6   bg-white mx-2  rounded-lg">
+          <Card headerTitle="لیست محصولات">
+            <Box sx={{ height: "70.5vh", width: "100%" }}>
               <DataGrid columns={columns} rows={items} />
             </Box>
           </Card>
@@ -86,6 +186,13 @@ const CreateProductTemplate = ({
         open={open}
         productInfo={productInfo}
       />
+
+      <AddInputModal
+        onCloseModal={onCloseAddInput}
+        onSubmit={onSubmitAddInput}
+        open={openInputModal}
+      />
+
       <ConfirmModal
         content="آیا از حذف این محصول مطمنید؟"
         onCloseConfirmModal={onCloseConfirmModal}

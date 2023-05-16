@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { CardTemplate } from "./Card.template";
 
-const Card = (props) => {
+const   Card = (props) => {
   const fileInputRef = useRef();
   const handleClickInputFile = () => {
     fileInputRef.current.click();

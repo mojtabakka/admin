@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card } from "components";
+import { Button, Card, Input } from "components";
 import { Link } from "react-router-dom";
 import { PATHS } from "config/routes.config";
 import {
@@ -16,7 +16,7 @@ import { Grid } from "@mui/material";
 
 const RegisterTemplate = ({ onRegister, isLoading }) => {
   return (
-    <div className=" position-fixed w-100 h-100   rounded  flex__center  text__bold ">
+    <div className=" h-screen  mt-20  p-14 ">
       <form onSubmit={onRegister}>
         <div>
           <Card
@@ -33,71 +33,71 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <div className="py-1">
-                  <label>نام </label>
-                  <input
+                  <Input
+                    className="w-3/4"
+                    label="نام"
                     tabIndex={1}
-                    className=" text__right input__default  background__muted"
                     name={NAME}
                   />
                 </div>
 
                 <div className="py-1">
-                  <label>نام خانوادگی </label>
-                  <input
+                  <Input
+                    className="w-3/4"
+                    label="نام خانوادگی"
                     tabIndex={2}
-                    className=" text__right input__default  background__muted"
                     name={lAST_NAME}
                   />
                 </div>
 
                 <div className="py-1">
-                  <label>شماره ملی</label>
-                  <input
+                  <Input
+                    className="w-3/4"
+                    label="شماره ملی"
                     tabIndex={3}
-                    className=" text__right input__default  background__muted"
                     name={NATIONAL_CODE}
                   />
                 </div>
                 <div className="py-1">
-                  <label>شماره تماس</label>
-                  <input
+                  <Input
+                    className="w-3/4"
+                    label="شماره تماس"
                     tabIndex={4}
-                    className=" text__right input__default  background__muted"
                     name={PHONE_NUMBER}
                   />
                 </div>
               </Grid>
               <Grid item xs={6}>
                 <div className="py-1">
-                  <label>نام کاربری </label>
-                  <input
+                  <Input
+                    className="w-3/4"
+                    label="نام کاربری"
                     tabIndex={5}
-                    className=" text__right input__default  background__muted"
                     name={USERNAME}
                   />
                 </div>
                 <div className="py-1">
-                  <label>ایمیل</label>
-                  <input
+                  <Input
+                    className="w-3/4"
+                    label="ایمیل"
                     tabIndex={6}
-                    className=" text__right input__default  background__muted"
                     name={EMAIL}
                   />
                 </div>
                 <div className="py-1">
-                  <label>رمز عبور </label>
-                  <input
+                  <Input
+                    className="w-3/4"
+                    label="رمزعبور"
                     tabIndex={7}
-                    className=" text__right input__default  background__muted"
                     type="password"
                     name={PASSWORD}
                   />
                 </div>
                 <div className="py-2">
-                  <label>تکرار رمز عبور </label>
-                  <input
+                  <Input
+                    className="w-3/4"
+                    label="تکرار رمز عبور"
                     tabIndex={8}
-                    className=" text__right input__default  background__muted"
                     type="password"
                     name={CONFIRM_PASSWORD}
                   />
@@ -106,8 +106,8 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
             </Grid>
           </Card>
 
-          <div className="text-center p-2  text-decoration-underline text-black">
-            <Link to={PATHS.login}> ورود</Link>
+          <div className="text-center p-2  underline text-black">
+            <Link to={PATHS.login} > ورود</Link>
           </div>
         </div>
       </form>

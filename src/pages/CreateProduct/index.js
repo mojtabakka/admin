@@ -5,21 +5,28 @@ import {
   createProduct,
   deleteProduct,
   editProduct,
+  getProduct,
   getProducts,
+  uploadProductImage,
 } from "redux/actions/Product.action";
-import { BORD, LENZ, FIELDS } from "./CreateProduct.config";
+import { BORD, LENZ, FIELDS, PHOTO, MODEL } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
-// import DeleteIcon from "@mui/icons-material/Delete";
-
+import { BASE_URL } from "config/variables.config";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 const CreateProductComponent = (props) => {
   const [columns, setColumns] = useState([]);
+  const [formInputs, setFormInputs] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [openBackDrop, setOpenBackDrop] = useState(false);
-  const [productInfo, setProductInfo] = useState({});
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [openInputModal, setOpenInputModal] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [productInfo, setProductInfo] = useState({});
   const fileInputRef = useRef();
 
   useEffect(() => {
@@ -32,14 +39,38 @@ const CreateProductComponent = (props) => {
 
   const handleSubmit = async (e) => {
     try {
+      const features = [];
       setOpenBackDrop(true);
       const { createProduct } = props;
       setIsloading(true);
       e.preventDefault();
       const form = new FormData(e.target);
       const data = Object.fromEntries(form);
-      await createProduct(data);
-      getAllProducts();
+      const dataChangedToArray = Object.entries(data);
+      const dataMaped = dataChangedToArray.map(([key, value]) => {
+        const searchedValue = key.search("_feature");
+        if (searchedValue !== -1) {
+          return { title: key, value: value };
+        }
+      });
+
+      const dataFiltered = dataMaped.filter((item) => {
+        const searchedValue = item?.title.search("_feature");
+        if (searchedValue) {
+          item.title = item?.title.replace("_feature", "");
+          return item;
+        }
+      });
+      delete data.updatedAt;
+
+      data.features = dataFiltered;
+      data.photo = photo;
+      const result = await createProduct(data);
+      if (result) {
+        getAllProducts();
+        e.target.reset();
+        setPhoto(null);
+      }
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -49,9 +80,32 @@ const CreateProductComponent = (props) => {
   };
   const getAllProducts = async () => {
     const { getProducts } = props;
+
     const columns = [
-      { field: FIELDS.BORD, headerName: "نام برد", width: 150 },
-      { field: FIELDS.LENZ, headerName: "نام لنز", width: 150 },
+      {
+        field: "photo",
+        sortable: false,
+        headerName: "عکس",
+        renderCell: (params) => {
+          if (params.row?.photo) {
+            return (
+              <img
+                src={BASE_URL + params.row.photo}
+                width={50}
+                height={50}
+                className="border__radius__circle"
+              />
+            );
+          } else {
+            return (
+              <div className="text__center text__muted  padding__10 border border__radius__circle background__blue-muted">
+                <PersonOutlineIcon />
+              </div>
+            );
+          }
+        },
+      },
+      { field: FIELDS.MODEL, headerName: "مدل", width: 150 },
       {
         field: "edit",
         sortable: false,
@@ -62,8 +116,9 @@ const CreateProductComponent = (props) => {
             edit(params.row);
           };
           return (
-            <Button onClick={onClick} variant="outlined">
-              ویرایش
+            <Button onClick={onClick}>
+              <EditIcon />
+              <div className="padding__horizontal__5"> ویرایش </div>
             </Button>
           );
         },
@@ -78,8 +133,9 @@ const CreateProductComponent = (props) => {
             deleteItem(params.row);
           };
           return (
-            <Button onClick={onClick} variant="outlined" color="error">
-              حذف
+            <Button onClick={onClick} color="error">
+              <DeleteIcon />
+              <div className="padding__horizontal__10"> حذف</div>
             </Button>
           );
         },
@@ -90,9 +146,9 @@ const CreateProductComponent = (props) => {
       const products = await getProducts();
       const data = products.data.map((item) => {
         return {
-          id: item._id,
-          [BORD]: item.bord,
-          [LENZ]: item.lenz,
+          id: item.id,
+          [MODEL]: item.model,
+          [PHOTO]: item.photo,
         };
       });
       setItems(data);
@@ -104,29 +160,42 @@ const CreateProductComponent = (props) => {
     }
   };
 
-  const edit = (row) => {
-    setProductInfo(row);
-    setOpen(true);
+  const edit = async (row) => {
+    const { getProduct } = props;
+    try {
+      const product = await getProduct(row.id);
+      const info = {
+        ...product.data,
+        features: product.data.features,
+      };
+      setProductInfo(info);
+      setOpen(true);
+    } catch (error) {
+      console.log("erroe", error);
+    }
   };
+
   const deleteItem = (item) => {
     setProductInfo(item);
     setOpenConfirmModal(true);
   };
+
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleCloseModal = () => {
     setOpen(false);
   };
+
   const handleEdit = async (data) => {
     setOpenBackDrop(true);
     const { editProduct } = props;
     const mainData = {
       ...data,
-      id: productInfo.id,
     };
     try {
-      await editProduct(mainData);
+      await editProduct(mainData, productInfo.id);
       getAllProducts();
     } catch (error) {
       console.log("error", error);
@@ -143,7 +212,7 @@ const CreateProductComponent = (props) => {
     setOpenBackDrop(true);
     const { deleteProduct } = props;
     try {
-      await deleteProduct({ id: productInfo.id });
+      await deleteProduct(productInfo.id);
       getAllProducts();
     } catch (error) {
       console.log("error", error);
@@ -152,9 +221,37 @@ const CreateProductComponent = (props) => {
       setOpenConfirmModal(false);
     }
   };
-  const handleChangeFile = (e) => {
-    const formData = new FormData();
-    formData.append("photo", e.target.files[0]);
+  const handleChangeFile = async (file) => {
+    const { uploadProductImage } = props;
+    try {
+      if (file) {
+        setOpenBackDrop(true);
+        const formData = new FormData();
+        formData.append("photo", file);
+        const uploadedPhoto = await uploadProductImage(formData);
+        setPhoto(uploadedPhoto.data.src);
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setOpenBackDrop(false);
+    }
+  };
+
+  const handleCanclePhoto = () => {
+    setPhoto(null);
+  };
+
+  const handleOpenAddInputModal = () => {
+    setOpenInputModal(true);
+  };
+  const handleSubmitAddInput = (data) => {
+    formInputs.push(data);
+    setFormInputs(formInputs);
+    setOpenInputModal(false);
+  };
+  const handleCloseAddInput = () => {
+    setOpenInputModal(false);
   };
   return (
     <ErrorBoundary>
@@ -167,15 +264,22 @@ const CreateProductComponent = (props) => {
         open={open}
         openBackDrop={openBackDrop}
         openConfirmModal={openConfirmModal}
+        openInputModal={openInputModal}
+        photo={photo}
         productInfo={productInfo}
+        formInputs={formInputs}
+        onCanclePhtoto={handleCanclePhoto}
+        onChangeFile={handleChangeFile}
         onClickInputFile={handleClickInputFile}
+        onCloseAddInput={handleCloseAddInput}
         onCloseConfirmModal={handleCloseConfirmModal}
         onCloseModal={handleCloseModal}
         onDisagree={handleDisagree}
         onEdit={handleEdit}
+        onOpenAddInputModal={handleOpenAddInputModal}
         onOpenModal={handleOpen}
         onSubmit={handleSubmit}
-        onChangeFile={handleChangeFile}
+        onSubmitAddInput={handleSubmitAddInput}
       />
     </ErrorBoundary>
   );
@@ -184,8 +288,11 @@ const CreateProductComponent = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   createProduct: (data) => dispatch(createProduct(data)),
   getProducts: () => dispatch(getProducts()),
+  getProduct: (id) => dispatch(getProduct(id)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
-  editProduct: (data) => dispatch(editProduct(data)),
+  editProduct: (data, id) => dispatch(editProduct(data, id)),
+
+  uploadProductImage: (data) => dispatch(uploadProductImage(data)),
 });
 
 const CreateProduct = connect(null, mapDispatchToProps)(CreateProductComponent);

@@ -51,22 +51,22 @@ class httpService {
   }
 
   post(address, data, config) {
-    // config = { headers: { "Content-Type": "application/json" } };
+    config = config || { headers: { "Content-Type": "application/json" } };
     return axios.post(address, data, config);
   }
 
   delete(address, data, config) {
-    config = config || { headers: { "content-type": "application/json" } };
+    config = config || { headers: { "Content-Type": "application/json" } };
     return axios.delete(address, { data });
   }
 
   patch(address, data, config) {
-    // config = config || { headers: { "content-type": "application/json" } };
+    config = config || { headers: { "Content-Type": "application/json" } };
     return axios.patch(address, data, config);
   }
 
   put(address, data, config) {
-    config = config || { headers: { "content-type": "application/json" } };
+    config = config || { headers: { "Content-Type": "application/json" } };
     return axios.put(address, data, config);
   }
 }

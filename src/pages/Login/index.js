@@ -16,6 +16,7 @@ const LoginPage = (props) => {
       setIsLoading(true);
       const form = new FormData(e.target);
       const data = Object.fromEntries(form);
+      console.log(data);
       await login(data);
       navigate(PATHS.home);
     } catch (error) {

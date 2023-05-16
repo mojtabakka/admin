@@ -34,7 +34,7 @@ const HeaderSiteTemplate = ({
   return (
     <div className="px-2">
       <div
-        className="p-3 rounded d-flex justify-content-between   background__white text__bold "
+        className=" p-3 rounded flex  justify-between bg-white font-black  items-center "
         style={{ boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)" }}
       >
         <div>سایت تستی</div>
@@ -45,19 +45,19 @@ const HeaderSiteTemplate = ({
             onClick={onShowDropDown}
             data-dropdown-toggle="dropdown"
             type="button"
+            className="px-4 cursor-pointer"
           >
             <span
-              className="px-2"
+              className=" font-black"
               aria-describedby={open ? "simple-popover" : undefined}
               variant="contained"
               onClick={onPopoverClick}
             >
               <span>
                 <MdIcons.MdKeyboardArrowDown className="inline-block" />
-                <span> {user.name}</span>
+                <span className="font-black"> {user.name}</span>
                 <span> {user.lastName} </span>
               </span>
-              <span></span>
             </span>
 
             <Popover
@@ -72,11 +72,11 @@ const HeaderSiteTemplate = ({
             >
               <div className="py-4 background__white">
                 <div
-                  className=" text__right pb-4 cursor__pointer px-3"
+                  className=" text-right cursor-pointer pb-4  px-3"
                   onClick={onEdit}
                 >
                   <Link>
-                    <span className="!text__bold ">ویرایش</span>
+                    <span className=" font-black ">ویرایش</span>
                     <span className="px-2">
                       <EditIcon />
                     </span>
@@ -90,9 +90,6 @@ const HeaderSiteTemplate = ({
                 </div>
               </div>
             </Popover>
-            <span className="w-10 p-2 h-10 rounded inline-block text-center">
-              {/* <CgIcons.CgProfile className=" h5  inline-block" /> */}
-            </span>
           </div>
           <div
             className={`${hideDropDown ? "hidden" : null}`}
