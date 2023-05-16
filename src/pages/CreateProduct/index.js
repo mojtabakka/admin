@@ -166,7 +166,7 @@ const CreateProductComponent = (props) => {
       const product = await getProduct(row.id);
       const info = {
         ...product.data,
-        features: JSON.parse(product.data.features),
+        features: product.data.features,
       };
       setProductInfo(info);
       setOpen(true);
@@ -174,16 +174,20 @@ const CreateProductComponent = (props) => {
       console.log("erroe", error);
     }
   };
+
   const deleteItem = (item) => {
     setProductInfo(item);
     setOpenConfirmModal(true);
   };
+
   const handleOpen = () => {
     setOpen(true);
   };
+
   const handleCloseModal = () => {
     setOpen(false);
   };
+
   const handleEdit = async (data) => {
     setOpenBackDrop(true);
     const { editProduct } = props;
