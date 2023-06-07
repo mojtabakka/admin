@@ -11,6 +11,7 @@ export const PATHS = {
   register: "/register",
   createProduct: "/create-product",
   editProfile: "/edit-profile",
+  orders: "/orders",
 };
 
 export const RoutesConfig = [
@@ -62,5 +63,16 @@ export const RoutesConfig = [
       type: "login",
     },
     type: ROUTES_TYPES.PUBLIC,
+  },
+
+  {
+    path: PATHS.orders,
+    name: "orders",
+    component: pages.Orders,
+    ifIsLoginGoBack: true,
+    layout: {
+      type: "home",
+    },
+    type: ROUTES_TYPES.PRIVATE,
   },
 ];

@@ -61,6 +61,7 @@ class httpService {
   }
 
   patch(address, data, config) {
+    console.log('helo');
     config = config || { headers: { "Content-Type": "application/json" } };
     return axios.patch(address, data, config);
   }

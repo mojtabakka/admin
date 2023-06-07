@@ -2,6 +2,7 @@ import React from "react";
 import {
   Backdrop,
   CircularProgress,
+  Input,
   MenuItem,
   Select,
   TextField,
@@ -15,12 +16,24 @@ import {
   EXIST,
   MODEL,
   NUMBER_OF_EXIST,
+  OFF,
   PRICE_FOR_USER,
   PRICE_FOR_WORKMATE,
   WARRANTY,
 } from "./CreateProduct.config";
 import { AddInputModal, Edit } from "./components";
+
+const localizedTextsMap = {
+  columnMenuUnsort: "não classificado",
+  columnMenuSortAsc: "Classificar por ordem crescente",
+  columnMenuSortDesc: "Classificar por ordem decrescente",
+  columnMenuFilter: "Filtro",
+  columnMenuHideColumn: "Ocultar",
+  columnMenuShowColumns: "Mostrar colunas",
+};
+
 const CreateProductTemplate = ({
+  dataGrid,
   columns,
   formInputs,
   isLoading,
@@ -153,6 +166,16 @@ const CreateProductTemplate = ({
                   </div>
 
                   <div className="py-2  text-right ">
+                    <label className="px-2">تخفیف </label>
+                    <TextField
+                      className=" text__right   w-full"
+                      name={OFF}
+                      size="small"
+                      type="number"
+                    />
+                  </div>
+
+                  <div className="py-2  text-right ">
                     <label className="px-2">روش ارسال </label>
                     <TextField
                       className=" text__right   w-full"
@@ -175,7 +198,24 @@ const CreateProductTemplate = ({
         <div className="w-full p-2 h-5/6   bg-white mx-2  rounded-lg">
           <Card headerTitle="لیست محصولات">
             <Box sx={{ height: "70.5vh", width: "100%" }}>
-              <DataGrid columns={columns} rows={items} />
+              <DataGrid
+            
+                dataGrid
+                localeText={{
+                  MuiTablePagination: {
+                    labelDisplayedRows: ({ from, to, count }) =>
+                      `${from} - ${to} محصول از ${count} محصول`,
+                  },
+                }}
+                loading={false}
+                rowCount={200}
+                page={dataGrid.page - 1}
+                pageSize={dataGrid.pageSize}
+                columns={columns}
+                rows={items}
+                checkboxSelection
+                autoHeight
+              />
             </Box>
           </Card>
         </div>
