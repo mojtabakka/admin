@@ -10,6 +10,10 @@ export const PRODUCT = "/product";
 export const GET_PRODUCT = "/product/:id";
 export const UPLOAD_PRODUCT_IMAGE_POST = "/product/upload-product-image";
 
+//order Controller
+export const ORDER = "/orders";
+export const CHANGE_ORDER_STATUS = "orders/change-order-status/:id";
+
 //user controller
 export const USER = "/users";
 export const UPLOAD_USER_IMG = "/user/upload-image";

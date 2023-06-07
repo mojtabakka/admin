@@ -9,7 +9,7 @@ import {
   getProducts,
   uploadProductImage,
 } from "redux/actions/Product.action";
-import { BORD, LENZ, FIELDS, PHOTO, MODEL } from "./CreateProduct.config";
+import { FIELDS, PHOTO, MODEL } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
 import { BASE_URL } from "config/variables.config";
@@ -28,6 +28,13 @@ const CreateProductComponent = (props) => {
   const [photo, setPhoto] = useState(null);
   const [productInfo, setProductInfo] = useState({});
   const fileInputRef = useRef();
+  const [dataGrid, setDataGrid] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 200,
+    pageSize: 10,
+    page: 2,
+  });
 
   useEffect(() => {
     getAllProducts();
@@ -83,9 +90,12 @@ const CreateProductComponent = (props) => {
 
     const columns = [
       {
+        headerClassName: "super-app-theme--header",
         field: "photo",
         sortable: false,
         headerName: "عکس",
+        filterable: false,
+        hideable: false,
         renderCell: (params) => {
           if (params.row?.photo) {
             return (
@@ -110,6 +120,8 @@ const CreateProductComponent = (props) => {
         field: "edit",
         sortable: false,
         headerName: "",
+        filterable: false,
+        hideable: false,
         renderCell: (params) => {
           const onClick = (e) => {
             e.stopPropagation();
@@ -127,6 +139,7 @@ const CreateProductComponent = (props) => {
         field: "delete",
         headerName: "",
         sortable: false,
+        filterable: false,
         renderCell: (params) => {
           const onClick = (e) => {
             e.stopPropagation();
@@ -280,6 +293,7 @@ const CreateProductComponent = (props) => {
         onOpenModal={handleOpen}
         onSubmit={handleSubmit}
         onSubmitAddInput={handleSubmitAddInput}
+        dataGrid={dataGrid}
       />
     </ErrorBoundary>
   );

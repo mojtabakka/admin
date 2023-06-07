@@ -1,5 +1,6 @@
 // import { PATHS } from "./routes.config";
 import * as AiIcons from "react-icons/ai";
+import { HiOutlineClipboardList } from "react-icons/hi";
 // import * as MdIcons from "react-icons/md";
 // import * as RiIcons from "react-icons/ri";
 // import * as IoIcons from 'react-icons/io'
@@ -8,6 +9,7 @@ export const PATHS = {
   login: "/login",
   register: "/register",
   createProduct: "/create-product",
+  orders: "/orders",
 };
 const items = [
   {
@@ -15,6 +17,13 @@ const items = [
     label: "محصولات",
     icon: <AiIcons.AiFillHome />,
     path: PATHS.createProduct,
+  },
+
+  {
+    name: "سفارش ها",
+    label: "سفارش ها",
+    icon: <HiOutlineClipboardList />,
+    path: PATHS.orders,
   },
 
   // {
@@ -52,7 +61,7 @@ const items = [
 ];
 
 const colors = [
-  { backgroundColor: "#92C5FD", color: "blue" },
+  { backgroundColor: "#92C5FD", color: "black" },
   { backgroundColor: "#08A45C", color: "white" },
   { backgroundColor: "red", color: "white" },
   { backgroundColor: "purple", color: "blue" },
