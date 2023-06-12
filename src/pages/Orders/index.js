@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Orderstemplate from "./Orders.template";
-import { changeOrderStatus, getOrders } from "redux/actions/Order.action";
+import {
+  changeOrderStatus,
+  getOrders,
+  searchOrder,
+} from "redux/actions/Order.action";
 import { connect } from "react-redux";
 import {
   ADDRESS,
   PHONE_NUMBER,
   NUMBER_OF_PRODUCT,
   STATUS,
+  FORM_ID,
 } from "./Orders.config";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { BiCommentDetail } from "react-icons/bi";
 import { TbExchange } from "react-icons/tb";
 import { ORDER_STATUS } from "config/general.config";
@@ -24,13 +23,17 @@ const OrdersPage = (props) => {
   const [openChangeStatusModal, setOpenChangeStatusModal] = useState(false);
   const [columns, setColumns] = useState([]);
   const [detailsItems, setDailsItems] = useState();
+  const [tabValue, setTabValue] = useState(ORDER_STATUS.notPayed.value);
   const [rows, setRows] = useState([]);
+  const [filter, setfilter] = useState({});
   useEffect(() => {
     getOrders();
-  }, []);
+  }, [filter]);
   const getOrders = async () => {
-    const { getOrders } = props;
-    const result = await getOrders();
+    const { searchOrder } = props;
+    filter.status = tabValue;
+    setfilter(filter);
+    const result = await searchOrder(filter);
     const columns = [
       { field: PHONE_NUMBER, headerName: "شماره همراه", width: 150 },
       { field: ADDRESS, headerName: "آدرس", width: 150 },
@@ -132,17 +135,57 @@ const OrdersPage = (props) => {
       setOpenChangeStatusModal(false);
     }
   };
+
+  const handleChangeTab = (e, newValue) => {
+    filter.status = newValue;
+    setfilter({ ...filter });
+    setTabValue(newValue);
+  };
+
+  const handleSubmitSearch = async (e) => {
+    let permision = false;
+    e.preventDefault();
+    const form = new FormData(e.target);
+    const data = Object.fromEntries(form);
+    for (var key in data) {
+      delete filter[key];
+      if (data[key].trim()) {
+        permision = true;
+        filter[key] = data[key];
+      }
+    }
+    permision && setfilter({ ...filter });
+  };
+
+  const handleClickInit = () => {
+    let permision = false;
+    document.getElementById(FORM_ID).reset();
+    const form = new FormData(document.getElementById(FORM_ID));
+    const data = Object.fromEntries(form);
+    for (var key in data) {
+      if (filter[key] && filter[key].trim()) {
+        permision = true;
+      }
+      delete filter[key];
+    }
+    permision && setfilter({ ...filter });
+  };
+
   return (
     <Orderstemplate
-      openChangeStatusModal={openChangeStatusModal}
       {...props}
+      openChangeStatusModal={openChangeStatusModal}
       columns={columns}
       rows={rows}
       detailsItems={detailsItems}
       openDetailModal={openDetailModal}
+      tabValue={tabValue}
       onSubmitChangeStatus={handleSubmitChangeStatus}
       onCloseDetailModal={handleCloseDetailModal}
       onCloseChangeStatusModal={handleCloseChangeStatusModal}
+      onChangeTab={handleChangeTab}
+      onSubmitSearch={handleSubmitSearch}
+      onClickInit={handleClickInit}
     />
   );
 };
@@ -150,6 +193,7 @@ const OrdersPage = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   getOrders: (data) => dispatch(getOrders(data)),
   changeOrderStatus: (id, data) => dispatch(changeOrderStatus(id, data)),
+  searchOrder: (data) => dispatch(searchOrder(data)),
 });
 
 const Orders = connect(null, mapDispatchToProps)(OrdersPage);

@@ -13,7 +13,7 @@ const ButtonTemplate = ({
     <button
       onClick={onClick}
       type={type}
-      className={`  bg-blue-300 rounded-xl  px-4 py-3 text-black  text-base font-bold  ${className} `}
+      className={`  bg-blue-200 rounded-xl  px-4 py-3 text-black  text-base font-bold  ${className} `}
       disabled={disable}
     >
       <div>

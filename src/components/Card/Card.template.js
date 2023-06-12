@@ -1,4 +1,4 @@
-import { Avatar, Divider } from "@mui/material";
+import { Avatar } from "@mui/material";
 import React from "react";
 import style from "./Card.module.scss";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -18,16 +18,19 @@ const CardTemplate = ({
 }) => {
   return (
     <div
-      className={` relative  rounded   bg-white   ${className}  `}
-      style={{ boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)" }}
+      className={` relative  rounded   bg-white     ${className}  `}
+      style={{
+        boxShadow: "0px 1px 2px 0px rgb(21 27 38 / 15%)",
+        border: "1px solid #E4E7EB",
+      }}
     >
       <div>
         {showHeader && (
           <>
             <div
-              className={`p-2 text-right text-lg font-black    ${style.header_border}`}
+              className={`p-2 text-right text-lg font-black  bg-blue-200 text-whites   ${style.header_border}`}
             >
-              <span className=" font-black text-black">{headerTitle}</span>
+              <span className=" font-black text-black ">{headerTitle}</span>
             </div>
             <div className="border w-full  "></div>
           </>
