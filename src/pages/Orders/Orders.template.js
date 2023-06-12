@@ -1,16 +1,18 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Tab from "@material-ui/core/Tab";
 import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
+import { FiRefreshCcw } from "react-icons/fi";
 import { Button, Card, Input } from "components";
 import { ChangeStatus, OrderDetails } from "./components";
 import { ORDER_STATUS } from "config/general.config";
 import { FORM_ID, form_inputs } from "./Orders.config";
 
 function Orderstemplate({
+  loading,
   columns,
   detailsItems,
   openDetailModal,
@@ -22,7 +24,8 @@ function Orderstemplate({
   onSubmitChangeStatus,
   onSubmitSearch,
   openChangeStatusModal,
-  onClickInit
+  onClickInit,
+  onClickRefresh,
 }) {
   return (
     <>
@@ -113,6 +116,7 @@ function Orderstemplate({
                 rows={rows}
                 checkboxSelection
                 autoHeight
+                loading={loading}
               />
             </Box>
           </TabPanel>
@@ -153,6 +157,12 @@ function Orderstemplate({
           onClose={onCloseChangeStatusModal}
           size="small"
         />
+        <div className="flex justify-end mx-6">
+          <Button className=" !p-2  " size="small" onClick={onClickRefresh}>
+            <FiRefreshCcw className=" inline-block" />
+            <span className="px-2">بروزرسانی</span>
+          </Button>
+        </div>
       </Card>
     </>
   );

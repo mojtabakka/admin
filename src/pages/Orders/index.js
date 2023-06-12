@@ -19,102 +19,110 @@ import { TbExchange } from "react-icons/tb";
 import { ORDER_STATUS } from "config/general.config";
 
 const OrdersPage = (props) => {
-  const [openDetailModal, setOpenDetailModal] = useState(false);
-  const [openChangeStatusModal, setOpenChangeStatusModal] = useState(false);
   const [columns, setColumns] = useState([]);
   const [detailsItems, setDailsItems] = useState();
-  const [tabValue, setTabValue] = useState(ORDER_STATUS.notPayed.value);
-  const [rows, setRows] = useState([]);
   const [filter, setfilter] = useState({});
+  const [loading, setLoading] = useState({});
+  const [openChangeStatusModal, setOpenChangeStatusModal] = useState(false);
+  const [openDetailModal, setOpenDetailModal] = useState(false);
+  const [rows, setRows] = useState([]);
+  const [tabValue, setTabValue] = useState(ORDER_STATUS.notPayed.value);
   useEffect(() => {
     getOrders();
   }, [filter]);
   const getOrders = async () => {
-    const { searchOrder } = props;
-    filter.status = tabValue;
-    setfilter(filter);
-    const result = await searchOrder(filter);
-    const columns = [
-      { field: PHONE_NUMBER, headerName: "شماره همراه", width: 150 },
-      { field: ADDRESS, headerName: "آدرس", width: 150 },
-      {
-        field: NUMBER_OF_PRODUCT,
-        headerName: "تعداد محصول خریداری شده",
-        width: 150,
-      },
-
-      {
-        field: STATUS,
-        headerName: "وضعیت",
-        width: 150,
-      },
-
-      {
-        field: "edit",
-        sortable: false,
-        headerName: "",
-        filterable: false,
-        hideable: false,
-        width: 150,
-        renderCell: (params) => {
-          const onClick = (e) => {
-            e.stopPropagation();
-            const item = result.data.filter(
-              (item) => item.id === params.row.id
-            );
-            setDailsItems(item[0]);
-            setOpenDetailModal(true);
-          };
-
-          return (
-            <Button onClick={onClick} color="primary">
-              <div color="error font-black ">
-                <BiCommentDetail className="text-lg font-black" />
-              </div>
-              <div className="px-2"> جزییات </div>
-            </Button>
-          );
+    try {
+      setLoading(true);
+      const { searchOrder } = props;
+      filter.status = tabValue;
+      setfilter(filter);
+      const result = await searchOrder(filter);
+      const columns = [
+        { field: PHONE_NUMBER, headerName: "شماره همراه", width: 150 },
+        { field: ADDRESS, headerName: "آدرس", width: 150 },
+        {
+          field: NUMBER_OF_PRODUCT,
+          headerName: "تعداد محصول خریداری شده",
+          width: 150,
         },
-      },
-      {
-        field: "change state",
-        sortable: false,
-        headerName: "",
-        filterable: false,
-        hideable: false,
-        width: 150,
-        renderCell: (params) => {
-          const onClick = (e) => {
-            const item = result.data.filter(
-              (item) => item.id === params.row.id
-            );
-            setDailsItems(item[0]);
-            setOpenChangeStatusModal(true);
-            e.stopPropagation();
-          };
 
-          return (
-            <Button onClick={onClick} className=" text-black">
-              <div color="error font-black ">
-                <TbExchange className="text-lg font-black" />
-              </div>
-              <div className="px-2"> تغییر وضعیت</div>
-            </Button>
-          );
+        {
+          field: STATUS,
+          headerName: "وضعیت",
+          width: 150,
         },
-      },
-    ];
-    const rows = result.data.map((item) => {
-      return {
-        [PHONE_NUMBER]: item?.user?.phoneNumber,
-        [ADDRESS]: item.address.address,
-        [NUMBER_OF_PRODUCT]: item.cart.products.length,
-        [STATUS]: ORDER_STATUS[item?.status].text,
-        id: item?.id,
-      };
-    });
-    setColumns(columns);
-    setRows(rows);
+
+        {
+          field: "edit",
+          sortable: false,
+          headerName: "",
+          filterable: false,
+          hideable: false,
+          width: 150,
+          renderCell: (params) => {
+            const onClick = (e) => {
+              e.stopPropagation();
+              const item = result.data.filter(
+                (item) => item.id === params.row.id
+              );
+              setDailsItems(item[0]);
+              setOpenDetailModal(true);
+            };
+
+            return (
+              <Button onClick={onClick} color="primary">
+                <div color="error font-black ">
+                  <BiCommentDetail className="text-lg font-black" />
+                </div>
+                <div className="px-2"> جزییات </div>
+              </Button>
+            );
+          },
+        },
+        {
+          field: "change state",
+          sortable: false,
+          headerName: "",
+          filterable: false,
+          hideable: false,
+          width: 150,
+          renderCell: (params) => {
+            const onClick = (e) => {
+              const item = result.data.filter(
+                (item) => item.id === params.row.id
+              );
+              setDailsItems(item[0]);
+              setOpenChangeStatusModal(true);
+              e.stopPropagation();
+            };
+
+            return (
+              <Button onClick={onClick} className=" text-black">
+                <div color="error font-black ">
+                  <TbExchange className="text-lg font-black" />
+                </div>
+                <div className="px-2"> تغییر وضعیت</div>
+              </Button>
+            );
+          },
+        },
+      ];
+      const rows = result.data.map((item) => {
+        return {
+          [PHONE_NUMBER]: item?.user?.phoneNumber,
+          [ADDRESS]: item.address.address,
+          [NUMBER_OF_PRODUCT]: item.cart.products.length,
+          [STATUS]: ORDER_STATUS[item?.status].text,
+          id: item?.id,
+        };
+      });
+      setColumns(columns);
+      setRows(rows);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoading(false);
+    }
   };
   const handleCloseDetailModal = () => {
     setOpenDetailModal(false);
@@ -171,11 +179,16 @@ const OrdersPage = (props) => {
     permision && setfilter({ ...filter });
   };
 
+  const handleClickRefresh = () => {
+    getOrders();
+  };
+
   return (
     <Orderstemplate
       {...props}
       openChangeStatusModal={openChangeStatusModal}
       columns={columns}
+      loading={loading}
       rows={rows}
       detailsItems={detailsItems}
       openDetailModal={openDetailModal}
@@ -186,6 +199,7 @@ const OrdersPage = (props) => {
       onChangeTab={handleChangeTab}
       onSubmitSearch={handleSubmitSearch}
       onClickInit={handleClickInit}
+      onClickRefresh={handleClickRefresh}
     />
   );
 };
