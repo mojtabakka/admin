@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Tab from "@material-ui/core/Tab";
 import TabContext from "@material-ui/lab/TabContext";
@@ -27,6 +27,23 @@ function Orderstemplate({
   onClickInit,
   onClickRefresh,
 }) {
+  const dataGrid = (
+    <Box sx={{ height: "100%", width: "100%" }}>
+      <DataGrid
+        localeText={{
+          MuiTablePagination: {
+            labelDisplayedRows: ({ from, to, count }) =>
+              `${from} - ${to} محصول از ${count} محصول`,
+          },
+        }}
+        columns={columns}
+        rows={rows}
+        checkboxSelection
+        autoHeight
+        loading={loading}
+      />
+    </Box>
+  );
   return (
     <>
       <div className=""></div>
@@ -103,46 +120,13 @@ function Orderstemplate({
               />
             </TabList>
           </Box>
-          <TabPanel value={ORDER_STATUS.notPayed.value}>
-            <Box sx={{ height: "100%", width: "100%" }}>
-              <DataGrid
-                localeText={{
-                  MuiTablePagination: {
-                    labelDisplayedRows: ({ from, to, count }) =>
-                      `${from} - ${to} محصول از ${count} محصول`,
-                  },
-                }}
-                columns={columns}
-                rows={rows}
-                checkboxSelection
-                autoHeight
-                loading={loading}
-              />
-            </Box>
-          </TabPanel>
+          <TabPanel value={ORDER_STATUS.notPayed.value}>{dataGrid}</TabPanel>
           <TabPanel value={ORDER_STATUS.payed.value}>
-            <Box sx={{ height: "100%", width: "100%" }}>
-              <DataGrid
-                localeText={{
-                  MuiTablePagination: {
-                    labelDisplayedRows: ({ from, to, count }) =>
-                      `${from} - ${to} محصول از ${count} محصول`,
-                  },
-                }}
-                columns={columns}
-                rows={rows}
-                checkboxSelection
-                autoHeight
-              />
-            </Box>
+            <Box sx={{ height: "100%", width: "100%" }}>{dataGrid}</Box>
           </TabPanel>
-          <TabPanel value={ORDER_STATUS.preparing.value}>
-            پرداخت نشده ا
-          </TabPanel>
-          <TabPanel value={ORDER_STATUS.isSendig.value}>پرداخت نشده ا</TabPanel>
-          <TabPanel value={ORDER_STATUS.completed.value}>
-            پرداخت نشده ا
-          </TabPanel>
+          <TabPanel value={ORDER_STATUS.preparing.value}>{dataGrid}</TabPanel>
+          <TabPanel value={ORDER_STATUS.isSendig.value}>{dataGrid}</TabPanel>
+          <TabPanel value={ORDER_STATUS.completed.value}>{dataGrid}</TabPanel>
         </TabContext>
 
         <OrderDetails
