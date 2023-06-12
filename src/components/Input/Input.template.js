@@ -1,4 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
 import React from "react";
 
 const InputTemplate = ({
@@ -13,7 +12,6 @@ const InputTemplate = ({
   label,
   className,
   tabIndex,
-  inpuClassName,
 }) => {
   return (
     <div className="py-2">
@@ -21,7 +19,7 @@ const InputTemplate = ({
       <input
         className={`${
           type !== "password" ? "p-2" : "px-2"
-        } bg-slate-100 rounded-2xl  text-sm text-gray-500 ${className}  `}
+        } border bg-slate-100 rounded-2xl  text-sm text-gray-500 ${className}  `}
         onChange={onChange}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}

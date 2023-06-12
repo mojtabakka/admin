@@ -16,3 +16,16 @@ export const STATUS = "status";
 export const FIELDS = {
   MODEL: "model",
 };
+
+export const form_inputs = {
+  name: "name",
+  lastName: "lastName",
+  nationalCode: "nationalCode",
+  phoneNumber: "phoneNumber",
+  model: "model",
+  state: "state",
+  city: "city",
+};
+
+
+export const FORM_ID="filter-product-form"

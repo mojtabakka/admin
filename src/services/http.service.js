@@ -27,12 +27,12 @@ class httpService {
     );
     axios.interceptors.response.use(
       (res) => {
-        if (res.config.method !== "get")
-          toast(res?.data.message, {
-            autoClose: 2000,
-            type: toast.TYPE.SUCCESS,
-            position: toast.POSITION.BOTTOM_LEFT,
-          });
+        // if (res.config.method !== "get")
+        //   toast(res?.data.message, {
+        //     autoClose: 2000,
+        //     type: toast.TYPE.SUCCESS,
+        //     position: toast.POSITION.BOTTOM_LEFT,
+        //   });
         return res;
       },
       (error) => {
@@ -61,7 +61,7 @@ class httpService {
   }
 
   patch(address, data, config) {
-    console.log('helo');
+    console.log("helo");
     config = config || { headers: { "Content-Type": "application/json" } };
     return axios.patch(address, data, config);
   }

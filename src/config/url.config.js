@@ -12,12 +12,15 @@ export const UPLOAD_PRODUCT_IMAGE_POST = "/product/upload-product-image";
 
 //order Controller
 export const ORDER = "/orders";
+export const GET_ORDER = "/orders/:id";
 export const CHANGE_ORDER_STATUS = "orders/change-order-status/:id";
+export const SEARCH_ORDER = "orders/search-order-admin";
 
 //user controller
 export const USER = "/users";
 export const UPLOAD_USER_IMG = "/user/upload-image";
 export const GET_USER_IMG = "/user/user-image";
+
 export const DONT_NEEDED_URLS_FOR_AUTHENTICATION = () => [
   { url: "/auth" + PATHS.login },
   { url: "/auth" + PATHS.register },

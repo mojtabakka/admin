@@ -15,6 +15,15 @@ const cacheRtl = createCache({
 });
 const theme = createTheme({
   direction: "rtl",
+  typography: {
+    fontFamily: [
+      "shabnam",
+      // "Roboto",
+      // '"Helvetica Neue"',
+      // "Arial",
+      // "sans-serif",
+    ].join(","),
+  },
 });
 
 const renderDom = () => {
