@@ -197,9 +197,8 @@ const CreateProductTemplate = ({
         </div>
         <div className="w-full p-2 h-5/6   bg-white mx-2  rounded-lg">
           <Card headerTitle="لیست محصولات">
-            <Box sx={{  width: "100%" }}>
+            <Box sx={{ width: "100%" }}>
               <DataGrid
-            
                 dataGrid
                 localeText={{
                   MuiTablePagination: {
@@ -210,7 +209,7 @@ const CreateProductTemplate = ({
                 loading={false}
                 rowCount={200}
                 page={dataGrid.page - 1}
-                pageSize={dataGrid.pageSize-2}
+                pageSize={dataGrid.pageSize - 2}
                 columns={columns}
                 rows={items}
                 checkboxSelection

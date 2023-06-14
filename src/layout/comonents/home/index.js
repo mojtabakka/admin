@@ -3,13 +3,13 @@ import { Sidebar, HeaderSite } from "components";
 
 const Home = ({ children }) => {
   return (
-    <div dir="rtl" className=" w-full h-full flex ">
+    <div dir="rtl" className=" flex w-full">
       <Sidebar />
       <div className=" w-full">
         <div>
           <HeaderSite />
         </div>
-        <div className="p-3"> {children}</div>
+        <div className="p-3 overflow-y-scroll"> {children}</div>
       </div>
     </div>
   );

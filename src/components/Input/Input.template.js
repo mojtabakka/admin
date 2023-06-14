@@ -14,7 +14,7 @@ const InputTemplate = ({
   tabIndex,
 }) => {
   return (
-    <div className="py-2">
+    <div className="py-2 inline-block">
       <span className="px-3">{label} </span>
       <input
         className={`${

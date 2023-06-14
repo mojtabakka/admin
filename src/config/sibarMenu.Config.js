@@ -1,6 +1,9 @@
 // import { PATHS } from "./routes.config";
 import * as AiIcons from "react-icons/ai";
 import { HiOutlineClipboardList } from "react-icons/hi";
+import { SiBrandfolder } from "react-icons/si";
+import { BiCategory } from "react-icons/bi";
+import { FiType } from "react-icons/fi";
 // import * as MdIcons from "react-icons/md";
 // import * as RiIcons from "react-icons/ri";
 // import * as IoIcons from 'react-icons/io'
@@ -10,6 +13,9 @@ export const PATHS = {
   register: "/register",
   createProduct: "/create-product",
   orders: "/orders",
+  createProductCat: "/create-product-cat",
+  productTypes: "/product-types",
+  brands: "/brands",
 };
 const items = [
   {
@@ -26,6 +32,26 @@ const items = [
     path: PATHS.orders,
   },
 
+  {
+    name: "ایجاد دسته بندی",
+    label: "ایجاد دسته بندی",
+    icon: <BiCategory />,
+    path: PATHS.createProductCat,
+  },
+
+  {
+    name: "برندها",
+    label: "برندها",
+    icon: <SiBrandfolder />,
+    path: PATHS.brands,
+  },
+
+  {
+    name: "نوع محصول",
+    label: "نوع محصول",
+    icon: <FiType />,
+    path: PATHS.productTypes,
+  },
   // {
   //   name: "setting",
   //   label: "Setting",
