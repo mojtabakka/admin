@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductTypesTemplate from "./ProductTypes.template";
 import { connect } from "react-redux";
-import { TYPE } from "./ProductTypes.config";
+import { TITLE, TYPE } from "./ProductTypes.config";
 import {
   addProductType,
   getProductType,
@@ -31,7 +31,9 @@ const ProductTypesPage = (props) => {
       const result = await getProductTypes();
       console.log(result);
       const columns = [
+        { field: TITLE, headerName: "عنوان", width: 150 },
         { field: TYPE, headerName: "نوع", width: 150 },
+
         // {
         //   field: "edit",
         //   sortable: false,
@@ -90,6 +92,7 @@ const ProductTypesPage = (props) => {
 
       const rows = result.data.map((item) => {
         return {
+          [TITLE]: item?.title,
           [TYPE]: item?.type,
           id: item?.id,
         };

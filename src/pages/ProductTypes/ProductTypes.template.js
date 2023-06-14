@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, Card, Input } from "components";
-import { TYPE } from "./ProductTypes.config";
+import { TITLE, TYPE } from "./ProductTypes.config";
 import React from "react";
 
 const ProductTypesTemplate = ({
@@ -11,7 +11,6 @@ const ProductTypesTemplate = ({
   loading,
   onSubmitType,
 }) => {
-    console.log(TYPE);
   const Grid = (
     <Box sx={{ height: "100%", width: "100%" }}>
       <DataGrid
@@ -40,8 +39,15 @@ const ProductTypesTemplate = ({
             <span className="py-1 px-2">
               <Input
                 type="text"
-                label="نام برند را به زبان فارسی وارد کنید"
+                label="نوع محصول را به زبان فارسی وارد کنید"
                 name={TYPE}
+                className="inline-block"
+              />
+
+              <Input
+                type="text"
+                label="نوع محصول را به انگلیسی وارد کنید"
+                name={TITLE}
                 className="inline-block"
               />
             </span>
