@@ -21,6 +21,11 @@ export const USER = "/users";
 export const UPLOAD_USER_IMG = "/user/upload-image";
 export const GET_USER_IMG = "/user/user-image";
 
+//type controller
+export const TYPE = "/type";
+export const BRAND_POST = "/type/add-brand";
+export const GET_BRANDS = "/type/get-brands";
+
 export const DONT_NEEDED_URLS_FOR_AUTHENTICATION = () => [
   { url: "/auth" + PATHS.login },
   { url: "/auth" + PATHS.register },

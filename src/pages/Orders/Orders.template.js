@@ -6,7 +6,7 @@ import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 import { FiRefreshCcw } from "react-icons/fi";
-import { Button, Card, Input } from "components";
+import { Button, Card, Input, PreLoading } from "components";
 import { ChangeStatus, OrderDetails } from "./components";
 import { ORDER_STATUS } from "config/general.config";
 import { FORM_ID, form_inputs } from "./Orders.config";
@@ -147,7 +147,7 @@ function Orderstemplate({
             <span className="px-2">بروزرسانی</span>
           </Button>
         </div>
-      </Card>
+      </Card>      
     </>
   );
 }
