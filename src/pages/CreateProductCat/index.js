@@ -6,15 +6,30 @@ import {
   PRODUCT_TYPE2_FORM,
 } from "./CreateProductCat.config";
 import { connect } from "react-redux";
-import { addBrand, addProductType } from "redux/actions/Type.action";
+import {
+  addBrand,
+  addProductType,
+  getBrands,
+  getProductTypes,
+} from "redux/actions/Type.action";
 
 function CreateProductCatPage(props) {
   const [productType, setProductType] = useState();
   const [showBrand, setShowBrand] = useState(false);
   const [showTypes, setShowTypes] = useState(false);
-
   const [brands, setBrands] = useState([]);
   const [types, setTypes] = useState([]);
+  useEffect(() => {
+    init();
+  }, []);
+
+  const init = async () => {
+    const { getBrands, getProductTypes } = props;
+    const allbrands = await getBrands();
+    const alltypes = await getProductTypes();
+    setTypes(alltypes.data);
+    setBrands(allbrands.data);
+  };
 
   const handleSubmitProductType = async (e) => {
     const { addProductType } = props;
@@ -73,6 +88,12 @@ function CreateProductCatPage(props) {
     setTypes([]);
   };
 
+  const handleChangeBrand = (e) => {};
+
+  const handleChangeType = (e) => {
+    console.log(e.target);
+  };
+
   return (
     <CreateProductCatTemplate
       {...props}
@@ -87,6 +108,8 @@ function CreateProductCatPage(props) {
       onClickPlusBrand={handleClickPlusBrand}
       onClickPlustype={handleClickPlusType}
       onChangeProductType={handleChangeProductType}
+      onChangebrand={handleChangeBrand}
+      onChangeType={handleChangeType}
     />
   );
 }
@@ -94,6 +117,8 @@ function CreateProductCatPage(props) {
 const mapDispatchToProps = (dispatch) => ({
   addProductType: (data) => dispatch(addProductType(data)),
   addBrand: (data) => dispatch(addBrand(data)),
+  getBrands: () => dispatch(getBrands()),
+  getProductTypes: () => dispatch(getProductTypes()),
 });
 
 const CreateProductCat = connect(

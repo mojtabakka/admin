@@ -1,22 +1,11 @@
 import { Button, Card, Input } from "components";
 import React from "react";
-import { FiPlus } from "react-icons/fi";
-import {
-  BRAND_FORM,
-  PRODUCT_TYPE,
-  PRODUCT_TYPE2_FORM,
-} from "./CreateProductCat.config";
+import { PRODUCT_TYPE } from "./CreateProductCat.config";
 import { isEmptyArray } from "common/utils/function.util";
-
 const CreateProductCatTemplate = ({
-  productType,
-  showBrand = false,
-  showTypes,
-  onSubmitBrand,
   onSubmitProductType,
-  onSubmitProductType2,
-  onClickPlusBrand,
-  onClickPlustype,
+  onChangebrand,
+  onChangeType,
   onChangeProductType,
   brands,
   types,
@@ -25,80 +14,45 @@ const CreateProductCatTemplate = ({
     <>
       <Card headerTitle="نوع محصول">
         <form onSubmit={onSubmitProductType}>
-          <Input
-            type="text"
-            name={PRODUCT_TYPE}
-            onChange={onChangeProductType}
-            label="نوع محصول را وارد کنید"
-          />
-          <div className="flex justify-end p-5">
-            <Button type="submit">تایید</Button>
-          </div>
-        </form>
-      </Card>
-      <Card
-        headerTitle={`برندهای ${productType}`}
-        className={`mt-5 ${showBrand ? null : "hidden"}`}
-      >
-        <form onSubmit={onSubmitBrand} id={BRAND_FORM}>
-          <div className="  items-center">
-            <span className="py-10 px-2">
-              <Input
-                type="text"
-                label="برند۱"
-                name="brand1"
-                className="inline-block"
-              />
+          <div className=" flex ">
+            <Input
+              type="text"
+              name={PRODUCT_TYPE}
+              onChange={onChangeProductType}
+              label="نوع محصول را وارد کنید"
+            />
+            <span className="mx-4 mt-3 flex ">
+              <span> برندها </span>
+              <div className=" h-56  bg-gray-100 border  shopx-3 mx-2 rounded-lg p-3 w-48 overflow-y-scroll ">
+                {!isEmptyArray(brands) &&
+                  brands.map((brand) => (
+                    <div>
+                      <Input
+                        type="checkbox"
+                        value={brand.id}
+                        label={brand.title}
+                        onChange={onChangebrand}
+                      />
+                    </div>
+                  ))}
+              </div>
             </span>
 
-            {!isEmptyArray(brands) &&
-              brands.map((item, index) => (
-                <span className="mx-3" key={"brand" + index}>
-                  <Input
-                    type="text"
-                    name={"brand" + (index + 2)}
-                    label={`برند ${index + 2}`}
-                  />
-                </span>
-              ))}
-            <span
-              className=" bg-blue-400  px-2 py-1   rounded-3xl "
-              onClick={onClickPlusBrand}
-            >
-              <FiPlus className="text-white inline-block cursor-pointer text-xl  " />
-            </span>
-          </div>
-          <div className="flex justify-end p-5">
-            <Button type="submit">تایید</Button>
-          </div>
-        </form>
-      </Card>
-
-      <Card
-        headerTitle={` انواع ${productType}`}
-        className={`mt-5 ${showTypes ? null : "hidden"}`}
-      >
-        <form onSubmit={onSubmitProductType2} id={PRODUCT_TYPE2_FORM}>
-          <div className="  items-center">
-            <span className="py-10">
-              <Input type="text" label="برند۱" className="inline-block" />
-            </span>
-
-            {!isEmptyArray(types) &&
-              types.map((item, index) => (
-                <span className="mx-3" key={"type" + index}>
-                  <Input
-                    type="text"
-                    name={"type" + (index + 2)}
-                    label={`نوع ${index + 2}`}
-                  />
-                </span>
-              ))}
-            <span
-              className=" bg-blue-400  px-2 py-1   rounded-3xl "
-              onClick={onClickPlustype}
-            >
-              <FiPlus className="text-white inline-block cursor-pointer text-xl  " />
+            <span className="mx-4 mt-3 flex ">
+              <span> انواع</span>
+              <div className=" h-56  bg-gray-100 border-gray-100 px-3 mx-2 rounded-lg p-3 w-48 overflow-y-scroll">
+                {!isEmptyArray(brands) &&
+                  types.map((type) => (
+                    <div>
+                      <Input
+                        type="checkbox"
+                        value={type.id}
+                        label={type.title}
+                        onChange={(item) => onChangeType}
+                      />
+                    </div>
+                  ))}
+              </div>
             </span>
           </div>
           <div className="flex justify-end p-5">
