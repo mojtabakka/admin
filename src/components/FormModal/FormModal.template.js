@@ -28,7 +28,7 @@ const FormModalTemplate = ({
             >
               <form onSubmit={onSubmit} className="white-100">
                 {children}
-                <div className="text-left mx-2 mt-4">
+                <div className="text-left mx-2 mt-4 flex  justify-end">
                   <Button
                     isLoading={isLoading}
                     variant="danger"

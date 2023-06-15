@@ -9,17 +9,23 @@ import {
   getProducts,
   uploadProductImage,
 } from "redux/actions/Product.action";
-import { FIELDS, PHOTO, MODEL } from "./CreateProduct.config";
+import { FIELDS, PHOTO, MODEL, BRAND, TYPE } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
 import { BASE_URL } from "config/variables.config";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getCat, getCats } from "redux/actions/Type.action";
+import { isEmptyArray } from "common/utils/function.util";
 const CreateProductComponent = (props) => {
+  const [brands, setBrands] = useState({});
+  const [brandsFormSend, setBrandsForSend] = useState();
+  const [categories, setCategories] = useState({});
   const [columns, setColumns] = useState([]);
   const [formInputs, setFormInputs] = useState([]);
   const [isLoading, setIsloading] = useState(false);
+  const [isloadingSelect, setIsloadingSelect] = useState(false);
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [openBackDrop, setOpenBackDrop] = useState(false);
@@ -27,7 +33,10 @@ const CreateProductComponent = (props) => {
   const [openInputModal, setOpenInputModal] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [productInfo, setProductInfo] = useState({});
+  const [productTypes, setProductTypes] = useState({});
+  const [typesForSend, setTypesForSend] = useState();
   const fileInputRef = useRef();
+
   const [dataGrid, setDataGrid] = useState({
     loading: true,
     rows: [],
@@ -38,7 +47,28 @@ const CreateProductComponent = (props) => {
 
   useEffect(() => {
     getAllProducts();
+    getCategories();
   }, []);
+
+  const getCategories = async () => {
+    setIsloading(true);
+    setBrands([]);
+    setProductTypes([]);
+    try {
+      const { getCats } = props;
+      const result = await getCats();
+      const categories =
+        !isEmptyArray(result.data) &&
+        result.data.map((item) => {
+          return { value: item.id, label: item.title };
+        });
+      setCategories(categories);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsloading(false);
+    }
+  };
 
   const handleClickInputFile = () => {
     fileInputRef.current.click();
@@ -46,7 +76,6 @@ const CreateProductComponent = (props) => {
 
   const handleSubmit = async (e) => {
     try {
-      const features = [];
       setOpenBackDrop(true);
       const { createProduct } = props;
       setIsloading(true);
@@ -69,9 +98,10 @@ const CreateProductComponent = (props) => {
         }
       });
       delete data.updatedAt;
-
       data.features = dataFiltered;
       data.photo = photo;
+      data[BRAND] = brandsFormSend;
+      data[TYPE] = typesForSend;
       const result = await createProduct(data);
       if (result) {
         getAllProducts();
@@ -115,7 +145,7 @@ const CreateProductComponent = (props) => {
           }
         },
       },
-      { field: FIELDS.MODEL, headerName: "مدل", width: 150 },
+      { field: MODEL, headerName: "مدل", width: 150 },
       {
         field: "edit",
         sortable: false,
@@ -161,6 +191,7 @@ const CreateProductComponent = (props) => {
         return {
           id: item.id,
           [MODEL]: item.model,
+
           [PHOTO]: item.photo,
         };
       });
@@ -266,13 +297,63 @@ const CreateProductComponent = (props) => {
   const handleCloseAddInput = () => {
     setOpenInputModal(false);
   };
+
+  const hanleChangeCategory = async (item) => {
+    const { getCat } = props;
+    try {
+      setIsloadingSelect(true);
+      const data = {
+        id: Number(item?.value),
+        brand: true,
+        productType: true,
+      };
+      const result = await getCat(data);
+      const brands = result.data.brands.map((item) => ({
+        value: item?.id,
+        label: item?.title,
+      }));
+      const productTypes = result.data.productTypes.map((item) => ({
+        value: item?.id,
+        label: item?.title,
+      }));
+      setBrands(brands);
+      setProductTypes(productTypes);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsloadingSelect(false);
+    }
+  };
+
+  const handleChangeBrand = (item) => {
+    const brans =
+      !isEmptyArray(item) &&
+      item.map((item) => {
+        return { id: item.value };
+      });
+    setBrandsForSend(brans);
+  };
+
+  const handleChangeType = (item) => {
+    const types =
+      !isEmptyArray(item) &&
+      item.map((item) => {
+        return { id: item.value };
+      });
+    setTypesForSend(types);
+  };
   return (
     <ErrorBoundary>
       <CreateProductTemplate
         {...props}
+        brands={brands}
+        categories={categories}
         columns={columns}
+        dataGrid={dataGrid}
         fileInputRef={fileInputRef}
+        formInputs={formInputs}
         isLoading={isLoading}
+        isloadingSelect={isloadingSelect}
         items={items}
         open={open}
         openBackDrop={openBackDrop}
@@ -280,9 +361,12 @@ const CreateProductComponent = (props) => {
         openInputModal={openInputModal}
         photo={photo}
         productInfo={productInfo}
-        formInputs={formInputs}
+        productTypes={productTypes}
         onCanclePhtoto={handleCanclePhoto}
+        onChangeBrand={handleChangeBrand}
+        onChangeCategory={hanleChangeCategory}
         onChangeFile={handleChangeFile}
+        onChangeType={handleChangeType}
         onClickInputFile={handleClickInputFile}
         onCloseAddInput={handleCloseAddInput}
         onCloseConfirmModal={handleCloseConfirmModal}
@@ -293,7 +377,6 @@ const CreateProductComponent = (props) => {
         onOpenModal={handleOpen}
         onSubmit={handleSubmit}
         onSubmitAddInput={handleSubmitAddInput}
-        dataGrid={dataGrid}
       />
     </ErrorBoundary>
   );
@@ -305,8 +388,9 @@ const mapDispatchToProps = (dispatch) => ({
   getProduct: (id) => dispatch(getProduct(id)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
   editProduct: (data, id) => dispatch(editProduct(data, id)),
-
+  getCats: () => dispatch(getCats()),
   uploadProductImage: (data) => dispatch(uploadProductImage(data)),
+  getCat: (data) => dispatch(getCat(data)),
 });
 
 const CreateProduct = connect(null, mapDispatchToProps)(CreateProductComponent);

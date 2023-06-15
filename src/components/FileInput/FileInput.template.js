@@ -9,41 +9,39 @@ const FileInputTemplate = ({
   onClickInputFile,
   onClickCancleUploadImage,
   onChangeFile,
+  label,
 }) => {
   return (
     <div>
-      <div className="py-1">
-        <label>عکس</label>
+      <div className="py-1 ">
         <div
           onClick={onClickInputFile}
-          className=" cursor-pointer bg-blue-300 text-white  p-2 rounded border border-dark"
+          className=" cursor-pointer bg-blue-300 text-white  p-2  border border-dark rounded-3xl"
         >
-          <div className="  justify-between flex items-center ">
-            <span className="text-white font-bold">
-              عکس مورد نظر را انتخاب کنید
-            </span>
-            {!photo ? (
-              <UploadIcon />
-            ) : (
-              <div className=" position-relative">
-                <img
-                  alt={photo}
-                  src={BASE_URL + photo}
-                  width={50}
-                  height={50}
-                  className=" rounded-full"
-                />
-                <div
-                  className=" position-absolute"
-                  style={{ top: "-7px", left: "-7px" }}
-                  onClick={onClickCancleUploadImage}
-                >
-                  <CancelIcon />
-                </div>
-              </div>
-            )}
-          </div>
+          <span className="  justify-between flex items-center ">
+            <span className="text-white font-bold">{label}</span>
+            {!photo && <UploadIcon />}
+          </span>
         </div>
+
+        {photo && (
+          <div className=" relative ">
+            <img
+              alt={photo}
+              src={photo}
+              width={50}
+              height={50}
+              className=" rounded-full "
+            />
+            <div
+              className="  absolute top-4"
+              style={{ top: " 25px", right: "32px" }}
+              onClick={onClickCancleUploadImage}
+            >
+              <CancelIcon className="cursor-pointer" />
+            </div>
+          </div>
+        )}
         <input
           type="file"
           name="photo"
