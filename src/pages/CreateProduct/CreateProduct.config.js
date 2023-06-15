@@ -9,6 +9,9 @@ export const PHOTO = "photo";
 export const PRICE_FOR_USER = "priceForUser";
 export const PRICE_FOR_WORKMATE = "priceForWorkmate";
 export const WARRANTY = "warranty";
+export const BRAND = "brands";
+export const TYPE = "types";
+export const CATERGORY = "categories";
 export const FIELDS = {
   MODEL: "model",
 };

@@ -1,15 +1,19 @@
 import React from "react";
-import { FileInput, FormModal } from "components";
+import { FileInput, FormModal, Input, Select } from "components";
 import {
   WARRANTY,
   EXIST,
   MODEL,
   PRICE_FOR_USER,
   PRICE_FOR_WORKMATE,
+  OFF,
 } from "../../CreateProduct.config";
-import { MenuItem, Select, TextField } from "@mui/material";
+import { ProductTypes } from "pages/ProductTypes";
 
 const EditTemplate = ({
+  brands,
+  categories,
+  productTypes,
   open,
   onCloseModal,
   productInfo,
@@ -26,25 +30,18 @@ const EditTemplate = ({
       onSubmit={onEdit}
       isLoading={isLoading}
       title="ویرایش"
+      size="large"
     >
-      <FileInput
-        onChange={onChangeFile}
-        photo={photo}
-        onCancle={onCanclePhtoto}
-      />
       <div>
-        <div className="py-2 w-full text-right">
-          <label>مدل </label>
-          <TextField
-            tabIndex={1}
-            className=" text-right  w-full"
-            name={MODEL}
-            size="small"
-            defaultValue={productInfo[MODEL]}
-          />
-        </div>
+        <Input
+          label="مدل"
+          tabIndex={1}
+          name={MODEL}
+          size="small"
+          defaultValue={productInfo[MODEL]}
+        />
 
-        {productInfo?.features &&
+        {/* {productInfo?.features &&
           productInfo.features.map((item) => (
             <div className="py-2">
               <label className=" inline-block mb-2 font-black text-right">
@@ -58,47 +55,57 @@ const EditTemplate = ({
                 defaultValue={item.value}
               />
             </div>
-          ))}
+          ))} */}
 
-        <div className="py-2 text-right">
-          <label>قیمت برای کاربر </label>
-          <TextField
-            tabIndex={1}
-            className=" text-right   w-full"
-            name={PRICE_FOR_USER}
-            defaultValue={productInfo[PRICE_FOR_USER]}
-            size="small"
+        <Input
+          tabIndex={1}
+          name={PRICE_FOR_USER}
+          defaultValue={productInfo[PRICE_FOR_USER]}
+          size="small"
+          label="قیمت برای کاربر"
+        />
+
+        <Input
+          tabIndex={1}
+          name={PRICE_FOR_WORKMATE}
+          defaultValue={productInfo[PRICE_FOR_WORKMATE]}
+          size="small"
+          label="قیمت برای همکار"
+        />
+        <Input
+          tabIndex={1}
+          name={WARRANTY}
+          defaultValue={productInfo[WARRANTY]}
+          size="small"
+          label="گارانتی"
+        />
+
+        <Input
+          tabIndex={1}
+          name={OFF}
+          defaultValue={productInfo[OFF]}
+          size="small"
+          label="تخفیف"
+        />
+        <Select options={categories} />
+        <Select options={brands} isMulti />
+        <Select options={productTypes} isMulti />
+
+        <div className="w-1/6 mx-14 mt-3">
+          <FileInput
+            onChange={onChangeFile}
+            photo={photo}
+            onCancle={onCanclePhtoto}
+            label="عکس"
           />
         </div>
-
-        <div className="py-2 text-right">
-          <label>قیمت برای همکار </label>
-          <TextField
-            tabIndex={1}
-            className=" text-right   w-full"
-            name={PRICE_FOR_WORKMATE}
-            defaultValue={productInfo[PRICE_FOR_WORKMATE]}
-            size="small"
-          />
-        </div>
-        <div className="py-2 text-right">
-          <label>گارانتی </label>
-          <TextField
-            tabIndex={1}
-            className=" text__right   w-full"
-            name={WARRANTY}
-            defaultValue={productInfo[WARRANTY]}
-            size="small"
-          />
-        </div>
-
-        <div className="py-2 text-right">
+        {/* <div className="py-2 text-right">
           <label>وضعیت موجودی </label>
           <Select name={EXIST} className="w-full" size="small" ƒ>
             <MenuItem value={true}>موجود است</MenuItem>
             <MenuItem value={false}>موجود نیست</MenuItem>
           </Select>
-        </div>
+        </div> */}
       </div>
     </FormModal>
   );

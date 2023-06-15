@@ -118,11 +118,11 @@ const BrandPage = (props) => {
   return (
     <BrandTemplate
       {...props}
-      onSubmitBrand={handleSubmitBrand}
       columns={columns}
       rows={rows}
       loading={loading}
       dataGrid={dataGrid}
+      onSubmitBrand={handleSubmitBrand}
     />
   );
 };

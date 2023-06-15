@@ -1,5 +1,12 @@
 import http from "services/http.service";
-import { BRAND_POST, GET_BRANDS, TYPE } from "config/url.config";
+import {
+  BRAND_POST,
+  GET_BRANDS,
+  GET_CAT,
+  GET_CATS,
+  POST_CAT,
+  TYPE,
+} from "config/url.config";
 
 const authApis = {
   addProductType(data) {
@@ -39,6 +46,39 @@ const authApis = {
     return new Promise(function (resolve, reject) {
       http
         .post(GET_BRANDS, data)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  createCat(data) {
+    return new Promise(function (resolve, reject) {
+      http
+        .post(POST_CAT, data)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  getCats(data) {
+    return new Promise(function (resolve, reject) {
+      http
+        .get(GET_CATS, data)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  getCat(data) {
+    return new Promise(function (resolve, reject) {
+      http
+        .get(GET_CAT, data)
         .then((response) => {
           return resolve(response.data);
         })
