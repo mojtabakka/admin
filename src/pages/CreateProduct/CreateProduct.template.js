@@ -2,7 +2,7 @@ import React from "react";
 import { Backdrop, CircularProgress, MenuItem, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
-import { AiOutlinePlusCircle } from "react-icons/ai";
+
 import {
   Button,
   Card,
@@ -16,7 +16,6 @@ import {
   BRAND,
   CATERGORY,
   DELIVERY_METHOD,
-  EXIST,
   MODEL,
   NUMBER_OF_EXIST,
   OFF,
@@ -27,15 +26,6 @@ import {
 } from "./CreateProduct.config";
 import { AddInputModal, Edit } from "./components";
 
-const localizedTextsMap = {
-  columnMenuUnsort: "não classificado",
-  columnMenuSortAsc: "Classificar por ordem crescente",
-  columnMenuSortDesc: "Classificar por ordem decrescente",
-  columnMenuFilter: "Filtro",
-  columnMenuHideColumn: "Ocultar",
-  columnMenuShowColumns: "Mostrar colunas",
-};
-
 const CreateProductTemplate = ({
   brands,
   categories,
@@ -43,7 +33,6 @@ const CreateProductTemplate = ({
   dataGrid,
   isLoading,
   isloadingSelect,
-  items,
   open,
   openBackDrop,
   openConfirmModal,
@@ -51,6 +40,8 @@ const CreateProductTemplate = ({
   photo,
   productInfo,
   productTypes,
+  rows,
+  editId,
 
   onCanclePhtoto,
   onChangeBrand,
@@ -65,6 +56,26 @@ const CreateProductTemplate = ({
   onSubmit,
   onSubmitAddInput,
 }) => {
+  const Grid = (
+    <Box sx={{ height: "100%", width: "100%" }}>
+      <DataGrid
+        localeText={{
+          MuiTablePagination: {
+            labelDisplayedRows: ({ from, to, count }) =>
+              `${from} - ${to} برند از ${count} برند`,
+          },
+        }}
+        rowCount={200}
+        columns={columns}
+        rows={rows}
+        checkboxSelection
+        autoHeight
+        page={0}
+        pageSize={dataGrid.pageSize - 2}
+        loading={isLoading}
+      />
+    </Box>
+  );
   return (
     <div className="">
       <Card headerTitle="ایجاد محصول جدید" className="">
@@ -140,7 +151,8 @@ const CreateProductTemplate = ({
         </form>
       </Card>
       <Card headerTitle="لیست محصولات" className="mt-4">
-        <Box sx={{ width: "100%" }}>
+        {Grid}
+        {/* <Box sx={{ width: "100%" }}>
           <DataGrid
             dataGrid
             localeText={{
@@ -150,15 +162,15 @@ const CreateProductTemplate = ({
               },
             }}
             loading={false}
-            rowCount={200}
-            page={dataGrid.page - 1}
-            pageSize={4}
+            rowCount={10}
+            page={10}
+            pageSize={10}
             columns={columns}
             rows={items}
             checkboxSelection
             autoHeight
           />
-        </Box>
+        </Box> */}
       </Card>
       <Edit
         brands={brands}
@@ -167,7 +179,8 @@ const CreateProductTemplate = ({
         onCloseModal={onCloseModal}
         onEdit={onEdit}
         open={open}
-        productInfo={productInfo}
+
+        editId={editId}
       />
 
       <AddInputModal

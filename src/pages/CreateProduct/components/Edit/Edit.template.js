@@ -13,7 +13,6 @@ import { ProductTypes } from "pages/ProductTypes";
 const EditTemplate = ({
   brands,
   categories,
-  productTypes,
   open,
   onCloseModal,
   productInfo,
@@ -22,6 +21,13 @@ const EditTemplate = ({
   onChangeFile,
   photo,
   onCanclePhtoto,
+  brandsDefaultValue,
+  typesDefaultValue,
+  catDefaultValue,
+  types,
+  onChangeType,
+  onChangeBrand,
+  onChangeCat,
 }) => {
   return (
     <FormModal
@@ -87,9 +93,24 @@ const EditTemplate = ({
           size="small"
           label="تخفیف"
         />
-        <Select options={categories} />
-        <Select options={brands} isMulti />
-        <Select options={productTypes} isMulti />
+
+        <Select
+          options={categories}
+          onChange={onChangeCat}
+          value={catDefaultValue}
+        />
+        <Select
+          options={brands}
+          isMulti
+          value={brandsDefaultValue}
+          onChange={onChangeBrand}
+        />
+        <Select
+          options={types}
+          isMulti
+          value={typesDefaultValue}
+          onChange={onChangeType}
+        />
 
         <div className="w-1/6 mx-14 mt-3">
           <FileInput

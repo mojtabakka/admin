@@ -1,7 +1,0 @@
-.tabbar {
-  @media all and (min-width: 551px) {
-    & .link, & .tab-link, &-labels .link, &-labels .tab-link {
-      flex-direction: column !important;
-    }
-  }
-}

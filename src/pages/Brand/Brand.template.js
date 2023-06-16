@@ -19,7 +19,7 @@ const BrandTemplate = ({ onSubmitBrand, columns, rows, loading, dataGrid }) => {
         rows={rows}
         checkboxSelection
         autoHeight
-        page={0}
+        page={dataGrid.page - 1}
         pageSize={dataGrid.pageSize - 2}
         loading={loading}
       />

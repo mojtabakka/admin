@@ -15,15 +15,14 @@ const ButtonTemplate = ({
       type={type}
       className={` flex items-center  bg-blue-200 rounded-xl  px-4 py-3 text-black  text-base font-bold  ${className} `}
       disabled={disable}
-      
     >
       <div>
         {isLoading ? (
-          <span className="padding__vertical__10  text__white">
+          <span>
             <Spinner animation="border" variant="light" size="sm" />
           </span>
         ) : (
-          <span className="text__bold padding__horizontal__5">{children}</span>
+          <span>{children}</span>
         )}
       </div>
     </button>

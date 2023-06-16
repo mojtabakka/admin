@@ -19,6 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { getCat, getCats } from "redux/actions/Type.action";
 import { isEmptyArray } from "common/utils/function.util";
 const CreateProductComponent = (props) => {
+  const [editId, SetEditId] = useState();
   const [brands, setBrands] = useState({});
   const [brandsFormSend, setBrandsForSend] = useState();
   const [categories, setCategories] = useState({});
@@ -26,7 +27,7 @@ const CreateProductComponent = (props) => {
   const [formInputs, setFormInputs] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const [isloadingSelect, setIsloadingSelect] = useState(false);
-  const [items, setItems] = useState([]);
+  const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
   const [openBackDrop, setOpenBackDrop] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -133,12 +134,12 @@ const CreateProductComponent = (props) => {
                 src={BASE_URL + params.row.photo}
                 width={50}
                 height={50}
-                className="border__radius__circle"
+                className="rouned"
               />
             );
           } else {
             return (
-              <div className="text__center text__muted  padding__10 border border__radius__circle background__blue-muted">
+              <div className=" text-center text-gray-500    p-2  border  rounded-full bg-blue-100">
                 <PersonOutlineIcon />
               </div>
             );
@@ -160,7 +161,7 @@ const CreateProductComponent = (props) => {
           return (
             <Button onClick={onClick}>
               <EditIcon />
-              <div className="padding__horizontal__5"> ویرایش </div>
+              <div className="px-5"> ویرایش </div>
             </Button>
           );
         },
@@ -178,7 +179,7 @@ const CreateProductComponent = (props) => {
           return (
             <Button onClick={onClick} color="error">
               <DeleteIcon />
-              <div className="padding__horizontal__10"> حذف</div>
+              <div> حذف</div>
             </Button>
           );
         },
@@ -195,7 +196,7 @@ const CreateProductComponent = (props) => {
           [PHOTO]: item.photo,
         };
       });
-      setItems(data);
+      setRows(data);
       setColumns(columns);
     } catch (error) {
       console.log("error", error);
@@ -205,18 +206,9 @@ const CreateProductComponent = (props) => {
   };
 
   const edit = async (row) => {
-    const { getProduct } = props;
-    try {
-      const product = await getProduct(row.id);
-      const info = {
-        ...product.data,
-        features: product.data.features,
-      };
-      setProductInfo(info);
-      setOpen(true);
-    } catch (error) {
-      console.log("erroe", error);
-    }
+    setOpen(true);
+    SetEditId(null);
+    SetEditId(row.id);
   };
 
   const deleteItem = (item) => {
@@ -298,7 +290,7 @@ const CreateProductComponent = (props) => {
     setOpenInputModal(false);
   };
 
-  const hanleChangeCategory = async (item) => {
+  const hanleChangeCategory = async (item, actionMeta) => {
     const { getCat } = props;
     try {
       setIsloadingSelect(true);
@@ -354,7 +346,7 @@ const CreateProductComponent = (props) => {
         formInputs={formInputs}
         isLoading={isLoading}
         isloadingSelect={isloadingSelect}
-        items={items}
+        rows={rows}
         open={open}
         openBackDrop={openBackDrop}
         openConfirmModal={openConfirmModal}
@@ -362,6 +354,7 @@ const CreateProductComponent = (props) => {
         photo={photo}
         productInfo={productInfo}
         productTypes={productTypes}
+        editId={editId}
         onCanclePhtoto={handleCanclePhoto}
         onChangeBrand={handleChangeBrand}
         onChangeCategory={hanleChangeCategory}
