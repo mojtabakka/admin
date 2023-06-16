@@ -19,11 +19,21 @@ const colourStyles = {
   input: (styles) => ({ ...styles, ...dot() }),
 };
 
-const selectTemplate = ({ name, label, onChange, loading, options,isMulti }) => {
+const selectTemplate = ({
+  name,
+  label,
+  onChange,
+  loading,
+  options,
+  isMulti,
+  value,
+  defaultValue,
+}) => {
   return (
     <>
       <span className="px-2">{label}</span>
       <Select
+        defaultValue={defaultValue}
         options={options}
         styles={colourStyles}
         className=" inline-block w-56"
@@ -31,6 +41,7 @@ const selectTemplate = ({ name, label, onChange, loading, options,isMulti }) => 
         onChange={onChange}
         isLoading={loading}
         isMulti={isMulti}
+        value={value}
       />
     </>
   );

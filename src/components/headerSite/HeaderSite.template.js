@@ -70,7 +70,7 @@ const HeaderSiteTemplate = ({
                 horizontal: "left",
               }}
             >
-              <div className="py-4 background__white">
+              <div className="py-4 ">
                 <div
                   className=" text-right cursor-pointer pb-4  px-3"
                   onClick={onEdit}
@@ -82,7 +82,7 @@ const HeaderSiteTemplate = ({
                     </span>
                   </Link>
                 </div>
-                <div className="text-center cursor__pointer" onClick={onLogout}>
+                <div className="text-center cursor-pointer " onClick={onLogout}>
                   <span className="px-2">خروج</span>
                   <span>
                     <LogoutIcon />
