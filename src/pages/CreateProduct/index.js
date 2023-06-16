@@ -231,7 +231,7 @@ const CreateProductComponent = (props) => {
       ...data,
     };
     try {
-      await editProduct(mainData, productInfo.id);
+      await editProduct(mainData, editId);
       getAllProducts();
     } catch (error) {
       console.log("error", error);
@@ -248,7 +248,7 @@ const CreateProductComponent = (props) => {
     setOpenBackDrop(true);
     const { deleteProduct } = props;
     try {
-      await deleteProduct(productInfo.id);
+      await deleteProduct(editId);
       getAllProducts();
     } catch (error) {
       console.log("error", error);

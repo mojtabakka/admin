@@ -99,10 +99,24 @@ const EditComponent = (props) => {
       }
       return;
     });
+    const brands =
+      !isEmptyArray(brandsDefaultValue) &&
+      brandsDefaultValue.map((item) => {
+        return { id: item.value };
+      });
+
+    const types =
+      !isEmptyArray(typesDefaultValue) &&
+      typesDefaultValue.map((item) => {
+        return { id: item.value };
+      });
 
     data.features = dataFiltered;
     data.photo = photo;
+    data.brands = brands ? brands : [];
+    data.types = types ? types : [];
     const mainData = {};
+
     Object.keys(data).forEach(function (key, index) {
       console.log(key.search("_feature"));
       if (key.search("_feature") !== -1) {
@@ -111,6 +125,7 @@ const EditComponent = (props) => {
       mainData[key] = data[key];
       return;
     });
+
     props.onEdit(mainData);
   };
 
