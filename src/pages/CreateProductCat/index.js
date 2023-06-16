@@ -10,6 +10,7 @@ import {
   getProductTypes,
 } from "redux/actions/Type.action";
 import { TITLE } from "./CreateProductCat.config";
+import { isEmptyArray } from "common/utils/function.util";
 
 function CreateProductCatPage(props) {
   const [brands, setBrands] = useState([]);
@@ -33,9 +34,23 @@ function CreateProductCatPage(props) {
   const init = async () => {
     const { getBrands, getProductTypes } = props;
     const allbrands = await getBrands();
+    const myBrands =
+      !isEmptyArray(allbrands.data) &&
+      allbrands.data.map((item) => ({
+        label: item.title,
+        value: item,
+      }));
+    setBrands(myBrands);
     const alltypes = await getProductTypes();
-    setTypes(alltypes.data);
-    setBrands(allbrands.data);
+
+    const myTypes =
+      !isEmptyArray(alltypes.data) &&
+      alltypes.data.map((item) => ({
+        label: item.title,
+        value: item,
+      }));
+      console.log(myTypes);
+    setTypes(myTypes);
   };
 
   const getCatergories = async () => {
@@ -103,7 +118,7 @@ function CreateProductCatPage(props) {
 
     const rows = result.data.map((item) => {
       return {
-        // [BRAND]: item?.title,
+        // [BRAND]: item?.title,33322
         [TITLE]: item?.title,
         id: item?.id,
       };
@@ -112,46 +127,13 @@ function CreateProductCatPage(props) {
     setColumns(columns);
     setRows(rows);
   };
-  const handleChangeBrand = (e) => {
-    if (e.target.checked) {
-      const findItem = brandsForSend.find((item) => {
-        return Number(item.id) === Number(e.target.value);
-      });
-
-      const brand = brands.find((item) => {
-        return Number(item.id) === Number(e.target.value);
-      });
-      if (!findItem) {
-        brandsForSend.push(brand);
-      }
-      setBrandsForSend(brandsForSend);
-    } else {
-      const myBrands = brandsForSend.filter((item) => {
-        return Number(item.id) !== Number(e.target.value);
-      });
-      setBrandsForSend(myBrands);
-    }
+  const handleChangeBrand = (item) => {
+    setBrandsForSend(item.map((data) => data.value));
   };
 
-  const handleChangeType = (e) => {
-    if (e.target.checked) {
-      const findItem = typesforSend.find((item) => {
-        return Number(item.id) === Number(e.target.value);
-      });
-
-      const type = types.find((item) => {
-        return Number(item.id) === Number(e.target.value);
-      });
-      if (!findItem) {
-        typesforSend.push(type);
-      }
-      setTypesforSend(typesforSend);
-    } else {
-      const myTypes = typesforSend.filter((item) => {
-        return Number(item.id) !== Number(e.target.value);
-      });
-      setTypesforSend(myTypes);
-    }
+  const handleChangeType = (item) => {
+    console.log(item);
+    setTypesforSend(item.map((data) => data.value));
   };
 
   const handleSubmit = async (e) => {
@@ -165,6 +147,8 @@ function CreateProductCatPage(props) {
         brands: brandsForSend,
         types: typesforSend,
       };
+
+      console.log(sendData);
       const result = await createCat(sendData);
     } catch (error) {
       console.log("error", error);
