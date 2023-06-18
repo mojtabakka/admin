@@ -1,20 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropertyTemplate from "./Property.template";
 import { PROPERTY, TITLE } from "./Property.config";
 import { connect } from "react-redux";
-import { addProperty } from "redux/actions/Type.action";
+import { addProperty, getProperties } from "redux/actions/Type.action";
 
 const PropertyPage = (props) => {
   const [inputs, setInputs] = useState([0]);
-  const [isLoadin, setIsloading] = useState(false);
+  const [columns, setColumns] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [rows, setRows] = useState([]);
+  const [dataGrid, setDataGrid] = useState({
+    loading: true,
+    totalRows: 200,
+    pageSize: 10,
+    page: 1,
+  });
+  useEffect(() => {
+    init();
+  }, []);
   const hanleClickPlus = () => {
     inputs.push(0);
     setInputs([...inputs]);
   };
+
+  const init = async () => {
+    const { getProperties } = props;
+    try {
+      const result = await getProperties();
+      const columns = [{ field: TITLE, headerName: "عنوان", width: 150 }];
+      const rows = result.data.map((item) => {
+        return {
+          [TITLE]: item?.title,
+          id: item?.id,
+        };
+      });
+      setColumns(columns);
+      setRows(rows);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   const handleSubmit = async (e) => {
     const { addProperty } = props;
     try {
-      setIsloading(true);
+      setLoading(true);
       e.preventDefault();
       let properties = {};
       const form = new FormData(e.target);
@@ -33,10 +62,11 @@ const PropertyPage = (props) => {
       console.log("result", result);
       const inputs = [0];
       setInputs([...inputs]);
+      init();
     } catch (error) {
       console.log("error", error);
     } finally {
-      setIsloading(false);
+      setLoading(false);
     }
   };
 
@@ -46,12 +76,17 @@ const PropertyPage = (props) => {
       onClickPlus={hanleClickPlus}
       inputs={inputs}
       onSubmit={handleSubmit}
+      loading={loading}
+      columns={columns}
+      rows={rows}
+      dataGrid={dataGrid}
     />
   );
 };
 
 const mapDispatchToProps = (dispatch) => ({
   addProperty: (data) => dispatch(addProperty(data)),
+  getProperties: () => dispatch(getProperties()),
 });
 
 const Property = connect(null, mapDispatchToProps)(PropertyPage);

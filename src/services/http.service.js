@@ -9,6 +9,18 @@ class httpService {
     axios.defaults.timeout = AXIOS_TIMEdOUT;
     axios.interceptors.request.use(
       (config) => {
+        if (
+          config.method == "post" ||
+          config.method == "put" ||
+          config.method == "patch"
+        ) {
+          console.log(config.method);
+          toast("عملیات با موفقیت انجام شد ", {
+            autoClose: 2000,
+            type: toast.TYPE.SUCCESS,
+            position: toast.POSITION.BOTTOM_LEFT,
+          });
+        }
         const checkExist = DONT_NEEDED_URLS_FOR_AUTHENTICATION().filter(
           (item) => {
             return item.url.trim() === config.url.trim();

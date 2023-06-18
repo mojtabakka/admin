@@ -36,6 +36,7 @@ const CreateProductComponent = (props) => {
   const [productInfo, setProductInfo] = useState({});
   const [productTypes, setProductTypes] = useState({});
   const [typesForSend, setTypesForSend] = useState();
+  const [propertyInputArray, setPropertyInputArray] = useState();
   const fileInputRef = useRef();
 
   const [dataGrid, setDataGrid] = useState({
@@ -77,38 +78,33 @@ const CreateProductComponent = (props) => {
 
   const handleSubmit = async (e) => {
     try {
+      let featrues = [];
       setOpenBackDrop(true);
       const { createProduct } = props;
       setIsloading(true);
       e.preventDefault();
       const form = new FormData(e.target);
       const data = Object.fromEntries(form);
-      const dataChangedToArray = Object.entries(data);
-      const dataMaped = dataChangedToArray.map(([key, value]) => {
-        const searchedValue = key.search("_feature");
-        if (searchedValue !== -1) {
-          return { title: key, value: value };
+      console.log(data["feature_0"]);
+      for (let key in data) {
+        let searchKey = key.search("feature");
+        if (searchKey > -1) {
+          featrues.push({ id: Number(data[key]) });
+          delete data[key];
         }
-      });
+      }
 
-      const dataFiltered = dataMaped.filter((item) => {
-        const searchedValue = item?.title.search("_feature");
-        if (searchedValue) {
-          item.title = item?.title.replace("_feature", "");
-          return item;
-        }
-      });
-      delete data.updatedAt;
-      data.features = dataFiltered;
+      data.properties = featrues;
       data.photo = photo;
       data[BRAND] = brandsFormSend;
       data[TYPE] = typesForSend;
-      const result = await createProduct(data);
-      if (result) {
-        getAllProducts();
-        e.target.reset();
-        setPhoto(null);
-      }
+      await createProduct(data);
+      getAllProducts();
+      e.target.reset();
+      setCategories([]);
+      setBrands([]);
+      setProductTypes([]);
+      setPhoto(null);
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -291,6 +287,9 @@ const CreateProductComponent = (props) => {
   };
 
   const hanleChangeCategory = async (item, actionMeta) => {
+    let emtpy = [];
+    setBrands([...emtpy]);
+    setProductTypes([...emtpy]);
     const { getCat } = props;
     try {
       setIsloadingSelect(true);
@@ -298,6 +297,7 @@ const CreateProductComponent = (props) => {
         id: Number(item?.value),
         brand: true,
         productType: true,
+        propertyTitles: true,
       };
       const result = await getCat(data);
       const brands = result.data.brands.map((item) => ({
@@ -308,6 +308,8 @@ const CreateProductComponent = (props) => {
         value: item?.id,
         label: item?.title,
       }));
+      createInputs(result.data.propertyTitles);
+
       setBrands(brands);
       setProductTypes(productTypes);
     } catch (error) {
@@ -315,6 +317,27 @@ const CreateProductComponent = (props) => {
     } finally {
       setIsloadingSelect(false);
     }
+  };
+
+  const createInputs = (items) => {
+    const inputs = !isEmptyArray(items)
+      ? items.map((item, index) => {
+          console.log(item);
+          const selectItems =
+            !isEmptyArray(item.properties) &&
+            item.properties.map((data) => ({
+              label: data?.property,
+              value: data.id,
+            }));
+          return {
+            name: "feature_" + index,
+            label: item.title,
+            selectItems,
+          };
+        })
+      : [];
+
+    setPropertyInputArray(inputs);
   };
 
   const handleChangeBrand = (item) => {
@@ -356,6 +379,7 @@ const CreateProductComponent = (props) => {
         productInfo={productInfo}
         productTypes={productTypes}
         editId={editId}
+        propertyInputArray={propertyInputArray}
         onCanclePhtoto={handleCanclePhoto}
         onChangeBrand={handleChangeBrand}
         onChangeCategory={hanleChangeCategory}

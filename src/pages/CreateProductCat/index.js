@@ -8,6 +8,7 @@ import {
   getBrands,
   getCats,
   getProductTypes,
+  getProperties,
 } from "redux/actions/Type.action";
 import { TITLE } from "./CreateProductCat.config";
 import { isEmptyArray } from "common/utils/function.util";
@@ -17,7 +18,9 @@ function CreateProductCatPage(props) {
   const [types, setTypes] = useState([]);
   const [typesforSend, setTypesforSend] = useState([]);
   const [brandsForSend, setBrandsForSend] = useState([]);
+  const [propertiesForSend, setPropertiesForSend] = useState([]);
   const [columns, setColumns] = useState([]);
+  const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
   const [rows, setRows] = useState([]);
   const [dataGrid, setDataGrid] = useState({
@@ -32,7 +35,7 @@ function CreateProductCatPage(props) {
   }, []);
 
   const init = async () => {
-    const { getBrands, getProductTypes } = props;
+    const { getBrands, getProductTypes, getProperties } = props;
     const allbrands = await getBrands();
     const myBrands =
       !isEmptyArray(allbrands.data) &&
@@ -41,84 +44,35 @@ function CreateProductCatPage(props) {
         value: item,
       }));
     setBrands(myBrands);
-    const alltypes = await getProductTypes();
 
+    const alltypes = await getProductTypes();
     const myTypes =
       !isEmptyArray(alltypes.data) &&
       alltypes.data.map((item) => ({
         label: item.title,
         value: item,
       }));
-      console.log(myTypes);
     setTypes(myTypes);
+
+    const allProperties = await getProperties();
+    console.log(allProperties);
+    const myProperties =
+      !isEmptyArray(allProperties.data) &&
+      allProperties.data.map((item) => ({
+        label: item.title,
+        value: item,
+      }));
+    setProperties(myProperties);
   };
 
   const getCatergories = async () => {
     const { getCats } = props;
     const result = await getCats();
 
-    const columns = [
-      { field: TITLE, headerName: "عنوان", width: 150 },
-
-      // {
-      //   field: "edit",
-      //   sortable: false,
-      //   headerName: "",
-      //   filterable: false,
-      //   hideable: false,
-      //   width: 150,
-      //   renderCell: (params) => {
-      //     const onClick = (e) => {
-      //       e.stopPropagation();
-      //       const item = result.data.filter(
-      //         (item) => item.id === params.row.id
-      //       );
-      //       setDailsItems(item[0]);
-      //       setOpenDetailModal(true);
-      //     };
-
-      //     return (
-      //       <Button onClick={onClick} color="primary">
-      //         <div color="error font-black ">
-      //           <BiCommentDetail className="text-lg font-black" />
-      //         </div>
-      //         <div className="px-2"> جزییات </div>
-      //       </Button>
-      //     );
-      //   },
-      // },
-      // {
-      //   field: "change state",
-      //   sortable: false,
-      //   headerName: "",
-      //   filterable: false,
-      //   hideable: false,
-      //   width: 150,
-      //   renderCell: (params) => {
-      //     const onClick = (e) => {
-      //       const item = result.data.filter(
-      //         (item) => item.id === params.row.id
-      //       );
-      //       setDailsItems(item[0]);
-      //       setOpenChangeStatusModal(true);
-      //       e.stopPropagation();
-      //     };
-
-      //     return (
-      //       <Button onClick={onClick} className=" text-black">
-      //         <div color="error font-black ">
-      //           <TbExchange className="text-lg font-black" />
-      //         </div>
-      //         <div className="px-2"> تغییر وضعیت</div>
-      //       </Button>
-      //     );
-      //   },
-      // },
-    ];
+    const columns = [{ field: TITLE, headerName: "عنوان", width: 150 }];
 
     const rows = result.data.map((item) => {
       return {
-        // [BRAND]: item?.title,33322
         [TITLE]: item?.title,
         id: item?.id,
       };
@@ -132,10 +86,12 @@ function CreateProductCatPage(props) {
   };
 
   const handleChangeType = (item) => {
-    console.log(item);
     setTypesforSend(item.map((data) => data.value));
   };
 
+  const handleChangeProperties = (item) => {
+    setPropertiesForSend(item.map((data) => data.value));
+  };
   const handleSubmit = async (e) => {
     const { createCat } = props;
     try {
@@ -146,10 +102,9 @@ function CreateProductCatPage(props) {
         type: data.type,
         brands: brandsForSend,
         types: typesforSend,
+        properties: propertiesForSend,
       };
-
-      console.log(sendData);
-      const result = await createCat(sendData);
+      await createCat(sendData);
     } catch (error) {
       console.log("error", error);
     }
@@ -159,14 +114,16 @@ function CreateProductCatPage(props) {
     <CreateProductCatTemplate
       {...props}
       brands={brands}
-      types={types}
       columns={columns}
-      rows={rows}
-      loading={loading}
       dataGrid={dataGrid}
+      loading={loading}
+      properties={properties}
+      rows={rows}
+      types={types}
       onChangebrand={handleChangeBrand}
       onChangeType={handleChangeType}
       onSubmit={handleSubmit}
+      onChangeProperties={handleChangeProperties}
     />
   );
 }
@@ -178,6 +135,7 @@ const mapDispatchToProps = (dispatch) => ({
   getProductTypes: () => dispatch(getProductTypes()),
   createCat: (data) => dispatch(createCat(data)),
   getCats: () => dispatch(getCats()),
+  getProperties: () => dispatch(getProperties()),
 });
 
 const CreateProductCat = connect(

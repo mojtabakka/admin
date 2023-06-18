@@ -25,6 +25,7 @@ import {
   WARRANTY,
 } from "./CreateProduct.config";
 import { AddInputModal, Edit } from "./components";
+import { isEmptyArray } from "common/utils/function.util";
 
 const CreateProductTemplate = ({
   brands,
@@ -38,10 +39,10 @@ const CreateProductTemplate = ({
   openConfirmModal,
   openInputModal,
   photo,
-  productInfo,
   productTypes,
   rows,
   editId,
+  propertyInputArray,
 
   onCanclePhtoto,
   onChangeBrand,
@@ -83,7 +84,10 @@ const CreateProductTemplate = ({
         className=" mx-2 w-full  h-5/6  mb-10  !pb-0 overflow-y-scroll "
       >
         <div>
-          <form onSubmit={onSubmit} className="grid grid-cols-7  gap-4">
+          <form
+            onSubmit={onSubmit}
+            className="grid grid-cols-7  gap-4"
+          >
             <label className=" col-span-2 flex items-center "> مدل</label>
             <div className="  col-span-5 w-full ">
               <Input name={MODEL} className="w-full" />
@@ -118,6 +122,25 @@ const CreateProductTemplate = ({
                 isMulti
               />
             </div>
+
+            {!isEmptyArray(propertyInputArray) &&
+              propertyInputArray.map((item) => {
+                return (
+                  <>
+                    <label className=" col-span-2 flex items-center">
+                      {item.label}
+                    </label>
+                    <div className="  col-span-5 w-full ">
+                      <Select
+                        options={item.selectItems}
+                        loading={isloadingSelect}
+                        onChange={onChangeType}
+                        name={item.name}
+                      />
+                    </div>
+                  </>
+                );
+              })}
             <label className=" col-span-2 flex items-center">
               قیمت برای کاربر
             </label>
@@ -149,6 +172,7 @@ const CreateProductTemplate = ({
             <div className="  col-span-5 w-full ">
               <Input name={DELIVERY_METHOD} size="small" />
             </div>
+
             <div className=" col-span-4">
               <FileInput
                 label="عکس را انتخاب کنید"
@@ -157,12 +181,12 @@ const CreateProductTemplate = ({
                 onCancle={onCanclePhtoto}
               />
             </div>
+            <div className=" flex justify-end col-span-7 top-0   shadow-xl  bg-white  sticky bottom-0 ">
+              <Button type="submit" isLoading={isLoading}>
+                تایید
+              </Button>
+            </div>
           </form>
-        </div>
-        <div className=" flex justify-end  top-0    sticky bottom-0 ">
-          <Button type="submit" isLoading={isLoading}>
-            تایید
-          </Button>
         </div>
       </Card>
       <Card headerTitle="لیست محصولات" className="  w-full h-5/6">

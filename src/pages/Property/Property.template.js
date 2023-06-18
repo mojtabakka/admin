@@ -3,9 +3,38 @@ import React from "react";
 import { PROPERTY } from "./Property.config";
 import { AiOutlinePlus } from "react-icons/ai";
 import { TITLE } from "pages/ProductTypes/ProductTypes.config";
+import { Box } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
-const PropertyTemplate = ({ onSubmit, onClickPlus, inputs }) => {
-  console.log(inputs);
+const PropertyTemplate = ({
+  onSubmit,
+  onClickPlus,
+  inputs,
+  dataGrid,
+  rows,
+  columns,
+  loading,
+}) => {
+  const Grid = (
+    <Box sx={{ height: "100%", width: "100%" }}>
+      <DataGrid
+        localeText={{
+          MuiTablePagination: {
+            labelDisplayedRows: ({ from, to, count }) =>
+              `${from} - ${to} برند از ${count} برند`,
+          },
+        }}
+        rowCount={200}
+        columns={columns}
+        rows={rows}
+        checkboxSelection
+        autoHeight
+        page={dataGrid.page-1}
+        pageSize={dataGrid.pageSize}
+        loading={loading}
+      />
+    </Box>
+  );
   return (
     <>
       <div className="w-full h-screen  mt-7 flex">
@@ -41,7 +70,9 @@ const PropertyTemplate = ({ onSubmit, onClickPlus, inputs }) => {
             </div>
           </form>
         </Card>
-        <Card headerTitle="ویژگی ها " className="w-full h-5/6"></Card>
+        <Card headerTitle="ویژگی ها " className="w-full h-5/6">
+          {Grid}
+        </Card>
       </div>
     </>
   );

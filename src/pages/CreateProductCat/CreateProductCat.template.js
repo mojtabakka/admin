@@ -5,16 +5,18 @@ import { isEmptyArray } from "common/utils/function.util";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 const CreateProductCatTemplate = ({
-  onSubmit,
-  onChangebrand,
-  onChangeType,
-  onChangeProductType,
   brands,
-  types,
-  dataGrid,
   columns,
-  rows,
+  dataGrid,
   loading,
+  properties,
+  rows,
+  types,
+  onChangebrand,
+  onChangeProductType,
+  onChangeProperties,
+  onChangeType,
+  onSubmit,
 }) => {
   const Grid = (
     <Box sx={{ height: "100%", width: "100%" }}>
@@ -45,7 +47,7 @@ const CreateProductCatTemplate = ({
               type="text"
               name={PRODUCT_TYPE}
               onChange={onChangeProductType}
-              label="نوع محصول را وارد کنید"
+              label="نام دسته بندی را وارد کنید"
             />
 
             <span className="mx-10 mt-2">
@@ -56,6 +58,15 @@ const CreateProductCatTemplate = ({
             <span className="mx-10 mt-2">
               <span> انواع</span>
               <Select options={types} isMulti onChange={onChangeType} />
+            </span>
+
+            <span className="mx-10 mt-2">
+              <span> ویژگی ها</span>
+              <Select
+                options={properties}
+                isMulti
+                onChange={onChangeProperties}
+              />
             </span>
           </div>
           <div className="flex justify-end p-5">
