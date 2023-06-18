@@ -76,3 +76,26 @@ export function getCat(data) {
       .catch((error) => Promise.reject(error));
   };
 }
+
+export function addProperty(data) {
+  return () => {
+    return api
+      .addProperty(data)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => Promise.reject(error));
+  };
+}
+
+export function getProperties(data) {
+  return () => {
+    return api
+      .getProperties(data)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => Promise.reject(error));
+  };
+}
+

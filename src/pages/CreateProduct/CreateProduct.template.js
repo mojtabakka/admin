@@ -25,6 +25,7 @@ import {
   WARRANTY,
 } from "./CreateProduct.config";
 import { AddInputModal, Edit } from "./components";
+import { isEmptyArray } from "common/utils/function.util";
 
 const CreateProductTemplate = ({
   brands,
@@ -38,10 +39,10 @@ const CreateProductTemplate = ({
   openConfirmModal,
   openInputModal,
   photo,
-  productInfo,
   productTypes,
   rows,
   editId,
+  propertyInputArray,
 
   onCanclePhtoto,
   onChangeBrand,
@@ -77,100 +78,119 @@ const CreateProductTemplate = ({
     </Box>
   );
   return (
-    <div className="">
-      <Card headerTitle="ایجاد محصول جدید" className="">
-        <form onSubmit={onSubmit}>
-          <span className="mx-2">
-            <Input name={MODEL} label="مدل" />
-          </span>
-          <span>
-            <Select
-              label="دسته بندی"
-              options={categories}
-              onChange={onChangeCategory}
-              name={CATERGORY}
-            />
-          </span>
-          <span>
-            <Select
-              label="برند"
-              options={brands}
-              loading={isloadingSelect}
-              onChange={onChangeBrand}
-              name={BRAND}
-              isMulti
-            />
-          </span>
+    <div className="flex h-screen mt-7 ">
+      <Card
+        headerTitle="ایجاد محصول جدید"
+        className=" mx-2 w-full  h-5/6  mb-10  !pb-0 overflow-y-scroll "
+      >
+        <div>
+          <form
+            onSubmit={onSubmit}
+            className="grid grid-cols-7  gap-4"
+          >
+            <label className=" col-span-2 flex items-center "> مدل</label>
+            <div className="  col-span-5 w-full ">
+              <Input name={MODEL} className="w-full" />
+            </div>
 
-          <span>
-            <Select
-              label="نوع"
-              options={productTypes}
-              loading={isloadingSelect}
-              onChange={onChangeType}
-              name={TYPE}
-              isMulti
-            />
-          </span>
-          <span className="mx-2">
-            <Input name={PRICE_FOR_USER} size="small" label="قیمت برای کاربر" />
-          </span>
-          <span className="mx-2">
-            <Input
-              name={PRICE_FOR_WORKMATE}
-              size="small"
-              label="قیمت برای همکار"
-            />
-          </span>
-          <span className="mx-2">
-            <Input name={WARRANTY} size="small" label="گارانتی" />
-          </span>
-          <span className="mx-2">
-            <Input name={NUMBER_OF_EXIST} size="small" label="تعداد موجودی" />
-          </span>
-          <span className="mx-2">
-            <Input name={OFF} size="small" label="تخفیف" />
-          </span>
-          <span className="mx-2">
-            <Input name={DELIVERY_METHOD} size="small" label="روش ارسال" />
-          </span>
-          <div className="w-1/5 mt-3">
-            <FileInput
-              label="عکس را انتخاب کنید"
-              onChange={onChangeFile}
-              photo={photo}
-              onCancle={onCanclePhtoto}
-            />
-          </div>
+            <label className=" col-span-2 flex items-center">دسته بندی</label>
+            <div className="  col-span-5 w-full ">
+              <Select
+                options={categories}
+                onChange={onChangeCategory}
+                name={CATERGORY}
+              />
+            </div>
+            <label className=" col-span-2 flex items-center"> برند</label>
+            <div className="  col-span-5 w-full ">
+              <Select
+                options={brands}
+                loading={isloadingSelect}
+                onChange={onChangeBrand}
+                name={BRAND}
+                isMulti
+              />
+            </div>
 
-          <div className=" flex justify-end ">
-            <Button type="submit" isLoading={isLoading}>
-              تایید
-            </Button>
-          </div>
-        </form>
+            <label className=" col-span-2 flex items-center"> نوع</label>
+            <div className="  col-span-5 w-full ">
+              <Select
+                options={productTypes}
+                loading={isloadingSelect}
+                onChange={onChangeType}
+                name={TYPE}
+                isMulti
+              />
+            </div>
+
+            {!isEmptyArray(propertyInputArray) &&
+              propertyInputArray.map((item) => {
+                return (
+                  <>
+                    <label className=" col-span-2 flex items-center">
+                      {item.label}
+                    </label>
+                    <div className="  col-span-5 w-full ">
+                      <Select
+                        options={item.selectItems}
+                        loading={isloadingSelect}
+                        onChange={onChangeType}
+                        name={item.name}
+                      />
+                    </div>
+                  </>
+                );
+              })}
+            <label className=" col-span-2 flex items-center">
+              قیمت برای کاربر
+            </label>
+            <div className="  col-span-5 w-full ">
+              <Input name={PRICE_FOR_USER} size="small" />
+            </div>
+            <label className=" col-span-2 flex items-center">
+              قیمت برای همکار
+            </label>
+            <div className="  col-span-5 w-full ">
+              <Input name={PRICE_FOR_WORKMATE} size="small" />
+            </div>
+            <label className=" col-span-2 flex items-center"> گارانتی</label>
+            <div className="  col-span-5 w-full ">
+              <Input name={WARRANTY} size="small" />
+            </div>
+            <label className=" col-span-2 flex items-center">
+              تعداد موجودی
+            </label>
+            <div className="  col-span-5 w-full ">
+              <Input name={NUMBER_OF_EXIST} size="small" />
+            </div>
+            <label className=" col-span-2 flex items-center"> تخفیف</label>
+            <div className="  col-span-5 w-full ">
+              <Input name={OFF} size="small" />
+            </div>
+
+            <label className=" col-span-2 flex items-center"> روش ارسال</label>
+            <div className="  col-span-5 w-full ">
+              <Input name={DELIVERY_METHOD} size="small" />
+            </div>
+
+            <div className=" col-span-4">
+              <FileInput
+                label="عکس را انتخاب کنید"
+                onChange={onChangeFile}
+                photo={photo}
+                onCancle={onCanclePhtoto}
+              />
+            </div>
+            <div className=" flex justify-end col-span-7 top-0   shadow-xl  bg-white  sticky bottom-0 ">
+              <Button type="submit" isLoading={isLoading}>
+                تایید
+              </Button>
+            </div>
+          </form>
+        </div>
       </Card>
-      <Card headerTitle="لیست محصولات" className="mt-4">
+      <Card headerTitle="لیست محصولات" className="  w-full h-5/6">
         {Grid}
-        {/* <Box sx={{ width: "100%" }}>
-          <DataGrid
-            dataGrid
-            localeText={{
-              MuiTablePagination: {
-                labelDisplayedRows: ({ from, to, count }) =>
-                  `${from} - ${to} محصول از ${count} محصول`,
-              },
-            }}
-            loading={false}
-            rowCount={10}
-            page={10}
-            pageSize={10}
-            columns={columns}
-            rows={items}
-            checkboxSelection
-            autoHeight
-          />
-        </Box> */}
       </Card>
       <Edit
         brands={brands}
@@ -179,7 +199,6 @@ const CreateProductTemplate = ({
         onCloseModal={onCloseModal}
         onEdit={onEdit}
         open={open}
-
         editId={editId}
       />
 

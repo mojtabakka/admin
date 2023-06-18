@@ -6,15 +6,17 @@ export const ROUTES_TYPES = {
 };
 
 export const PATHS = {
+  brands: "/brands",
+  createProduct: "/create-product",
+  createProductCat: "/create-product-cat",
+  editProfile: "/edit-profile",
+  filter: "/filter",
   home: "/",
   login: "/login",
-  register: "/register",
-  createProduct: "/create-product",
-  editProfile: "/edit-profile",
   orders: "/orders",
-  createProductCat: "/create-product-cat",
   productTypes: "/product-types",
-  brands: "/brands",
+  property: "/property",
+  register: "/register",
 };
 
 export const RoutesConfig = [
@@ -32,6 +34,16 @@ export const RoutesConfig = [
     path: PATHS.brands,
     name: "brands",
     component: pages.Brand,
+    layout: {
+      type: "home",
+    },
+    type: ROUTES_TYPES.PRIVATE,
+  },
+
+  {
+    path: PATHS.property,
+    name: "property",
+    component: pages.Property,
     layout: {
       type: "home",
     },
@@ -90,8 +102,18 @@ export const RoutesConfig = [
   },
   {
     path: PATHS.productTypes,
-    name: "product-types",
+    name: "product-types ",
     component: pages.ProductTypes,
+    ifIsLoginGoBack: true,
+    layout: {
+      type: "home",
+    },
+    type: ROUTES_TYPES.PRIVATE,
+  },
+  {
+    path: PATHS.filter,
+    name: "product-types ",
+    component: pages.Filter,
     ifIsLoginGoBack: true,
     layout: {
       type: "home",

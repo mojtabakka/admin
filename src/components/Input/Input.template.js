@@ -15,7 +15,7 @@ const InputTemplate = ({
   tabIndex,
 }) => {
   return (
-    <div className="py-2 inline-block">
+    <div className="py-2 inline-block ">
       {type !== "checkbox" ? (
         <>
           <span className="px-3">{label} </span>

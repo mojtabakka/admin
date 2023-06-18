@@ -11,8 +11,8 @@ const BrandPage = (props) => {
   const [dataGrid, setDataGrid] = useState({
     loading: true,
     totalRows: 200,
-    pageSize: 8,
-    page: 2,
+    pageSize: 15,
+    page:1 ,
   });
 
   useEffect(() => {

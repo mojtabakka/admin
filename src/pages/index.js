@@ -7,4 +7,5 @@ export { Orders } from "./Orders";
 export { CreateProductCat } from "./CreateProductCat";
 export { ProductTypes } from "./ProductTypes";
 export { Brand } from "./Brand";
-
+export { Filter } from "./Filter";
+export { Property } from "./Property";
