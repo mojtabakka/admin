@@ -29,6 +29,8 @@ export const POST_CAT = "/type/cat";
 export const GET_CAT = "/type/get-cat";
 export const GET_CATS = "/type/get-cats";
 
+export const ADD_PROPERTY = "/type/add-property";
+
 export const DONT_NEEDED_URLS_FOR_AUTHENTICATION = () => [
   { url: "/auth" + PATHS.login },
   { url: "/auth" + PATHS.register },

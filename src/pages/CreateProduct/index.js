@@ -334,6 +334,7 @@ const CreateProductComponent = (props) => {
       });
     setTypesForSend(types);
   };
+
   return (
     <ErrorBoundary>
       <CreateProductTemplate

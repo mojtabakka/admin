@@ -4,6 +4,8 @@ import { HiOutlineClipboardList } from "react-icons/hi";
 import { SiBrandfolder } from "react-icons/si";
 import { BiCategory } from "react-icons/bi";
 import { FiType } from "react-icons/fi";
+import { FaFilter } from "react-icons/fa";
+import { VscSymbolProperty } from "react-icons/vsc";
 // import * as MdIcons from "react-icons/md";
 // import * as RiIcons from "react-icons/ri";
 // import * as IoIcons from 'react-icons/io'
@@ -16,6 +18,8 @@ export const PATHS = {
   createProductCat: "/create-product-cat",
   productTypes: "/product-types",
   brands: "/brands",
+  filter: "/filter",
+  property: "/property",
 };
 const items = [
   {
@@ -52,6 +56,21 @@ const items = [
     icon: <FiType />,
     path: PATHS.productTypes,
   },
+
+  {
+    name: "فیلترها",
+    label: "فیلترها",
+    icon: <FaFilter />,
+    path: PATHS.filter,
+  },
+
+  {
+    name: "ویژگی ها",
+    label: "ویژگی ها",
+    icon: <VscSymbolProperty />,
+    path: PATHS.property,
+  },
+
   // {
   //   name: "setting",
   //   label: "Setting",

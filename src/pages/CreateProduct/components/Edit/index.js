@@ -40,40 +40,44 @@ const EditComponent = (props) => {
       };
       setCatDefaultValue(catDefault);
 
-      const brandDefault =
-        !isEmptyArray(product.data.brands) &&
-        product.data.brands.map((item) => ({
-          value: item.id,
-          label: item.title,
-        }));
+      const brandDefault = !isEmptyArray(product.data.brands)
+        ? product.data.brands.map((item) => ({
+            value: item.id,
+            label: item.title,
+          }))
+        : [];
+      setBrandsDefaultValue(brandDefault);
+      const typesDefault = !isEmptyArray(product.data.productTypes)
+        ? product.data.productTypes.map((item) => ({
+            value: item.id,
+            label: item.title,
+          }))
+        : [];
+
+      const allBrands = !isEmptyArray(cat.data.brands)
+        ? cat.data.brands.map((item) => ({
+            value: item.id,
+            label: item.title,
+          }))
+        : [];
       setBrandsDefaultValue(brandDefault);
 
-      const typesDefault =
-        !isEmptyArray(product.data.productTypes) &&
-        product.data.productTypes.map((item) => ({
-          value: item.id,
-          label: item.title,
-        }));
+      const alltypes = !isEmptyArray(cat.data.productTypes)
+        ? cat.data.productTypes.map((item) => ({
+            value: item.id,
+            label: item.title,
+          }))
+        : [];
 
-      const allBrands =
-        !isEmptyArray(cat.data.brands) &&
-        cat.data.brands.map((item) => ({
-          value: item.id,
-          label: item.title,
-        }));
-      setBrandsDefaultValue(brandDefault);
-
-      const alltypes =
-        !isEmptyArray(cat.data.productTypes) &&
-        cat.data.productTypes.map((item) => ({
-          value: item.id,
-          label: item.title,
-        }));
-
-      !isEmptyArray(allBrands) && setBrands([...allBrands]);
-      !isEmptyArray(alltypes) && settypes([...alltypes]);
-      !isEmptyArray(typesDefault) && settypesDefaultValue([...typesDefault]);
-      !isEmptyArray(brandDefault) && setBrandsDefaultValue([...brandDefault]);
+      console.log(typesDefault);
+      !isEmptyArray(allBrands) ? setBrands([...allBrands]) : setBrands();
+      !isEmptyArray(alltypes) ? settypes([...alltypes]) : settypes([]);
+      !isEmptyArray(typesDefault)
+        ? settypesDefaultValue([...typesDefault])
+        : settypesDefaultValue([]);
+      !isEmptyArray(brandDefault)
+        ? setBrandsDefaultValue([...brandDefault])
+        : setBrandsDefaultValue([]);
     } catch (error) {
       console.log("erroe", error);
     }
@@ -110,8 +114,9 @@ const EditComponent = (props) => {
       typesDefaultValue.map((item) => {
         return { id: item.value };
       });
-
+    const cats = [{ id: catDefaultValue.value }];
     data.features = dataFiltered;
+    data.categories = cats ? cats : [];
     data.photo = photo;
     data.brands = brands ? brands : [];
     data.types = types ? types : [];

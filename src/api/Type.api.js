@@ -1,5 +1,6 @@
 import http from "services/http.service";
 import {
+  ADD_PROPERTY,
   BRAND_POST,
   GET_BRANDS,
   GET_CAT,
@@ -79,6 +80,17 @@ const authApis = {
     return new Promise(function (resolve, reject) {
       http
         .get(GET_CAT, data)
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  addProperty(data) {
+    return new Promise(function (resolve, reject) {
+      http
+        .post(ADD_PROPERTY, data)
         .then((response) => {
           return resolve(response.data);
         })
