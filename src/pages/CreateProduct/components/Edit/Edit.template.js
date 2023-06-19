@@ -9,12 +9,14 @@ import {
   OFF,
 } from "../../CreateProduct.config";
 import { ProductTypes } from "pages/ProductTypes";
+import { isEmptyArray } from "common/utils/function.util";
 
 const EditTemplate = ({
   brands,
   categories,
   open,
   onCloseModal,
+  onChangeProperty,
   productInfo,
   onEdit,
   isLoading,
@@ -25,6 +27,7 @@ const EditTemplate = ({
   typesDefaultValue,
   catDefaultValue,
   types,
+  propertyInputArray,
   onChangeType,
   onChangeBrand,
   onChangeCat,
@@ -111,6 +114,22 @@ const EditTemplate = ({
           value={typesDefaultValue}
           onChange={onChangeType}
         />
+
+        {!isEmptyArray(propertyInputArray) &&
+          propertyInputArray.map((item) => {
+            return (
+              <>
+                <Select
+                  options={item.selectItems}
+                  // loading={isloadingSelect}
+                  value={item.defaultValue}
+                  name={item.name}
+                  label={item.label}
+                  onChange={(onChangeProperty)}
+                />
+              </>
+            );
+          })}
 
         <div className="w-1/6 mx-14 mt-3">
           <FileInput

@@ -85,7 +85,6 @@ const CreateProductComponent = (props) => {
       e.preventDefault();
       const form = new FormData(e.target);
       const data = Object.fromEntries(form);
-      console.log(data["feature_0"]);
       for (let key in data) {
         let searchKey = key.search("feature");
         if (searchKey > -1) {
@@ -217,6 +216,7 @@ const CreateProductComponent = (props) => {
   };
 
   const handleCloseModal = () => {
+    SetEditId(null)
     setOpen(false);
   };
 
@@ -228,6 +228,7 @@ const CreateProductComponent = (props) => {
     };
     try {
       await editProduct(mainData, editId);
+      SetEditId(null);
       getAllProducts();
     } catch (error) {
       console.log("error", error);

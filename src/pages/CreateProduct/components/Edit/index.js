@@ -13,6 +13,7 @@ const EditComponent = (props) => {
   const [productInfo, setProdcutInfo] = useState([]);
   const [brands, setBrands] = useState([]);
   const [types, settypes] = useState([]);
+  const [propertyInputArray, setPropertyInputArray] = useState();
 
   useEffect(() => {
     props.editId && init();
@@ -21,40 +22,37 @@ const EditComponent = (props) => {
     const { getProduct, getCat } = props;
     try {
       const product = await getProduct(props.editId);
-      const data = {
-        id: Number(product.data.categories[0].id),
-        brand: true,
-        productType: true,
-      };
-      const cat = await getCat(data);
 
+      const cat = await getCat({
+        id: product.data.categories[0].id,
+      });
       const info = {
         ...product.data,
         features: product.data.features,
       };
       setProdcutInfo(info);
 
-      const catDefault = !isEmptyArray(product.data.categories) && {
+      const catDefault = !isEmptyArray(product.data?.categories) && {
         value: product.data.categories[0].id,
         label: product.data.categories[0].title,
       };
       setCatDefaultValue(catDefault);
 
-      const brandDefault = !isEmptyArray(product.data.brands)
+      const brandDefault = !isEmptyArray(product.data?.brands)
         ? product.data.brands.map((item) => ({
             value: item.id,
             label: item.title,
           }))
         : [];
       setBrandsDefaultValue(brandDefault);
-      const typesDefault = !isEmptyArray(product.data.productTypes)
+      const typesDefault = !isEmptyArray(product.data?.productTypes)
         ? product.data.productTypes.map((item) => ({
             value: item.id,
             label: item.title,
           }))
         : [];
 
-      const allBrands = !isEmptyArray(cat.data.brands)
+      const allBrands = !isEmptyArray(cat.data?.brands)
         ? cat.data.brands.map((item) => ({
             value: item.id,
             label: item.title,
@@ -62,14 +60,13 @@ const EditComponent = (props) => {
         : [];
       setBrandsDefaultValue(brandDefault);
 
-      const alltypes = !isEmptyArray(cat.data.productTypes)
+      const alltypes = !isEmptyArray(cat.data?.productTypes)
         ? cat.data.productTypes.map((item) => ({
             value: item.id,
             label: item.title,
           }))
         : [];
-
-      console.log(typesDefault);
+      createInputs(cat.data.propertyTitles, product.data.properties);
       !isEmptyArray(allBrands) ? setBrands([...allBrands]) : setBrands();
       !isEmptyArray(alltypes) ? settypes([...alltypes]) : settypes([]);
       !isEmptyArray(typesDefault)
@@ -83,26 +80,56 @@ const EditComponent = (props) => {
     }
   };
 
-  const hnadleEdit = (e) => {
+  const createInputs = (items, defaultValue) => {
+    const inputs = !isEmptyArray(items)
+      ? items.map((item, index) => {
+          const itemId = item.id;
+          let valueDefault;
+          const selectItems =
+            !isEmptyArray(item.properties) &&
+            item.properties.map((data) => {
+              valueDefault =
+                !isEmptyArray(defaultValue) &&
+                defaultValue.find((item) => {
+                  return item.title == data.title;
+                });
+              return {
+                ...data,
+                label: data?.property,
+                value: data.id,
+                itemId: itemId,
+              };
+            });
+
+          return {
+            name: "feature_" + index,
+            label: item.title,
+            id: itemId,
+            selectItems,
+            defaultValue: {
+              label: valueDefault.property,
+              value: valueDefault.id,
+            },
+          };
+        })
+      : [];
+    setPropertyInputArray([...inputs]);
+  };
+
+  const handleEdit = (e) => {
+    let featrues = [];
     e.preventDefault();
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
-    const dataChangedToArray = Object.entries(data);
-    const dataMaped = dataChangedToArray.map(([key, value]) => {
-      const searchedValue = key.search("_feature");
-      if (searchedValue !== -1) {
-        return { title: key, value: value };
+    console.log(data);
+
+    for (let key in data) {
+      let searchKey = key.search("feature");
+      if (searchKey > -1) {
+        featrues.push({ id: Number(data[key]) });
+        delete data[key];
       }
-      return;
-    });
-    const dataFiltered = dataMaped.filter((item) => {
-      const searchedValue = item?.title?.search("_feature");
-      if (searchedValue) {
-        item.title = item?.title.replace("_feature", "");
-        return item;
-      }
-      return;
-    });
+    }
     const brands =
       !isEmptyArray(brandsDefaultValue) &&
       brandsDefaultValue.map((item) => {
@@ -115,23 +142,13 @@ const EditComponent = (props) => {
         return { id: item.value };
       });
     const cats = [{ id: catDefaultValue.value }];
-    data.features = dataFiltered;
     data.categories = cats ? cats : [];
     data.photo = photo;
     data.brands = brands ? brands : [];
     data.types = types ? types : [];
-    const mainData = {};
-
-    Object.keys(data).forEach(function (key, index) {
-      console.log(key.search("_feature"));
-      if (key.search("_feature") !== -1) {
-        return;
-      }
-      mainData[key] = data[key];
-      return;
-    });
-
-    props.onEdit(mainData);
+    data.properties = featrues ? featrues : [];
+    console.log(data);
+    props.onEdit(data);
   };
 
   const handleChangeFile = async (file) => {
@@ -170,6 +187,7 @@ const EditComponent = (props) => {
         value: item?.id,
         label: item?.title,
       }));
+      createInputs(result.data.propertyTitles);
       setBrands(brands);
       settypes(productTypes);
       setCatDefaultValue(item);
@@ -182,6 +200,20 @@ const EditComponent = (props) => {
     }
   };
 
+  const handleChangeProperty = (item) => {
+    // console.log(item);
+    const changeProperty = propertyInputArray.map((data) => {
+      if (data.id === item.itemId) {
+        return {
+          ...data,
+          defaultValue: item,
+        };
+      }
+      return data;
+    });
+    setPropertyInputArray([...changeProperty]);
+  };
+
   return (
     <EditTemplate
       {...props}
@@ -192,12 +224,14 @@ const EditComponent = (props) => {
       brands={brands}
       types={types}
       photo={photo}
-      onEdit={hnadleEdit}
+      propertyInputArray={propertyInputArray}
+      onEdit={handleEdit}
       onChangeFile={handleChangeFile}
       onCanclePhtoto={handleCanclePhtoto}
       onChangeType={handleChangeType}
       onChangeBrand={handleChangeBrand}
       onChangeCat={handleChangeCat}
+      onChangeProperty={handleChangeProperty}
     />
   );
 };
