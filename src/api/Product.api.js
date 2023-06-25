@@ -20,10 +20,10 @@ const authApis = {
     });
   },
 
-  getProducts() {
+  getProducts(data) {
     return new Promise(function (resolve, reject) {
       http
-        .get(PRODUCT)
+        .get(PRODUCT, data)
         .then((response) => {
           return resolve(response.data);
         })

@@ -43,6 +43,9 @@ const CreateProductTemplate = ({
   rows,
   editId,
   propertyInputArray,
+  catValue,
+  brandsValue,
+  typesValue,
 
   onCanclePhtoto,
   onChangeBrand,
@@ -56,6 +59,7 @@ const CreateProductTemplate = ({
   onEdit,
   onSubmit,
   onSubmitAddInput,
+  onPageChange,
 }) => {
   const Grid = (
     <Box sx={{ height: "100%", width: "100%" }}>
@@ -66,14 +70,16 @@ const CreateProductTemplate = ({
               `${from} - ${to} برند از ${count} برند`,
           },
         }}
-        rowCount={200}
+        rowCount={dataGrid.totalRows}
         columns={columns}
         rows={rows}
-        checkboxSelection
         autoHeight
-        page={0}
-        pageSize={dataGrid.pageSize - 2}
+        page={dataGrid.page - 1}
+        server
+        paginationMode="server"
+        pageSize={8}
         loading={isLoading}
+        onPageChange={onPageChange}
       />
     </Box>
   );
@@ -84,10 +90,7 @@ const CreateProductTemplate = ({
         className=" mx-2 w-full  h-5/6  mb-10  !pb-0 overflow-y-scroll "
       >
         <div>
-          <form
-            onSubmit={onSubmit}
-            className="grid grid-cols-7  gap-4"
-          >
+          <form onSubmit={onSubmit} className="grid grid-cols-7  gap-4">
             <label className=" col-span-2 flex items-center "> مدل</label>
             <div className="  col-span-5 w-full ">
               <Input name={MODEL} className="w-full" />
@@ -97,8 +100,9 @@ const CreateProductTemplate = ({
             <div className="  col-span-5 w-full ">
               <Select
                 options={categories}
-                onChange={onChangeCategory}
                 name={CATERGORY}
+                value={catValue}
+                onChange={onChangeCategory}
               />
             </div>
             <label className=" col-span-2 flex items-center"> برند</label>
@@ -106,9 +110,10 @@ const CreateProductTemplate = ({
               <Select
                 options={brands}
                 loading={isloadingSelect}
-                onChange={onChangeBrand}
                 name={BRAND}
+                value={brandsValue}
                 isMulti
+                onChange={onChangeBrand}
               />
             </div>
 
@@ -117,9 +122,10 @@ const CreateProductTemplate = ({
               <Select
                 options={productTypes}
                 loading={isloadingSelect}
-                onChange={onChangeType}
+                value={typesValue}
                 name={TYPE}
                 isMulti
+                onChange={onChangeType}
               />
             </div>
 

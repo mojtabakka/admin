@@ -125,7 +125,7 @@ const EditTemplate = ({
                   value={item.defaultValue}
                   name={item.name}
                   label={item.label}
-                  onChange={(onChangeProperty)}
+                  onChange={onChangeProperty}
                 />
               </>
             );

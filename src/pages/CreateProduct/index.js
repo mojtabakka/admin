@@ -36,19 +36,25 @@ const CreateProductComponent = (props) => {
   const [productInfo, setProductInfo] = useState({});
   const [productTypes, setProductTypes] = useState({});
   const [typesForSend, setTypesForSend] = useState();
+  const [catValue, setCatValue] = useState(null);
+  const [brandsValue, setBrandsValue] = useState(null);
+  const [typesValue, setTypesValue] = useState(null);
   const [propertyInputArray, setPropertyInputArray] = useState();
   const fileInputRef = useRef();
 
   const [dataGrid, setDataGrid] = useState({
     loading: true,
     rows: [],
-    totalRows: 200,
+    totalRows: 1,
     pageSize: 10,
-    page: 2,
+    page: 1,
   });
 
   useEffect(() => {
     getAllProducts();
+  }, [dataGrid.page]);
+
+  useEffect(() => {
     getCategories();
   }, []);
 
@@ -64,6 +70,7 @@ const CreateProductComponent = (props) => {
         result.data.map((item) => {
           return { value: item.id, label: item.title };
         });
+
       setCategories(categories);
     } catch (error) {
       console.log("error", error);
@@ -78,6 +85,7 @@ const CreateProductComponent = (props) => {
 
   const handleSubmit = async (e) => {
     try {
+      const empty = [];
       let featrues = [];
       setOpenBackDrop(true);
       const { createProduct } = props;
@@ -92,7 +100,6 @@ const CreateProductComponent = (props) => {
           delete data[key];
         }
       }
-
       data.properties = featrues;
       data.photo = photo;
       data[BRAND] = brandsFormSend;
@@ -100,10 +107,13 @@ const CreateProductComponent = (props) => {
       await createProduct(data);
       getAllProducts();
       e.target.reset();
-      setCategories([]);
-      setBrands([]);
-      setProductTypes([]);
+      setBrands([...empty]);
+      setProductTypes([...empty]);
       setPhoto(null);
+      setPropertyInputArray([...empty]);
+      setBrandsValue([...empty]);
+      setTypesValue(null);
+      setCatValue(null);
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -151,6 +161,7 @@ const CreateProductComponent = (props) => {
         renderCell: (params) => {
           const onClick = (e) => {
             e.stopPropagation();
+
             edit(params.row);
           };
           return (
@@ -182,7 +193,9 @@ const CreateProductComponent = (props) => {
     ];
     try {
       setOpenBackDrop(true);
-      const products = await getProducts();
+      const products = await getProducts({ page: dataGrid.page });
+      dataGrid.totalRows = products.meta.itemCount;
+      setDataGrid({ ...dataGrid });
       const data = products.data.map((item) => {
         return {
           id: item.id,
@@ -191,6 +204,7 @@ const CreateProductComponent = (props) => {
           [PHOTO]: item.photo,
         };
       });
+
       setRows(data);
       setColumns(columns);
     } catch (error) {
@@ -216,7 +230,7 @@ const CreateProductComponent = (props) => {
   };
 
   const handleCloseModal = () => {
-    SetEditId(null)
+    SetEditId(null);
     setOpen(false);
   };
 
@@ -289,6 +303,7 @@ const CreateProductComponent = (props) => {
 
   const hanleChangeCategory = async (item, actionMeta) => {
     let emtpy = [];
+    setCatValue(item);
     setBrands([...emtpy]);
     setProductTypes([...emtpy]);
     const { getCat } = props;
@@ -342,6 +357,7 @@ const CreateProductComponent = (props) => {
   };
 
   const handleChangeBrand = (item) => {
+    setBrandsValue(item);
     const brans =
       !isEmptyArray(item) &&
       item.map((item) => {
@@ -351,6 +367,7 @@ const CreateProductComponent = (props) => {
   };
 
   const handleChangeType = (item) => {
+    setTypesValue(item);
     const types =
       !isEmptyArray(item) &&
       item.map((item) => {
@@ -358,7 +375,10 @@ const CreateProductComponent = (props) => {
       });
     setTypesForSend(types);
   };
-
+  const handlePageChange = (page) => {
+    dataGrid.page = page + 1;
+    setDataGrid({ ...dataGrid });
+  };
   return (
     <ErrorBoundary>
       <CreateProductTemplate
@@ -381,6 +401,9 @@ const CreateProductComponent = (props) => {
         productTypes={productTypes}
         editId={editId}
         propertyInputArray={propertyInputArray}
+        catValue={catValue}
+        brandsValue={brandsValue}
+        typesValue={typesValue}
         onCanclePhtoto={handleCanclePhoto}
         onChangeBrand={handleChangeBrand}
         onChangeCategory={hanleChangeCategory}
@@ -396,6 +419,7 @@ const CreateProductComponent = (props) => {
         onOpenModal={handleOpen}
         onSubmit={handleSubmit}
         onSubmitAddInput={handleSubmitAddInput}
+        onPageChange={handlePageChange}
       />
     </ErrorBoundary>
   );
@@ -403,7 +427,7 @@ const CreateProductComponent = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   createProduct: (data) => dispatch(createProduct(data)),
-  getProducts: () => dispatch(getProducts()),
+  getProducts: (data) => dispatch(getProducts(data)),
   getProduct: (id) => dispatch(getProduct(id)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
   editProduct: (data, id) => dispatch(editProduct(data, id)),

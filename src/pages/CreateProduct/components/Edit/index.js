@@ -22,15 +22,17 @@ const EditComponent = (props) => {
     const { getProduct, getCat } = props;
     try {
       const product = await getProduct(props.editId);
-
-      const cat = await getCat({
-        id: product.data.categories[0].id,
-      });
+      console.log(product.data);
+      const cat = !isEmptyArray(product.data.categories)
+        ? await getCat({
+            id: product.data.categories[0].id,
+          })
+        : [];
       const info = {
         ...product.data,
         features: product.data.features,
       };
-      setProdcutInfo(info);
+      setProdcutInfo({ ...info });
 
       const catDefault = !isEmptyArray(product.data?.categories) && {
         value: product.data.categories[0].id,
@@ -66,7 +68,7 @@ const EditComponent = (props) => {
             label: item.title,
           }))
         : [];
-      createInputs(cat.data.propertyTitles, product.data.properties);
+      createInputs(cat.data?.propertyTitles, product.data?.properties);
       !isEmptyArray(allBrands) ? setBrands([...allBrands]) : setBrands();
       !isEmptyArray(alltypes) ? settypes([...alltypes]) : settypes([]);
       !isEmptyArray(typesDefault)
@@ -113,6 +115,7 @@ const EditComponent = (props) => {
           };
         })
       : [];
+      console.log(inputs);
     setPropertyInputArray([...inputs]);
   };
 
@@ -121,8 +124,6 @@ const EditComponent = (props) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
-    console.log(data);
-
     for (let key in data) {
       let searchKey = key.search("feature");
       if (searchKey > -1) {
@@ -147,7 +148,6 @@ const EditComponent = (props) => {
     data.brands = brands ? brands : [];
     data.types = types ? types : [];
     data.properties = featrues ? featrues : [];
-    console.log(data);
     props.onEdit(data);
   };
 

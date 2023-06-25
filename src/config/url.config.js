@@ -16,7 +16,7 @@ export const GET_ORDER = "/orders/:id";
 export const CHANGE_ORDER_STATUS = "orders/change-order-status/:id";
 export const SEARCH_ORDER = "orders/search-order-admin";
 
-//user controller
+//user controllernpm
 export const USER = "/users";
 export const UPLOAD_USER_IMG = "/user/upload-image";
 export const GET_USER_IMG = "/user/user-image";
