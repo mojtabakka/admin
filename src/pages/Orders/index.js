@@ -27,16 +27,25 @@ const OrdersPage = (props) => {
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const [rows, setRows] = useState([]);
   const [tabValue, setTabValue] = useState(ORDER_STATUS.notPayed.value);
+  const [dataGrid, setDataGrid] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 1,
+    pageSize: 10,
+    page: 1,
+  });
+
   useEffect(() => {
     getOrders();
-  }, [filter]);
+  }, [filter, dataGrid.page]);
   const getOrders = async () => {
     try {
       setLoading(true);
       const { searchOrder } = props;
       filter.status = tabValue;
-      setfilter(filter);
-      const result = await searchOrder(filter);
+      const result = await searchOrder({ ...filter, page: dataGrid.page });
+      dataGrid.totalRows = result.meta.itemCount;
+      setDataGrid({ ...dataGrid });
       const columns = [
         { field: PHONE_NUMBER, headerName: "شماره همراه", width: 150 },
         { field: ADDRESS, headerName: "آدرس", width: 150 },
@@ -183,6 +192,10 @@ const OrdersPage = (props) => {
     getOrders();
   };
 
+  const handlePageChange = (page) => {
+    dataGrid.page = page + 1;
+    setDataGrid({ ...dataGrid });
+  };
   return (
     <Orderstemplate
       {...props}
@@ -193,6 +206,7 @@ const OrdersPage = (props) => {
       detailsItems={detailsItems}
       openDetailModal={openDetailModal}
       tabValue={tabValue}
+      dataGrid={dataGrid}
       onSubmitChangeStatus={handleSubmitChangeStatus}
       onCloseDetailModal={handleCloseDetailModal}
       onCloseChangeStatusModal={handleCloseChangeStatusModal}
@@ -200,6 +214,7 @@ const OrdersPage = (props) => {
       onSubmitSearch={handleSubmitSearch}
       onClickInit={handleClickInit}
       onClickRefresh={handleClickRefresh}
+      onPageChange={handlePageChange}
     />
   );
 };

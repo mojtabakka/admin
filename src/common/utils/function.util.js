@@ -36,6 +36,11 @@ export function groupBy(list, key) {
   });
 }
 
+export function getAppTitle() {
+  // return getAppLanguage() === "en"
+  return process.env.REACT_APP_TITLE_FA;
+  //  process.env.REACT_APP_TITLE_FA;
+}
 export function isFunction(data) {
   return typeof data === "function";
 }

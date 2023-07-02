@@ -2,7 +2,6 @@ import React from "react";
 import UploadIcon from "@mui/icons-material/Upload";
 import CancelIcon from "@mui/icons-material/Cancel";
 import style from "./FileInput.module.scss";
-import { BASE_URL } from "config/variables.config";
 const FileInputTemplate = ({
   fileInputRef,
   photo,

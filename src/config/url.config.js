@@ -12,7 +12,7 @@ export const UPLOAD_PRODUCT_IMAGE_POST = "/product/upload-product-image";
 
 //order Controller
 export const ORDER = "/orders";
-export const GET_ORDER = "/orders/:id";
+export const GET_ORDER = "/orders/get-order/:id";
 export const CHANGE_ORDER_STATUS = "orders/change-order-status/:id";
 export const SEARCH_ORDER = "orders/search-order-admin";
 

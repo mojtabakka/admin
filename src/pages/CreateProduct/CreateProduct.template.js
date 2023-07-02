@@ -26,6 +26,7 @@ import {
 } from "./CreateProduct.config";
 import { AddInputModal, Edit } from "./components";
 import { isEmptyArray } from "common/utils/function.util";
+import { PAGE_SIZE } from "config/general.config";
 
 const CreateProductTemplate = ({
   brands,
@@ -77,7 +78,7 @@ const CreateProductTemplate = ({
         page={dataGrid.page - 1}
         server
         paginationMode="server"
-        pageSize={8}
+        pageSize={PAGE_SIZE}
         loading={isLoading}
         onPageChange={onPageChange}
       />

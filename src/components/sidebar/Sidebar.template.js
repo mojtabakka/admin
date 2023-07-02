@@ -1,7 +1,7 @@
 import React from "react";
 import { items } from "config/sibarMenu.config";
 import SidebarItem from "./sidbarItems";
-import style from "./index.module.scss";
+// import style from "./index.module.scss";
 import * as MdIcons from "react-icons/md";
 
 const SidebarTemplate = ({

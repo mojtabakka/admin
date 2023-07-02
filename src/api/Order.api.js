@@ -43,7 +43,7 @@ const authApis = {
   searchOrder(data) {
     return new Promise(function (resolve, reject) {
       http
-        .post(SEARCH_ORDER, data)
+        .get(SEARCH_ORDER, data)
         .then((response) => {
           return resolve(response.data);
         })

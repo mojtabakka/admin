@@ -21,3 +21,5 @@ export const ORDER_STATUS = {
     text: "تکمیل شده",
   },
 };
+
+export const PAGE_SIZE = 10;

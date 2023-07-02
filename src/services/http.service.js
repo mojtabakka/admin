@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL, AXIOS_TIMEdOUT } from "config/variables.config";
 import { DONT_NEEDED_URLS_FOR_AUTHENTICATION } from "config/url.config";
+import { isEmptyObject } from "common/utils/function.util";
 
 class httpService {
   constructor() {
@@ -9,18 +10,6 @@ class httpService {
     axios.defaults.timeout = AXIOS_TIMEdOUT;
     axios.interceptors.request.use(
       (config) => {
-        if (
-          config.method == "post" ||
-          config.method == "put" ||
-          config.method == "patch"
-        ) {
-          console.log(config.method);
-          toast("عملیات با موفقیت انجام شد ", {
-            autoClose: 2000,
-            type: toast.TYPE.SUCCESS,
-            position: toast.POSITION.BOTTOM_LEFT,
-          });
-        }
         const checkExist = DONT_NEEDED_URLS_FOR_AUTHENTICATION().filter(
           (item) => {
             return item.url.trim() === config.url.trim();
@@ -39,15 +28,27 @@ class httpService {
     );
     axios.interceptors.response.use(
       (res) => {
-        // if (res.config.method !== "get")
-        //   toast(res?.data.message, {
-        //     autoClose: 2000,
-        //     type: toast.TYPE.SUCCESS,
-        //     position: toast.POSITION.BOTTOM_LEFT,
-        //   });
+        if (
+          res.method === "post" ||
+          res.method === "put" ||
+          res.method === "patch"
+        ) {
+          toast("عملیات با موفقیت انجام شد ", {
+            autoClose: 2000,
+            type: toast.TYPE.SUCCESS,
+            position: toast.POSITION.BOTTOM_LEFT,
+          });
+        }
         return res;
       },
       (error) => {
+        if (isEmptyObject(error)) {
+          toast("خطای داخلی سرور", {
+            autoClose: 2000,
+            type: toast.TYPE.ERROR,
+            position: toast.POSITION.BOTTOM_LEFT,
+          });
+        }
         toast(error.response.data.message, {
           autoClose: 2000,
           type: toast.TYPE.ERROR,
@@ -73,7 +74,6 @@ class httpService {
   }
 
   patch(address, data, config) {
-    console.log("helo");
     config = config || { headers: { "Content-Type": "application/json" } };
     return axios.patch(address, data, config);
   }

@@ -9,7 +9,7 @@ import {
   getProducts,
   uploadProductImage,
 } from "redux/actions/Product.action";
-import { FIELDS, PHOTO, MODEL, BRAND, TYPE } from "./CreateProduct.config";
+import { PHOTO, MODEL, BRAND, TYPE } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
 import { BASE_URL } from "config/variables.config";

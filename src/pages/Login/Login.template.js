@@ -18,13 +18,8 @@ const LoginTemplate = ({ onSubmit, isLoading }) => {
               </Button>
             )}
           >
-            <div>
-              <Input
-                label="ایمیل"
-                name={USERNAME}
-                type="text"
-                className="w-3/4"
-              />
+            <div className="">
+              <Input label="ایمیل" name={USERNAME} type="text" />
             </div>
             <div>
               <Input
