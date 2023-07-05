@@ -55,7 +55,7 @@ function Orderstemplate({
     <div>
       <Card headerTitle="فیلتر ها">
         <form onSubmit={onSubmitSearch} id={FORM_ID}>
-          <div className="flex">
+          <div className="flex ">
             <div className="px-2">
               <Input
                 label="کدملی"
@@ -76,16 +76,17 @@ function Orderstemplate({
             <div className="px-2">
               <Input label="نام خوانوادگی" name={form_inputs.lastName} />
             </div>
-          </div>
-          <div className="flex">
-            <div className="px-2">
-              <Input label="مدل دوربین" name={form_inputs.model} />
-            </div>
             <div className="px-2">
               <Input label="استان" name={form_inputs.state} />
             </div>
+          </div>
+
+          <div className="flex">
             <div className="px-2">
               <Input label="شهر" name={form_inputs.city} />
+            </div>
+            <div className="px-2">
+              <Input label="مدل دوربین" name={form_inputs.model} />
             </div>
           </div>
           <div className="flex justify-end">

@@ -104,16 +104,18 @@ const CreateProductComponent = (props) => {
       data.photo = photo;
       data[BRAND] = brandsFormSend;
       data[TYPE] = typesForSend;
-      await createProduct(data);
-      getAllProducts();
-      e.target.reset();
-      setBrands([...empty]);
-      setProductTypes([...empty]);
-      setPhoto(null);
-      setPropertyInputArray([...empty]);
-      setBrandsValue([...empty]);
-      setTypesValue(null);
-      setCatValue(null);
+      const result = await createProduct(data);
+      if (result) {
+        getAllProducts();
+        e.target.reset();
+        setBrands([...empty]);
+        setProductTypes([...empty]);
+        setPhoto(null);
+        setPropertyInputArray([...empty]);
+        setBrandsValue([...empty]);
+        setTypesValue(null);
+        setCatValue(null);
+      }
     } catch (error) {
       console.log("error", error);
     } finally {

@@ -15,14 +15,14 @@ const InputTemplate = ({
   tabIndex,
 }) => {
   return (
-    <div className="py-2 inline-block ">
+    <div className="py-2 inline-block w-full ">
       {type !== "checkbox" ? (
-        <>
-          <span className="px-3">{label} </span>
+        <div className="">
+          <div className="px-1 py-2  ">{label} </div>
           <input
             className={`${
               type !== "password" ? "p-2" : "px-2"
-            } border bg-slate-100 rounded-2xl  text-sm text-gray-500 ${className}  `}
+            } border w-full pb-2  bg-slate-100 rounded-2xl  text-sm text-gray-500 ${className}  `}
             onChange={onChange}
             onKeyDown={onKeyDown}
             onKeyUp={onKeyUp}
@@ -33,7 +33,7 @@ const InputTemplate = ({
             placeholder={placeholder}
             tabIndex={tabIndex}
           />
-        </>
+        </div>
       ) : (
         <div class="flex items-center mb-4">
           <input

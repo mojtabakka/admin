@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, Input } from "components";
 import { PATHS } from "config/routes.config";
-import { PASSWORD, USERNAME } from "./Login.config";
+import { PASSWORD, PHONE_NUMBER, USERNAME } from "./Login.config";
 
 const LoginTemplate = ({ onSubmit, isLoading }) => {
   return (
@@ -19,7 +19,7 @@ const LoginTemplate = ({ onSubmit, isLoading }) => {
             )}
           >
             <div className="">
-              <Input label="ایمیل" name={USERNAME} type="text" />
+              <Input label="شماره تماس" name={PHONE_NUMBER} type="number" />
             </div>
             <div>
               <Input

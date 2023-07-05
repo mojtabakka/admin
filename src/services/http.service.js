@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BASE_URL, AXIOS_TIMEdOUT } from "config/variables.config";
 import { DONT_NEEDED_URLS_FOR_AUTHENTICATION } from "config/url.config";
-import { isEmptyObject } from "common/utils/function.util";
+import { isEmptyArray, isEmptyObject } from "common/utils/function.util";
 
 class httpService {
   constructor() {
@@ -28,11 +28,13 @@ class httpService {
     );
     axios.interceptors.response.use(
       (res) => {
+        console.log('ress',res);
         if (
-          res.method === "post" ||
-          res.method === "put" ||
-          res.method === "patch"
+          res.config.method === "post" ||
+          res.config.method === "put" ||
+          res.config.method === "patch"
         ) {
+          console.log("hello");
           toast("عملیات با موفقیت انجام شد ", {
             autoClose: 2000,
             type: toast.TYPE.SUCCESS,
@@ -42,6 +44,11 @@ class httpService {
         return res;
       },
       (error) => {
+        console.log(error.response.data.message);
+        if (error?.response?.data?.statusCode === 403) {
+          localStorage.removeItem("user");
+          window.location.href = "/";
+        }
         if (isEmptyObject(error)) {
           toast("خطای داخلی سرور", {
             autoClose: 2000,
@@ -49,11 +56,16 @@ class httpService {
             position: toast.POSITION.BOTTOM_LEFT,
           });
         }
-        toast(error.response.data.message, {
-          autoClose: 2000,
-          type: toast.TYPE.ERROR,
-          position: toast.POSITION.BOTTOM_LEFT,
-        });
+        toast(
+          isEmptyArray(error.response.data.message)
+            ? error.response.data.message
+            : error.response.data.message[0],
+          {
+            autoClose: 2000,
+            type: toast.TYPE.ERROR,
+            position: toast.POSITION.BOTTOM_LEFT,
+          }
+        );
         return error;
       }
     );
