@@ -28,7 +28,6 @@ class httpService {
     );
     axios.interceptors.response.use(
       (res) => {
-        console.log('ress',res);
         if (
           res.config.method === "post" ||
           res.config.method === "put" ||
@@ -44,7 +43,6 @@ class httpService {
         return res;
       },
       (error) => {
-        console.log(error.response.data.message);
         if (error?.response?.data?.statusCode === 403) {
           localStorage.removeItem("user");
           window.location.href = "/";

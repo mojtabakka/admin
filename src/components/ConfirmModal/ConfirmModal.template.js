@@ -10,7 +10,7 @@ import React from "react";
 
 const ConfirmModalTemplate = ({
   onCloseConfirmModal,
-  onDisagree,
+  onAgree,
   open,
   content,
   header,
@@ -30,7 +30,7 @@ const ConfirmModalTemplate = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onDisagree}>بله</Button>
+          <Button onClick={onAgree}>بله</Button>
           <Button onClick={onCloseConfirmModal} autoFocus>
             خیر
           </Button>

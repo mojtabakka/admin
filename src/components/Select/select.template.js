@@ -28,11 +28,13 @@ const selectTemplate = ({
   isMulti,
   value,
   defaultValue,
+  className
 }) => {
   return (
     <>
-      <span className="px-2">{label}</span>
+      <div className="px-2 my-1">{label}</div>
       <Select
+        classNames={className}
         defaultValue={defaultValue}
         options={options}
         styles={colourStyles}

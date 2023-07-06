@@ -9,7 +9,7 @@ import {
   getProducts,
   uploadProductImage,
 } from "redux/actions/Product.action";
-import { PHOTO, MODEL, BRAND, TYPE } from "./CreateProduct.config";
+import { PHOTO, MODEL, BRAND, TYPE, CATERGORY } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
 import { BASE_URL } from "config/variables.config";
@@ -21,7 +21,7 @@ import { isEmptyArray } from "common/utils/function.util";
 const CreateProductComponent = (props) => {
   const [editId, SetEditId] = useState();
   const [brands, setBrands] = useState({});
-  const [brandsFormSend, setBrandsForSend] = useState();
+  const [brandForSend, setBrandForSend] = useState();
   const [categories, setCategories] = useState({});
   const [columns, setColumns] = useState([]);
   const [formInputs, setFormInputs] = useState([]);
@@ -102,7 +102,7 @@ const CreateProductComponent = (props) => {
       }
       data.properties = featrues;
       data.photo = photo;
-      data[BRAND] = brandsFormSend;
+      data[BRAND] = brandForSend;
       data[TYPE] = typesForSend;
       const result = await createProduct(data);
       if (result) {
@@ -258,10 +258,11 @@ const CreateProductComponent = (props) => {
   };
 
   const handleDisagree = async () => {
+    console.log(productInfo.model);
     setOpenBackDrop(true);
     const { deleteProduct } = props;
     try {
-      await deleteProduct(editId);
+      await deleteProduct(productInfo.model);
       getAllProducts();
     } catch (error) {
       console.log("error", error);
@@ -303,7 +304,7 @@ const CreateProductComponent = (props) => {
     setOpenInputModal(false);
   };
 
-  const hanleChangeCategory = async (item, actionMeta) => {
+  const hanleChangeCategory = async (item) => {
     let emtpy = [];
     setCatValue(item);
     setBrands([...emtpy]);
@@ -340,7 +341,6 @@ const CreateProductComponent = (props) => {
   const createInputs = (items) => {
     const inputs = !isEmptyArray(items)
       ? items.map((item, index) => {
-          console.log(item);
           const selectItems =
             !isEmptyArray(item.properties) &&
             item.properties.map((data) => ({
@@ -360,12 +360,7 @@ const CreateProductComponent = (props) => {
 
   const handleChangeBrand = (item) => {
     setBrandsValue(item);
-    const brans =
-      !isEmptyArray(item) &&
-      item.map((item) => {
-        return { id: item.value };
-      });
-    setBrandsForSend(brans);
+    setBrandForSend({ id: item.value });
   };
 
   const handleChangeType = (item) => {
@@ -415,7 +410,7 @@ const CreateProductComponent = (props) => {
         onCloseAddInput={handleCloseAddInput}
         onCloseConfirmModal={handleCloseConfirmModal}
         onCloseModal={handleCloseModal}
-        onDisagree={handleDisagree}
+        onAgree={handleDisagree}
         onEdit={handleEdit}
         onOpenAddInputModal={handleOpenAddInputModal}
         onOpenModal={handleOpen}

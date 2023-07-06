@@ -3,10 +3,11 @@ import React from "react";
 import { BRAND, TITLE } from "./Brand.config";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
+import { PAGE_SIZE } from "config/general.config";
 
 const BrandTemplate = ({ onSubmitBrand, columns, rows, loading, dataGrid }) => {
   const Grid = (
-    <Box sx={{ height: "100%", width: "100%" }}>
+    <Box>
       <DataGrid
         localeText={{
           MuiTablePagination: {
@@ -17,17 +18,16 @@ const BrandTemplate = ({ onSubmitBrand, columns, rows, loading, dataGrid }) => {
         rowCount={200}
         columns={columns}
         rows={rows}
-        checkboxSelection
         autoHeight
-        page={dataGrid.page - 1}
-        pageSize={dataGrid.pageSize - 2}
+        page={dataGrid.page-1}
+        pageSize={PAGE_SIZE}
         loading={loading}
       />
     </Box>
   );
   return (
-    <>
-      <Card headerTitle="ایجاد برند">
+    <div className="flex h-screen  mt-10">
+      <Card headerTitle="ایجاد برند" className="w-full h-5/6">
         <form onSubmit={onSubmitBrand}>
           <div className="  items-center">
             <span className="py-1 px-2">
@@ -56,10 +56,10 @@ const BrandTemplate = ({ onSubmitBrand, columns, rows, loading, dataGrid }) => {
           </div>
         </form>
       </Card>
-      <Card headerTitle="لیست محصولات" className="mt-10">
+      <Card headerTitle="لیست محصولات" className=" w-full h-5/6 ">
         {Grid}
       </Card>
-    </>
+    </div>
   );
 };
 

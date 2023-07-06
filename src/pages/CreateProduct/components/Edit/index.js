@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getProduct, uploadProductImage } from "redux/actions/Product.action";
 import { EditTemplate } from "./Edit.template";
-import { isEmptyArray } from "common/utils/function.util";
+import { isEmptyArray, isEmptyObject } from "common/utils/function.util";
 import { getCat } from "redux/actions/Type.action";
 
 const EditComponent = (props) => {
@@ -22,10 +22,9 @@ const EditComponent = (props) => {
     const { getProduct, getCat } = props;
     try {
       const product = await getProduct(props.editId);
-      console.log(product.data);
-      const cat = !isEmptyArray(product.data.categories)
+      const cat = !isEmptyObject(product.data.category)
         ? await getCat({
-            id: product.data.categories[0].id,
+            id: product.data.category.id,
           })
         : [];
       const info = {
@@ -33,20 +32,22 @@ const EditComponent = (props) => {
         features: product.data.features,
       };
       setProdcutInfo({ ...info });
-
-      const catDefault = !isEmptyArray(product.data?.categories) && {
-        value: product.data.categories[0].id,
-        label: product.data.categories[0].title,
-      };
+      const catDefault = !isEmptyObject(product.data?.category)
+        ? {
+            value: product.data.category.id,
+            label: product.data.category.title,
+          }
+        : {};
       setCatDefaultValue(catDefault);
 
-      const brandDefault = !isEmptyArray(product.data?.brands)
-        ? product.data.brands.map((item) => ({
-            value: item.id,
-            label: item.title,
-          }))
-        : [];
+      const brandDefault = !isEmptyObject(product.data?.brand)
+        ? {
+            value: product.data?.brand?.id,
+            label: product.data?.brand?.title,
+          }
+        : {};
       setBrandsDefaultValue(brandDefault);
+
       const typesDefault = !isEmptyArray(product.data?.productTypes)
         ? product.data.productTypes.map((item) => ({
             value: item.id,
@@ -74,9 +75,6 @@ const EditComponent = (props) => {
       !isEmptyArray(typesDefault)
         ? settypesDefaultValue([...typesDefault])
         : settypesDefaultValue([]);
-      !isEmptyArray(brandDefault)
-        ? setBrandsDefaultValue([...brandDefault])
-        : setBrandsDefaultValue([]);
     } catch (error) {
       console.log("erroe", error);
     }
@@ -115,7 +113,6 @@ const EditComponent = (props) => {
           };
         })
       : [];
-      console.log(inputs);
     setPropertyInputArray([...inputs]);
   };
 

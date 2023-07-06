@@ -56,7 +56,7 @@ const CreateProductTemplate = ({
   onCloseAddInput,
   onCloseConfirmModal,
   onCloseModal,
-  onDisagree,
+  onAgree,
   onEdit,
   onSubmit,
   onSubmitAddInput,
@@ -113,7 +113,6 @@ const CreateProductTemplate = ({
                 loading={isloadingSelect}
                 name={BRAND}
                 value={brandsValue}
-                isMulti
                 onChange={onChangeBrand}
               />
             </div>
@@ -141,7 +140,7 @@ const CreateProductTemplate = ({
                       <Select
                         options={item.selectItems}
                         loading={isloadingSelect}
-                        onChange={onChangeType}
+                        // onChange={onCharoperties}
                         name={item.name}
                       />
                     </div>
@@ -152,13 +151,13 @@ const CreateProductTemplate = ({
               قیمت برای کاربر
             </label>
             <div className="  col-span-5 w-full ">
-              <Input name={PRICE_FOR_USER} size="small" />
+              <Input name={PRICE_FOR_USER} size="small" type="number" />
             </div>
             <label className=" col-span-2 flex items-center">
               قیمت برای همکار
             </label>
             <div className="  col-span-5 w-full ">
-              <Input name={PRICE_FOR_WORKMATE} size="small" />
+              <Input name={PRICE_FOR_WORKMATE} size="small" type="number" />
             </div>
             <label className=" col-span-2 flex items-center"> گارانتی</label>
             <div className="  col-span-5 w-full ">
@@ -168,11 +167,11 @@ const CreateProductTemplate = ({
               تعداد موجودی
             </label>
             <div className="  col-span-5 w-full ">
-              <Input name={NUMBER_OF_EXIST} size="small" />
+              <Input name={NUMBER_OF_EXIST} size="small" type="number" />
             </div>
             <label className=" col-span-2 flex items-center"> تخفیف</label>
             <div className="  col-span-5 w-full ">
-              <Input name={OFF} size="small" />
+              <Input name={OFF} size="small" type="number" />
             </div>
 
             <label className=" col-span-2 flex items-center"> روش ارسال</label>
@@ -219,7 +218,7 @@ const CreateProductTemplate = ({
         content="آیا از حذف این محصول مطمنید؟"
         onCloseConfirmModal={onCloseConfirmModal}
         open={openConfirmModal}
-        onDisagree={onDisagree}
+        onAgree={onAgree}
       />
       <Backdrop open={openBackDrop}>
         <CircularProgress color="inherit" />

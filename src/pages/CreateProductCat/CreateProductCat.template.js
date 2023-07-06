@@ -39,10 +39,10 @@ const CreateProductCatTemplate = ({
     </Box>
   );
   return (
-    <>
-      <Card headerTitle="نوع محصول">
+    <div className="flex h-screen mt-10">
+      <Card headerTitle="نوع محصول" className=" w-full h-5/6">
         <form onSubmit={onSubmit}>
-          <div className=" flex ">
+          <div>
             <Input
               type="text"
               name={PRODUCT_TYPE}
@@ -50,19 +50,20 @@ const CreateProductCatTemplate = ({
               label="نام دسته بندی را وارد کنید"
             />
 
-            <span className="mx-10 mt-2">
-              <span> برندها </span>
+            <span className=" items-center my-4 mt-2 flex">
+              <div> برندها </div>
               <Select options={brands} isMulti onChange={onChangebrand} />
             </span>
 
-            <span className="mx-10 mt-2">
-              <span> انواع</span>
+            <span className="mt-2 flex items-center my-4">
+              <div> انواع</div>
               <Select options={types} isMulti onChange={onChangeType} />
             </span>
 
-            <span className="mx-10 mt-2">
-              <span> ویژگی ها</span>
+            <span className="mt-2 flex items-center my-4">
+              <div> ویژگی ها</div>
               <Select
+                className ="w-full"
                 options={properties}
                 isMulti
                 onChange={onChangeProperties}
@@ -75,10 +76,10 @@ const CreateProductCatTemplate = ({
         </form>
       </Card>
 
-      <Card headerTitle="لیست دسته بندی ها " className="mt-10">
+      <Card headerTitle="لیست دسته بندی ها " className="h-5/6 w-full">
         {Grid}
       </Card>
-    </>
+    </div>
   );
 };
 

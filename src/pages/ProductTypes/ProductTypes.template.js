@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button, Card, Input } from "components";
 import { TITLE, TYPE } from "./ProductTypes.config";
 import React from "react";
+import { PAGE_SIZE } from "config/general.config";
 
 const ProductTypesTemplate = ({
   columns,
@@ -25,15 +26,15 @@ const ProductTypesTemplate = ({
         rows={rows}
         checkboxSelection
         autoHeight
-        page={0}
-        pageSize={dataGrid.pageSize - 2}
+        page={dataGrid.page-1}
+        pageSize={PAGE_SIZE}
         loading={loading}
       />
     </Box>
   );
   return (
-    <>
-      <Card headerTitle="ایجاد نوع محصول">
+    <div className=" flex h-screen mt-10">
+      <Card headerTitle="ایجاد نوع محصول" className="w-full h-5/6">
         <form onSubmit={onSubmitType}>
           <div className="  items-center">
             <span className="py-1 px-2">
@@ -60,10 +61,10 @@ const ProductTypesTemplate = ({
           </div>
         </form>
       </Card>
-      <Card headerTitle="نوع محصولات" className="mt-10">
+      <Card headerTitle="نوع محصولات" className="w-full h-5/6">
         {Grid}
       </Card>
-    </>
+    </div>
   );
 };
 

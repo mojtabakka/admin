@@ -7,6 +7,7 @@ import {
   PRICE_FOR_USER,
   PRICE_FOR_WORKMATE,
   OFF,
+  DELIVERY_METHOD,
 } from "../../CreateProduct.config";
 import { ProductTypes } from "pages/ProductTypes";
 import { isEmptyArray } from "common/utils/function.util";
@@ -42,72 +43,84 @@ const EditTemplate = ({
       size="large"
     >
       <div>
-        <Input
-          label="مدل"
-          tabIndex={1}
-          name={MODEL}
-          size="small"
-          defaultValue={productInfo[MODEL]}
-        />
+        <div className="flex">
+          <div className="mx-2 w-full">
+            <Input
+              label="مدل"
+              tabIndex={1}
+              name={MODEL}
+              size="small"
+              defaultValue={productInfo[MODEL]}
+            />
+          </div>
 
-        {/* {productInfo?.features &&
-          productInfo.features.map((item) => (
-            <div className="py-2">
-              <label className=" inline-block mb-2 font-black text-right">
-                {item.title}
-              </label>
-              <TextField
-                tabIndex={1}
-                className=" text-right  w-full border-blue-300"
-                name={item.title + "_feature"}
-                size="small"
-                defaultValue={item.value}
+          <Input
+            tabIndex={1}
+            name={PRICE_FOR_USER}
+            defaultValue={productInfo[PRICE_FOR_USER]}
+            size="small"
+            label="قیمت برای کاربر"
+          />
+        </div>
+        <div className="flex">
+          <div className="mx-2 w-full">
+            <Input
+              tabIndex={1}
+              name={PRICE_FOR_WORKMATE}
+              defaultValue={productInfo[PRICE_FOR_WORKMATE]}
+              size="small"
+              label="قیمت برای همکار"
+            />
+          </div>
+          <Input
+            tabIndex={1}
+            name={WARRANTY}
+            defaultValue={productInfo[WARRANTY]}
+            size="small"
+            label="گارانتی"
+          />
+        </div>
+        <div className="flex">
+          <div className="mx-2 w-full">
+            <Input
+              tabIndex={1}
+              name={OFF}
+              defaultValue={productInfo[OFF]}
+              size="small"
+              label="تخفیف"
+              className=""
+            />
+          </div>
+
+          <Input
+            tabIndex={1}
+            name={OFF}
+            defaultValue={productInfo[DELIVERY_METHOD]}
+            size="small"
+            label="روش ارسال"
+          />
+        </div>
+
+        <div className="flex mt-3">
+          <span className="w-full">
+            <Select
+              label="دسته بندی"
+              options={categories}
+              onChange={onChangeCat}
+              value={catDefaultValue}
+            />
+          </span>
+          <span className="w-full">
+            <div>
+              <Select
+                label="برند"
+                options={brands}
+                value={brandsDefaultValue}
+                onChange={onChangeBrand}
               />
             </div>
-          ))} */}
-
-        <Input
-          tabIndex={1}
-          name={PRICE_FOR_USER}
-          defaultValue={productInfo[PRICE_FOR_USER]}
-          size="small"
-          label="قیمت برای کاربر"
-        />
-
-        <Input
-          tabIndex={1}
-          name={PRICE_FOR_WORKMATE}
-          defaultValue={productInfo[PRICE_FOR_WORKMATE]}
-          size="small"
-          label="قیمت برای همکار"
-        />
-        <Input
-          tabIndex={1}
-          name={WARRANTY}
-          defaultValue={productInfo[WARRANTY]}
-          size="small"
-          label="گارانتی"
-        />
-
-        <Input
-          tabIndex={1}
-          name={OFF}
-          defaultValue={productInfo[OFF]}
-          size="small"
-          label="تخفیف"
-        />
-
-        <Select
-          options={categories}
-          onChange={onChangeCat}
-          value={catDefaultValue}
-        />
-        <Select
-          options={brands}
-          isMulti
-          value={brandsDefaultValue}
-          onChange={onChangeBrand}
-        />
+          </span>
+        </div>
         <Select
           options={types}
           isMulti
