@@ -3,6 +3,7 @@ import {
   PRODUCT,
   UPLOAD_PRODUCT_IMAGE_POST,
   GET_PRODUCT,
+  EDIT_PRODUCT,
 } from "config/url.config";
 
 const authApis = {
@@ -54,10 +55,10 @@ const authApis = {
     });
   },
 
-  editProduct(data, id) {
+  editProduct(data, model) {
     return new Promise(function (resolve, reject) {
       http
-        .put(GET_PRODUCT.replace(":id", id), data)
+        .put(EDIT_PRODUCT.replace(":model", model), data)
         .then((response) => {
           return resolve(response.data);
         })

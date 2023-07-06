@@ -7,13 +7,14 @@ import { getCat } from "redux/actions/Type.action";
 
 const EditComponent = (props) => {
   const [photo, setPhoto] = useState();
-  const [brandsDefaultValue, setBrandsDefaultValue] = useState([]);
+  const [brandDefaultValue, setBrandDefaultValue] = useState([]);
   const [typesDefaultValue, settypesDefaultValue] = useState([]);
   const [catDefaultValue, setCatDefaultValue] = useState([]);
   const [productInfo, setProdcutInfo] = useState([]);
   const [brands, setBrands] = useState([]);
   const [types, settypes] = useState([]);
   const [propertyInputArray, setPropertyInputArray] = useState();
+  const [formValues, setFormValue] = useState({});
 
   useEffect(() => {
     props.editId && init();
@@ -29,8 +30,9 @@ const EditComponent = (props) => {
         : [];
       const info = {
         ...product.data,
-        features: product.data.features,
       };
+      setFormValue({ ...info });
+      console.log(info);
       setProdcutInfo({ ...info });
       const catDefault = !isEmptyObject(product.data?.category)
         ? {
@@ -46,7 +48,7 @@ const EditComponent = (props) => {
             label: product.data?.brand?.title,
           }
         : {};
-      setBrandsDefaultValue(brandDefault);
+      setBrandDefaultValue(brandDefault);
 
       const typesDefault = !isEmptyArray(product.data?.productTypes)
         ? product.data.productTypes.map((item) => ({
@@ -61,7 +63,7 @@ const EditComponent = (props) => {
             label: item.title,
           }))
         : [];
-      setBrandsDefaultValue(brandDefault);
+      setBrandDefaultValue(brandDefault);
 
       const alltypes = !isEmptyArray(cat.data?.productTypes)
         ? cat.data.productTypes.map((item) => ({
@@ -121,6 +123,7 @@ const EditComponent = (props) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const data = Object.fromEntries(form);
+
     for (let key in data) {
       let searchKey = key.search("feature");
       if (searchKey > -1) {
@@ -128,34 +131,41 @@ const EditComponent = (props) => {
         delete data[key];
       }
     }
-    const brands =
-      !isEmptyArray(brandsDefaultValue) &&
-      brandsDefaultValue.map((item) => {
-        return { id: item.value };
-      });
+    const brand = !isEmptyObject(brandDefaultValue)
+      ? { id: brandDefaultValue.value }
+      : {};
 
     const types =
       !isEmptyArray(typesDefaultValue) &&
       typesDefaultValue.map((item) => {
         return { id: item.value };
       });
-    const cats = [{ id: catDefaultValue.value }];
-    data.categories = cats ? cats : [];
+    const cats = { id: catDefaultValue.value };
+    data.category = cats ? cats : [];
     data.photo = photo;
-    data.brands = brands ? brands : [];
+    data.brand = brand ? brand : [];
     data.types = types ? types : [];
     data.properties = featrues ? featrues : [];
+    data.photo = photo;
     props.onEdit(data);
   };
 
   const handleChangeFile = async (file) => {
     const { uploadProductImage } = props;
-    const formData = new FormData();
-    const uploadedPhoto = await uploadProductImage(formData);
-    setPhoto(uploadedPhoto.data.src);
+    try {
+      if (file) {
+        const formData = new FormData();
+        formData.append("photo", file);
+        const uploadedPhoto = await uploadProductImage(formData);
+        setPhoto(uploadedPhoto.data.src);
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+    }
   };
 
-  const handleCanclePhtoto = () => {
+  const handleCanclePhtoto = (item) => {
     setPhoto(null);
   };
 
@@ -163,7 +173,7 @@ const EditComponent = (props) => {
     settypesDefaultValue(item);
   };
   const handleChangeBrand = (item) => {
-    setBrandsDefaultValue(item);
+    setBrandDefaultValue(item);
   };
 
   const handleChangeCat = async (item) => {
@@ -188,7 +198,7 @@ const EditComponent = (props) => {
       setBrands(brands);
       settypes(productTypes);
       setCatDefaultValue(item);
-      setBrandsDefaultValue([]);
+      setBrandDefaultValue([]);
       settypesDefaultValue([]);
     } catch (error) {
       console.log("error", error);
@@ -210,18 +220,23 @@ const EditComponent = (props) => {
     });
     setPropertyInputArray([...changeProperty]);
   };
-
+  const handleChangeInput = (item, key) => {
+    formValues[key] = item.target.value;
+    console.log(formValues);
+    setFormValue({ ...formValues });
+  };
   return (
     <EditTemplate
       {...props}
       productInfo={productInfo}
-      brandsDefaultValue={brandsDefaultValue}
+      brandDefaultValue={brandDefaultValue}
       typesDefaultValue={typesDefaultValue}
       catDefaultValue={catDefaultValue}
       brands={brands}
       types={types}
       photo={photo}
       propertyInputArray={propertyInputArray}
+      formValues={formValues}
       onEdit={handleEdit}
       onChangeFile={handleChangeFile}
       onCanclePhtoto={handleCanclePhtoto}
@@ -229,6 +244,7 @@ const EditComponent = (props) => {
       onChangeBrand={handleChangeBrand}
       onChangeCat={handleChangeCat}
       onChangeProperty={handleChangeProperty}
+      onChangeInput={handleChangeInput}
     />
   );
 };

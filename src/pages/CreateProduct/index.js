@@ -40,6 +40,7 @@ const CreateProductComponent = (props) => {
   const [brandsValue, setBrandsValue] = useState(null);
   const [typesValue, setTypesValue] = useState(null);
   const [propertyInputArray, setPropertyInputArray] = useState();
+  const [model, setModel] = useState(null);
   const fileInputRef = useRef();
 
   const [dataGrid, setDataGrid] = useState({
@@ -217,6 +218,7 @@ const CreateProductComponent = (props) => {
   };
 
   const edit = async (row) => {
+    setModel(row.model);
     setOpen(true);
     SetEditId(null);
     SetEditId(row.id);
@@ -243,7 +245,7 @@ const CreateProductComponent = (props) => {
       ...data,
     };
     try {
-      await editProduct(mainData, editId);
+      await editProduct(mainData, model);
       SetEditId(null);
       getAllProducts();
     } catch (error) {
@@ -258,7 +260,6 @@ const CreateProductComponent = (props) => {
   };
 
   const handleDisagree = async () => {
-    console.log(productInfo.model);
     setOpenBackDrop(true);
     const { deleteProduct } = props;
     try {

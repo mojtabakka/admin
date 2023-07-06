@@ -30,6 +30,7 @@ const InputTemplate = ({
             name={name}
             defaultValue={defaultValue}
             id={id}
+            value={value}
             placeholder={placeholder}
             tabIndex={tabIndex}
           />

@@ -16,15 +16,15 @@ const EditTemplate = ({
   brands,
   categories,
   open,
+  formValues,
   onCloseModal,
   onChangeProperty,
-  productInfo,
   onEdit,
   isLoading,
   onChangeFile,
   photo,
   onCanclePhtoto,
-  brandsDefaultValue,
+  brandDefaultValue,
   typesDefaultValue,
   catDefaultValue,
   types,
@@ -32,7 +32,9 @@ const EditTemplate = ({
   onChangeType,
   onChangeBrand,
   onChangeCat,
+  onChangeInput,
 }) => {
+  console.log(formValues);
   return (
     <FormModal
       open={open}
@@ -46,18 +48,20 @@ const EditTemplate = ({
         <div className="flex">
           <div className="mx-2 w-full">
             <Input
+              onChange={(event) => onChangeInput(event, MODEL)}
               label="مدل"
               tabIndex={1}
               name={MODEL}
               size="small"
-              defaultValue={productInfo[MODEL]}
+              value={formValues[MODEL]}
             />
           </div>
 
           <Input
+            onChange={(event) => onChangeInput(event, PRICE_FOR_USER)}
             tabIndex={1}
             name={PRICE_FOR_USER}
-            defaultValue={productInfo[PRICE_FOR_USER]}
+            value={formValues[PRICE_FOR_USER]}
             size="small"
             label="قیمت برای کاربر"
           />
@@ -65,17 +69,19 @@ const EditTemplate = ({
         <div className="flex">
           <div className="mx-2 w-full">
             <Input
+              onChange={(event) => onChangeInput(event, PRICE_FOR_WORKMATE)}
               tabIndex={1}
               name={PRICE_FOR_WORKMATE}
-              defaultValue={productInfo[PRICE_FOR_WORKMATE]}
+              value={formValues[PRICE_FOR_WORKMATE]}
               size="small"
               label="قیمت برای همکار"
             />
           </div>
           <Input
+            onChange={(event) => onChangeInput(event, WARRANTY)}
             tabIndex={1}
             name={WARRANTY}
-            defaultValue={productInfo[WARRANTY]}
+            value={formValues[WARRANTY]}
             size="small"
             label="گارانتی"
           />
@@ -83,9 +89,10 @@ const EditTemplate = ({
         <div className="flex">
           <div className="mx-2 w-full">
             <Input
+              onChange={(event) => onChangeInput(event, OFF)}
               tabIndex={1}
               name={OFF}
-              defaultValue={productInfo[OFF]}
+              value={formValues[OFF]}
               size="small"
               label="تخفیف"
               className=""
@@ -93,16 +100,17 @@ const EditTemplate = ({
           </div>
 
           <Input
+            onChange={(event) => onChangeInput(event, DELIVERY_METHOD)}
             tabIndex={1}
-            name={OFF}
-            defaultValue={productInfo[DELIVERY_METHOD]}
+            name={DELIVERY_METHOD}
+            value={formValues[DELIVERY_METHOD]}
             size="small"
             label="روش ارسال"
           />
         </div>
 
-        <div className="flex mt-3">
-          <span className="w-full">
+        <div className="grid grid-cols-4 ">
+          <span>
             <Select
               label="دسته بندی"
               options={categories}
@@ -110,41 +118,45 @@ const EditTemplate = ({
               value={catDefaultValue}
             />
           </span>
-          <span className="w-full">
+          <span>
             <div>
               <Select
                 label="برند"
                 options={brands}
-                value={brandsDefaultValue}
+                value={brandDefaultValue}
                 onChange={onChangeBrand}
               />
             </div>
           </span>
+          <span>
+            <Select
+              options={types}
+              isMulti
+              value={typesDefaultValue}
+              onChange={onChangeType}
+              label="نوع"
+            />
+          </span>
+          {!isEmptyArray(propertyInputArray) &&
+            propertyInputArray.map((item) => {
+              return (
+                <div className="mx-2">
+                  <Select
+                    options={item.selectItems}
+                    // loading={isloadingSelect}
+                    value={item.defaultValue}
+                    name={item.name}
+                    label={item.label}
+                    onChange={onChangeProperty}
+                  />
+                </div>
+              );
+            })}
+            
         </div>
-        <Select
-          options={types}
-          isMulti
-          value={typesDefaultValue}
-          onChange={onChangeType}
-        />
 
-        {!isEmptyArray(propertyInputArray) &&
-          propertyInputArray.map((item) => {
-            return (
-              <>
-                <Select
-                  options={item.selectItems}
-                  // loading={isloadingSelect}
-                  value={item.defaultValue}
-                  name={item.name}
-                  label={item.label}
-                  onChange={onChangeProperty}
-                />
-              </>
-            );
-          })}
 
-        <div className="w-1/6 mx-14 mt-3">
+        <div className="w-1/6  mt-3">
           <FileInput
             onChange={onChangeFile}
             photo={photo}
