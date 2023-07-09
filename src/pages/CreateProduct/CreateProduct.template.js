@@ -26,6 +26,7 @@ import {
 } from "./CreateProduct.config";
 import { AddInputModal, Edit } from "./components";
 import { isEmptyArray } from "common/utils/function.util";
+import { PAGE_SIZE } from "config/general.config";
 
 const CreateProductTemplate = ({
   brands,
@@ -43,6 +44,9 @@ const CreateProductTemplate = ({
   rows,
   editId,
   propertyInputArray,
+  catValue,
+  brandsValue,
+  typesValue,
 
   onCanclePhtoto,
   onChangeBrand,
@@ -52,10 +56,11 @@ const CreateProductTemplate = ({
   onCloseAddInput,
   onCloseConfirmModal,
   onCloseModal,
-  onDisagree,
+  onAgree,
   onEdit,
   onSubmit,
   onSubmitAddInput,
+  onPageChange,
 }) => {
   const Grid = (
     <Box sx={{ height: "100%", width: "100%" }}>
@@ -66,14 +71,16 @@ const CreateProductTemplate = ({
               `${from} - ${to} برند از ${count} برند`,
           },
         }}
-        rowCount={200}
+        rowCount={dataGrid.totalRows}
         columns={columns}
         rows={rows}
-        checkboxSelection
         autoHeight
-        page={0}
-        pageSize={dataGrid.pageSize - 2}
+        page={dataGrid.page - 1}
+        server
+        paginationMode="server"
+        pageSize={PAGE_SIZE}
         loading={isLoading}
+        onPageChange={onPageChange}
       />
     </Box>
   );
@@ -84,10 +91,7 @@ const CreateProductTemplate = ({
         className=" mx-2 w-full  h-5/6  mb-10  !pb-0 overflow-y-scroll "
       >
         <div>
-          <form
-            onSubmit={onSubmit}
-            className="grid grid-cols-7  gap-4"
-          >
+          <form onSubmit={onSubmit} className="grid grid-cols-7  gap-4">
             <label className=" col-span-2 flex items-center "> مدل</label>
             <div className="  col-span-5 w-full ">
               <Input name={MODEL} className="w-full" />
@@ -97,8 +101,9 @@ const CreateProductTemplate = ({
             <div className="  col-span-5 w-full ">
               <Select
                 options={categories}
-                onChange={onChangeCategory}
                 name={CATERGORY}
+                value={catValue}
+                onChange={onChangeCategory}
               />
             </div>
             <label className=" col-span-2 flex items-center"> برند</label>
@@ -106,9 +111,9 @@ const CreateProductTemplate = ({
               <Select
                 options={brands}
                 loading={isloadingSelect}
-                onChange={onChangeBrand}
                 name={BRAND}
-                isMulti
+                value={brandsValue}
+                onChange={onChangeBrand}
               />
             </div>
 
@@ -117,9 +122,10 @@ const CreateProductTemplate = ({
               <Select
                 options={productTypes}
                 loading={isloadingSelect}
-                onChange={onChangeType}
+                value={typesValue}
                 name={TYPE}
                 isMulti
+                onChange={onChangeType}
               />
             </div>
 
@@ -134,7 +140,7 @@ const CreateProductTemplate = ({
                       <Select
                         options={item.selectItems}
                         loading={isloadingSelect}
-                        onChange={onChangeType}
+                        // onChange={onCharoperties}
                         name={item.name}
                       />
                     </div>
@@ -145,13 +151,13 @@ const CreateProductTemplate = ({
               قیمت برای کاربر
             </label>
             <div className="  col-span-5 w-full ">
-              <Input name={PRICE_FOR_USER} size="small" />
+              <Input name={PRICE_FOR_USER} size="small" type="number" />
             </div>
             <label className=" col-span-2 flex items-center">
               قیمت برای همکار
             </label>
             <div className="  col-span-5 w-full ">
-              <Input name={PRICE_FOR_WORKMATE} size="small" />
+              <Input name={PRICE_FOR_WORKMATE} size="small" type="number" />
             </div>
             <label className=" col-span-2 flex items-center"> گارانتی</label>
             <div className="  col-span-5 w-full ">
@@ -161,11 +167,11 @@ const CreateProductTemplate = ({
               تعداد موجودی
             </label>
             <div className="  col-span-5 w-full ">
-              <Input name={NUMBER_OF_EXIST} size="small" />
+              <Input name={NUMBER_OF_EXIST} size="small" type="number" />
             </div>
             <label className=" col-span-2 flex items-center"> تخفیف</label>
             <div className="  col-span-5 w-full ">
-              <Input name={OFF} size="small" />
+              <Input name={OFF} size="small" type="number" />
             </div>
 
             <label className=" col-span-2 flex items-center"> روش ارسال</label>
@@ -212,7 +218,7 @@ const CreateProductTemplate = ({
         content="آیا از حذف این محصول مطمنید؟"
         onCloseConfirmModal={onCloseConfirmModal}
         open={openConfirmModal}
-        onDisagree={onDisagree}
+        onAgree={onAgree}
       />
       <Backdrop open={openBackDrop}>
         <CircularProgress color="inherit" />

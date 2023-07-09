@@ -89,7 +89,7 @@ const CardTemplate = ({
         {showFooter && (
           <>
             {/* <div className="border w-full mt-5"></div> */}
-            <div className="p-3 text-left">{footer()}</div>
+            <div className="p-3 text-left flex justify-end">{footer()}</div>
           </>
         )}
       </div>

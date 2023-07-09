@@ -1,16 +1,11 @@
 import http from "services/http.service";
-import {
-  CHANGE_ORDER_STATUS,
-  ORDER,
-  GET_ORDER,
-  SEARCH_ORDER,
-} from "config/url.config";
+import { GET_CAT, GET_CATS, POST_CAT } from "config/url.config";
 
 const authApis = {
-  getOrders(data) {
+  createCat(data) {
     return new Promise(function (resolve, reject) {
       http
-        .get(ORDER, data)
+        .post(POST_CAT, data)
         .then((response) => {
           return resolve(response.data);
         })
@@ -18,10 +13,10 @@ const authApis = {
     });
   },
 
-  changeOrderStatus(id, data) {
+  getCats(data) {
     return new Promise(function (resolve, reject) {
       http
-        .patch(CHANGE_ORDER_STATUS.replace(":id", id), data)
+        .get(GET_CATS, data)
         .then((response) => {
           return resolve(response.data);
         })
@@ -29,21 +24,10 @@ const authApis = {
     });
   },
 
-  getOrder(id) {
+  getCat(data) {
     return new Promise(function (resolve, reject) {
       http
-        .patch(GET_ORDER.replace(":id", id))
-        .then((response) => {
-          return resolve(response.data);
-        })
-        .catch((error) => reject(error));
-    });
-  },
-
-  searchOrder(data) {
-    return new Promise(function (resolve, reject) {
-      http
-        .get(SEARCH_ORDER, data)
+        .get(GET_CAT, data)
         .then((response) => {
           return resolve(response.data);
         })
@@ -51,5 +35,4 @@ const authApis = {
     });
   },
 };
-
 export default authApis;

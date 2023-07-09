@@ -8,11 +8,12 @@ import TabPanel from "@material-ui/lab/TabPanel";
 import { FiRefreshCcw } from "react-icons/fi";
 import { Button, Card, Input, PreLoading } from "components";
 import { ChangeStatus, OrderDetails } from "./components";
-import { ORDER_STATUS } from "config/general.config";
+import { ORDER_STATUS, PAGE_SIZE } from "config/general.config";
 import { FORM_ID, form_inputs } from "./Orders.config";
 
 function Orderstemplate({
   loading,
+  dataGrid,
   columns,
   detailsItems,
   openDetailModal,
@@ -26,30 +27,35 @@ function Orderstemplate({
   openChangeStatusModal,
   onClickInit,
   onClickRefresh,
+  onPageChange,
 }) {
-  const dataGrid = (
+  const Grid = (
     <Box sx={{ height: "100%", width: "100%" }}>
       <DataGrid
         localeText={{
           MuiTablePagination: {
             labelDisplayedRows: ({ from, to, count }) =>
-              `${from} - ${to} محصول از ${count} محصول`,
+              `${from} - ${to} برند از ${count} برند`,
           },
         }}
+        rowCount={dataGrid.totalRows}
         columns={columns}
         rows={rows}
-        checkboxSelection
         autoHeight
+        page={dataGrid.page - 1}
+        server
+        paginationMode="server"
+        pageSize={PAGE_SIZE}
         loading={loading}
+        onPageChange={onPageChange}
       />
     </Box>
   );
   return (
-    <>
-      <div className=""></div>
+    <div>
       <Card headerTitle="فیلتر ها">
         <form onSubmit={onSubmitSearch} id={FORM_ID}>
-          <div className="flex">
+          <div className="flex ">
             <div className="px-2">
               <Input
                 label="کدملی"
@@ -70,16 +76,17 @@ function Orderstemplate({
             <div className="px-2">
               <Input label="نام خوانوادگی" name={form_inputs.lastName} />
             </div>
-          </div>
-          <div className="flex">
-            <div className="px-2">
-              <Input label="مدل دوربین" name={form_inputs.model} />
-            </div>
             <div className="px-2">
               <Input label="استان" name={form_inputs.state} />
             </div>
+          </div>
+
+          <div className="flex">
             <div className="px-2">
               <Input label="شهر" name={form_inputs.city} />
+            </div>
+            <div className="px-2">
+              <Input label="مدل دوربین" name={form_inputs.model} />
             </div>
           </div>
           <div className="flex justify-end">
@@ -120,13 +127,11 @@ function Orderstemplate({
               />
             </TabList>
           </Box>
-          <TabPanel value={ORDER_STATUS.notPayed.value}>{dataGrid}</TabPanel>
-          <TabPanel value={ORDER_STATUS.payed.value}>
-            <Box sx={{ height: "100%", width: "100%" }}>{dataGrid}</Box>
-          </TabPanel>
-          <TabPanel value={ORDER_STATUS.preparing.value}>{dataGrid}</TabPanel>
-          <TabPanel value={ORDER_STATUS.isSendig.value}>{dataGrid}</TabPanel>
-          <TabPanel value={ORDER_STATUS.completed.value}>{dataGrid}</TabPanel>
+          <TabPanel value={ORDER_STATUS.notPayed.value}>{Grid}</TabPanel>
+          <TabPanel value={ORDER_STATUS.payed.value}>{Grid}</TabPanel>
+          <TabPanel value={ORDER_STATUS.preparing.value}>{Grid}</TabPanel>
+          <TabPanel value={ORDER_STATUS.isSendig.value}>{Grid}</TabPanel>
+          <TabPanel value={ORDER_STATUS.completed.value}>{Grid}</TabPanel>
         </TabContext>
 
         <OrderDetails
@@ -147,8 +152,8 @@ function Orderstemplate({
             <span className="px-2">بروزرسانی</span>
           </Button>
         </div>
-      </Card>      
-    </>
+      </Card>
+    </div>
   );
 }
 

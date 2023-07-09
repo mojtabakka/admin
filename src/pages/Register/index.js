@@ -18,8 +18,8 @@ const RegisterPage = (props) => {
     const data = Object.fromEntries(form);
     delete data[CONFIRM_PASSWORD];
     try {
-      await register(data);
-      navigate(PATHS.login);
+      const result = await register(data);
+      result && navigate(PATHS.login);
     } catch (error) {
       console.log("error", error);
     } finally {

@@ -33,60 +33,26 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <div className="py-1">
-                  <Input
-                    className="w-3/4"
-                    label="نام"
-                    tabIndex={1}
-                    name={NAME}
-                  />
+                  <Input label="نام" tabIndex={1} name={NAME} />
                 </div>
 
                 <div className="py-1">
-                  <Input
-                    className="w-3/4"
-                    label="نام خانوادگی"
-                    tabIndex={2}
-                    name={lAST_NAME}
-                  />
+                  <Input label="نام خانوادگی" tabIndex={2} name={lAST_NAME} />
                 </div>
 
                 <div className="py-1">
-                  <Input
-                    className="w-3/4"
-                    label="شماره ملی"
-                    tabIndex={3}
-                    name={NATIONAL_CODE}
-                  />
+                  <Input label="شماره ملی" tabIndex={3} name={NATIONAL_CODE} type="number" />
                 </div>
                 <div className="py-1">
-                  <Input
-                    className="w-3/4"
-                    label="شماره تماس"
-                    tabIndex={4}
-                    name={PHONE_NUMBER}
-                  />
+                  <Input label="شماره تماس" tabIndex={4} name={PHONE_NUMBER} type="number" />
                 </div>
               </Grid>
               <Grid item xs={6}>
                 <div className="py-1">
-                  <Input
-                    className="w-3/4"
-                    label="نام کاربری"
-                    tabIndex={5}
-                    name={USERNAME}
-                  />
+                  <Input label="ایمیل" tabIndex={6} name={EMAIL} type="text" />
                 </div>
                 <div className="py-1">
                   <Input
-                    className="w-3/4"
-                    label="ایمیل"
-                    tabIndex={6}
-                    name={EMAIL}
-                  />
-                </div>
-                <div className="py-1">
-                  <Input
-                    className="w-3/4"
                     label="رمزعبور"
                     tabIndex={7}
                     type="password"
@@ -95,7 +61,6 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
                 </div>
                 <div className="py-2">
                   <Input
-                    className="w-3/4"
                     label="تکرار رمز عبور"
                     tabIndex={8}
                     type="password"
@@ -107,7 +72,7 @@ const RegisterTemplate = ({ onRegister, isLoading }) => {
           </Card>
 
           <div className="text-center p-2  underline text-black">
-            <Link to={PATHS.login} > ورود</Link>
+            <Link to={PATHS.login}> ورود</Link>
           </div>
         </div>
       </form>

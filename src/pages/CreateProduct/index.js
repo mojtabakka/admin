@@ -9,19 +9,19 @@ import {
   getProducts,
   uploadProductImage,
 } from "redux/actions/Product.action";
-import { FIELDS, PHOTO, MODEL, BRAND, TYPE } from "./CreateProduct.config";
+import { PHOTO, MODEL, BRAND, TYPE } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
 import { BASE_URL } from "config/variables.config";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getCat, getCats } from "redux/actions/Type.action";
 import { isEmptyArray } from "common/utils/function.util";
+import { getCat, getCats } from "redux/actions/Category.action";
 const CreateProductComponent = (props) => {
   const [editId, SetEditId] = useState();
   const [brands, setBrands] = useState({});
-  const [brandsFormSend, setBrandsForSend] = useState();
+  const [brandForSend, setBrandForSend] = useState();
   const [categories, setCategories] = useState({});
   const [columns, setColumns] = useState([]);
   const [formInputs, setFormInputs] = useState([]);
@@ -36,19 +36,26 @@ const CreateProductComponent = (props) => {
   const [productInfo, setProductInfo] = useState({});
   const [productTypes, setProductTypes] = useState({});
   const [typesForSend, setTypesForSend] = useState();
+  const [catValue, setCatValue] = useState(null);
+  const [brandsValue, setBrandsValue] = useState(null);
+  const [typesValue, setTypesValue] = useState(null);
   const [propertyInputArray, setPropertyInputArray] = useState();
+  const [model, setModel] = useState(null);
   const fileInputRef = useRef();
 
   const [dataGrid, setDataGrid] = useState({
     loading: true,
     rows: [],
-    totalRows: 200,
+    totalRows: 1,
     pageSize: 10,
-    page: 2,
+    page: 1,
   });
 
   useEffect(() => {
     getAllProducts();
+  }, [dataGrid.page]);
+
+  useEffect(() => {
     getCategories();
   }, []);
 
@@ -64,6 +71,7 @@ const CreateProductComponent = (props) => {
         result.data.map((item) => {
           return { value: item.id, label: item.title };
         });
+
       setCategories(categories);
     } catch (error) {
       console.log("error", error);
@@ -78,6 +86,7 @@ const CreateProductComponent = (props) => {
 
   const handleSubmit = async (e) => {
     try {
+      const empty = [];
       let featrues = [];
       setOpenBackDrop(true);
       const { createProduct } = props;
@@ -85,7 +94,6 @@ const CreateProductComponent = (props) => {
       e.preventDefault();
       const form = new FormData(e.target);
       const data = Object.fromEntries(form);
-      console.log(data["feature_0"]);
       for (let key in data) {
         let searchKey = key.search("feature");
         if (searchKey > -1) {
@@ -93,18 +101,22 @@ const CreateProductComponent = (props) => {
           delete data[key];
         }
       }
-
       data.properties = featrues;
       data.photo = photo;
-      data[BRAND] = brandsFormSend;
+      data[BRAND] = brandForSend;
       data[TYPE] = typesForSend;
-      await createProduct(data);
-      getAllProducts();
-      e.target.reset();
-      setCategories([]);
-      setBrands([]);
-      setProductTypes([]);
-      setPhoto(null);
+      const result = await createProduct(data);
+      if (result) {
+        getAllProducts();
+        e.target.reset();
+        setBrands([...empty]);
+        setProductTypes([...empty]);
+        setPhoto(null);
+        setPropertyInputArray([...empty]);
+        setBrandsValue([...empty]);
+        setTypesValue(null);
+        setCatValue(null);
+      }
     } catch (error) {
       console.log("error", error);
     } finally {
@@ -131,6 +143,7 @@ const CreateProductComponent = (props) => {
                 width={50}
                 height={50}
                 className="rouned"
+                alt=""
               />
             );
           } else {
@@ -152,6 +165,7 @@ const CreateProductComponent = (props) => {
         renderCell: (params) => {
           const onClick = (e) => {
             e.stopPropagation();
+
             edit(params.row);
           };
           return (
@@ -183,7 +197,9 @@ const CreateProductComponent = (props) => {
     ];
     try {
       setOpenBackDrop(true);
-      const products = await getProducts();
+      const products = await getProducts({ page: dataGrid.page });
+      dataGrid.totalRows = products.meta.itemCount;
+      setDataGrid({ ...dataGrid });
       const data = products.data.map((item) => {
         return {
           id: item.id,
@@ -192,6 +208,7 @@ const CreateProductComponent = (props) => {
           [PHOTO]: item.photo,
         };
       });
+
       setRows(data);
       setColumns(columns);
     } catch (error) {
@@ -202,6 +219,7 @@ const CreateProductComponent = (props) => {
   };
 
   const edit = async (row) => {
+    setModel(row.model);
     setOpen(true);
     SetEditId(null);
     SetEditId(row.id);
@@ -217,6 +235,7 @@ const CreateProductComponent = (props) => {
   };
 
   const handleCloseModal = () => {
+    SetEditId(null);
     setOpen(false);
   };
 
@@ -227,7 +246,8 @@ const CreateProductComponent = (props) => {
       ...data,
     };
     try {
-      await editProduct(mainData, editId);
+      await editProduct(mainData, model);
+      SetEditId(null);
       getAllProducts();
     } catch (error) {
       console.log("error", error);
@@ -244,7 +264,7 @@ const CreateProductComponent = (props) => {
     setOpenBackDrop(true);
     const { deleteProduct } = props;
     try {
-      await deleteProduct(editId);
+      await deleteProduct(productInfo.model);
       getAllProducts();
     } catch (error) {
       console.log("error", error);
@@ -286,8 +306,9 @@ const CreateProductComponent = (props) => {
     setOpenInputModal(false);
   };
 
-  const hanleChangeCategory = async (item, actionMeta) => {
+  const hanleChangeCategory = async (item) => {
     let emtpy = [];
+    setCatValue(item);
     setBrands([...emtpy]);
     setProductTypes([...emtpy]);
     const { getCat } = props;
@@ -322,7 +343,6 @@ const CreateProductComponent = (props) => {
   const createInputs = (items) => {
     const inputs = !isEmptyArray(items)
       ? items.map((item, index) => {
-          console.log(item);
           const selectItems =
             !isEmptyArray(item.properties) &&
             item.properties.map((data) => ({
@@ -341,15 +361,12 @@ const CreateProductComponent = (props) => {
   };
 
   const handleChangeBrand = (item) => {
-    const brans =
-      !isEmptyArray(item) &&
-      item.map((item) => {
-        return { id: item.value };
-      });
-    setBrandsForSend(brans);
+    setBrandsValue(item);
+    setBrandForSend({ id: item.value });
   };
 
   const handleChangeType = (item) => {
+    setTypesValue(item);
     const types =
       !isEmptyArray(item) &&
       item.map((item) => {
@@ -357,7 +374,10 @@ const CreateProductComponent = (props) => {
       });
     setTypesForSend(types);
   };
-
+  const handlePageChange = (page) => {
+    dataGrid.page = page + 1;
+    setDataGrid({ ...dataGrid });
+  };
   return (
     <ErrorBoundary>
       <CreateProductTemplate
@@ -380,6 +400,9 @@ const CreateProductComponent = (props) => {
         productTypes={productTypes}
         editId={editId}
         propertyInputArray={propertyInputArray}
+        catValue={catValue}
+        brandsValue={brandsValue}
+        typesValue={typesValue}
         onCanclePhtoto={handleCanclePhoto}
         onChangeBrand={handleChangeBrand}
         onChangeCategory={hanleChangeCategory}
@@ -389,12 +412,13 @@ const CreateProductComponent = (props) => {
         onCloseAddInput={handleCloseAddInput}
         onCloseConfirmModal={handleCloseConfirmModal}
         onCloseModal={handleCloseModal}
-        onDisagree={handleDisagree}
+        onAgree={handleDisagree}
         onEdit={handleEdit}
         onOpenAddInputModal={handleOpenAddInputModal}
         onOpenModal={handleOpen}
         onSubmit={handleSubmit}
         onSubmitAddInput={handleSubmitAddInput}
+        onPageChange={handlePageChange}
       />
     </ErrorBoundary>
   );
@@ -402,7 +426,7 @@ const CreateProductComponent = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   createProduct: (data) => dispatch(createProduct(data)),
-  getProducts: () => dispatch(getProducts()),
+  getProducts: (data) => dispatch(getProducts(data)),
   getProduct: (id) => dispatch(getProduct(id)),
   deleteProduct: (id) => dispatch(deleteProduct(id)),
   editProduct: (data, id) => dispatch(editProduct(data, id)),

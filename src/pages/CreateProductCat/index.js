@@ -4,14 +4,13 @@ import { connect } from "react-redux";
 import {
   addBrand,
   addProductType,
-  createCat,
   getBrands,
-  getCats,
   getProductTypes,
   getProperties,
 } from "redux/actions/Type.action";
 import { TITLE } from "./CreateProductCat.config";
 import { isEmptyArray } from "common/utils/function.util";
+import { createCat, getCats } from "redux/actions/Category.action";
 
 function CreateProductCatPage(props) {
   const [brands, setBrands] = useState([]);

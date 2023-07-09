@@ -23,6 +23,7 @@ export function getProducts(data) {
 }
 
 export function getProduct(id) {
+  console.log(id);
   return () => {
     return api
       .getProduct(id)
@@ -44,10 +45,11 @@ export function deleteProduct(id) {
   };
 }
 
-export function editProduct(data, id) {
+export function editProduct(data, model) {
+  console.log('mode',model);
   return () => {
     return api
-      .editProduct(data, id)
+      .editProduct(data, model)
       .then((response) => {
         return response;
       })
