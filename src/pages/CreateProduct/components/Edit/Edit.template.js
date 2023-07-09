@@ -2,14 +2,12 @@ import React from "react";
 import { FileInput, FormModal, Input, Select } from "components";
 import {
   WARRANTY,
-  EXIST,
   MODEL,
   PRICE_FOR_USER,
   PRICE_FOR_WORKMATE,
   OFF,
   DELIVERY_METHOD,
 } from "../../CreateProduct.config";
-import { ProductTypes } from "pages/ProductTypes";
 import { isEmptyArray } from "common/utils/function.util";
 
 const EditTemplate = ({
@@ -152,25 +150,15 @@ const EditTemplate = ({
                 </div>
               );
             })}
-            
+          <div className="w-full  mt-3">
+            <FileInput
+              onChange={onChangeFile}
+              photo={photo}
+              onCancle={onCanclePhtoto}
+              label="عکس"
+            />
+          </div>
         </div>
-
-
-        <div className="w-1/6  mt-3">
-          <FileInput
-            onChange={onChangeFile}
-            photo={photo}
-            onCancle={onCanclePhtoto}
-            label="عکس"
-          />
-        </div>
-        {/* <div className="py-2 text-right">
-          <label>وضعیت موجودی </label>
-          <Select name={EXIST} className="w-full" size="small" ƒ>
-            <MenuItem value={true}>موجود است</MenuItem>
-            <MenuItem value={false}>موجود نیست</MenuItem>
-          </Select>
-        </div> */}
       </div>
     </FormModal>
   );

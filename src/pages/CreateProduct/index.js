@@ -9,15 +9,15 @@ import {
   getProducts,
   uploadProductImage,
 } from "redux/actions/Product.action";
-import { PHOTO, MODEL, BRAND, TYPE, CATERGORY } from "./CreateProduct.config";
+import { PHOTO, MODEL, BRAND, TYPE } from "./CreateProduct.config";
 import { CreateProductTemplate } from "./CreateProduct.template";
 import { Button } from "@mui/material";
 import { BASE_URL } from "config/variables.config";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getCat, getCats } from "redux/actions/Type.action";
 import { isEmptyArray } from "common/utils/function.util";
+import { getCat, getCats } from "redux/actions/Category.action";
 const CreateProductComponent = (props) => {
   const [editId, SetEditId] = useState();
   const [brands, setBrands] = useState({});
@@ -143,6 +143,7 @@ const CreateProductComponent = (props) => {
                 width={50}
                 height={50}
                 className="rouned"
+                alt=""
               />
             );
           } else {

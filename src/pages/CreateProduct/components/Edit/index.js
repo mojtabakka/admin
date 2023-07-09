@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getProduct, uploadProductImage } from "redux/actions/Product.action";
 import { EditTemplate } from "./Edit.template";
 import { isEmptyArray, isEmptyObject } from "common/utils/function.util";
-import { getCat } from "redux/actions/Type.action";
+import { getCat } from "redux/actions/Category.action";
 
 const EditComponent = (props) => {
   const [photo, setPhoto] = useState();
@@ -32,7 +32,6 @@ const EditComponent = (props) => {
         ...product.data,
       };
       setFormValue({ ...info });
-      console.log(info);
       setProdcutInfo({ ...info });
       const catDefault = !isEmptyObject(product.data?.category)
         ? {
@@ -93,7 +92,7 @@ const EditComponent = (props) => {
               valueDefault =
                 !isEmptyArray(defaultValue) &&
                 defaultValue.find((item) => {
-                  return item.title == data.title;
+                  return item.title === data.title;
                 });
               return {
                 ...data,
