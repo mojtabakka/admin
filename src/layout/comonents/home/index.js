@@ -1,5 +1,5 @@
 import React from "react";
-import { Sidebar, HeaderSite } from "components";
+import { Sidebar } from "components";
 
 const Home = ({ children }) => {
   return (
