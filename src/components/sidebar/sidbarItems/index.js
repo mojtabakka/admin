@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { colors } from "config/sibarMenu.config";
+import { colors } from "config/sibar-menu.config";
 import * as MdIcons from "react-icons/md";
 
 const SidebarItem = ({

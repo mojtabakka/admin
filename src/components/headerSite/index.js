@@ -1,4 +1,4 @@
-import { PATHS } from "config/sibarMenu.config";
+import { PATHS } from "config/sibar-menu.config";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
