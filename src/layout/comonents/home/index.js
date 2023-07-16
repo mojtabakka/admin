@@ -6,9 +6,7 @@ const Home = ({ children }) => {
     <div dir="rtl" className=" flex w-full">
       <Sidebar />
       <div className=" w-full">
-        <div>
-          <HeaderSite />
-        </div>
+        <div>{/* <HeaderSite /> */}</div>
         <div className="p-3 overflow-y-scroll"> {children}</div>
       </div>
     </div>
