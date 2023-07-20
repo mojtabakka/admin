@@ -3,11 +3,13 @@ import { toast } from "react-toastify";
 import { BASE_URL, AXIOS_TIMEdOUT } from "config/variables.config";
 import { DONT_NEEDED_URLS_FOR_AUTHENTICATION } from "config/url.config";
 import { isEmptyArray, isEmptyObject } from "common/utils/function.util";
+import Cookies from "js-cookie";
 
 class httpService {
   constructor() {
     axios.defaults.baseURL = BASE_URL + "api";
     axios.defaults.timeout = AXIOS_TIMEdOUT;
+    axios.defaults.withCredentials = true;
     axios.interceptors.request.use(
       (config) => {
         const checkExist = DONT_NEEDED_URLS_FOR_AUTHENTICATION().filter(
@@ -16,9 +18,10 @@ class httpService {
           }
         );
         if (checkExist.length === 0) {
+          console.log(Cookies.get("token"));
           const user = localStorage.getItem("user");
-          const token = `Bearer ${JSON.parse(user)?.token}`;
-          config.headers.Authorization = token;
+          // const token = `Bearer ${JSON.parse(user)?.token}`;
+          // config.headers.Authorization = token;
         }
         return config;
       },
