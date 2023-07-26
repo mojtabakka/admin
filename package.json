@@ -39,6 +39,7 @@
     "scripts": {
         "start": "env-cmd -f ./environment/.env.development react-scripts start",
         "build": " env-cmd  -f ./environment/.env.production react-scripts build",
+        "prod": "  npm run build && pm2 delete admin &&  pm2 serve -s build -l 8082 —name admin",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },

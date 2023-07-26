@@ -5,6 +5,9 @@ import { PATHS } from "config/routes.config";
 import { PASSWORD, PHONE_NUMBER, USERNAME } from "./Login.config";
 
 const LoginTemplate = ({ onSubmit, isLoading }) => {
+
+  const alpha = new Set([1,2,3,4,5,6,7,8,8]);
+  console.log(alpha);
   return (
     <div className="  flex h-screen w-full">
       <div className="m-auto">
