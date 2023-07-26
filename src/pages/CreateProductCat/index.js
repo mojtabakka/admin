@@ -10,9 +10,14 @@ import {
 } from "redux/actions/Type.action";
 import { TITLE } from "./CreateProductCat.config";
 import { isEmptyArray } from "common/utils/function.util";
-import { createCat, getCats } from "redux/actions/Category.action";
+import {
+  createCat,
+  getCats,
+  uploadCatImage,
+} from "redux/actions/Category.action";
 
 function CreateProductCatPage(props) {
+  const [openBackDrop, setOpenBackDrop] = useState(false);
   const [brands, setBrands] = useState([]);
   const [types, setTypes] = useState([]);
   const [typesforSend, setTypesforSend] = useState([]);
@@ -22,6 +27,7 @@ function CreateProductCatPage(props) {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(false);
   const [rows, setRows] = useState([]);
+  const [photo, setPhoto] = useState(null);
   const [dataGrid, setDataGrid] = useState({
     loading: true,
     totalRows: 200,
@@ -102,6 +108,7 @@ function CreateProductCatPage(props) {
         brands: brandsForSend,
         types: typesforSend,
         properties: propertiesForSend,
+        photo,
       };
       await createCat(sendData);
     } catch (error) {
@@ -109,9 +116,27 @@ function CreateProductCatPage(props) {
     }
   };
 
+  const handleChangeFile = async (file) => {
+    const { uploadCatImage } = props;
+    try {
+      if (file) {
+        setOpenBackDrop(true);
+        const formData = new FormData();
+        formData.append("photo", file);
+        const uploadedPhoto = await uploadCatImage(formData);
+        console.log(uploadedPhoto);
+        setPhoto(uploadedPhoto.data.src);
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setOpenBackDrop(false);
+    }
+  };
   return (
     <CreateProductCatTemplate
       {...props}
+      photo={photo}
       brands={brands}
       columns={columns}
       dataGrid={dataGrid}
@@ -119,6 +144,8 @@ function CreateProductCatPage(props) {
       properties={properties}
       rows={rows}
       types={types}
+      openBackDrop={openBackDrop}
+      onChangeFile={handleChangeFile}
       onChangebrand={handleChangeBrand}
       onChangeType={handleChangeType}
       onSubmit={handleSubmit}
@@ -133,6 +160,7 @@ const mapDispatchToProps = (dispatch) => ({
   getBrands: () => dispatch(getBrands()),
   getProductTypes: () => dispatch(getProductTypes()),
   createCat: (data) => dispatch(createCat(data)),
+  uploadCatImage: (data) => dispatch(uploadCatImage(data)),
   getCats: () => dispatch(getCats()),
   getProperties: () => dispatch(getProperties()),
 });

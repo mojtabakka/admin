@@ -46,7 +46,7 @@ export function deleteProduct(id) {
 }
 
 export function editProduct(data, model) {
-  console.log('mode',model);
+  console.log("mode", model);
   return () => {
     return api
       .editProduct(data, model)

@@ -1,5 +1,5 @@
 import http from "services/http.service";
-import { GET_CAT, GET_CATS, POST_CAT } from "config/url.config";
+import { GET_CAT, GET_CATS, POST_CAT, UPLOAD_CAT_IMAGE_POST } from "config/url.config";
 
 const authApis = {
   createCat(data) {
@@ -34,5 +34,21 @@ const authApis = {
         .catch((error) => reject(error));
     });
   },
+
+  uploadCatImage(data) {
+    return new Promise(function (resolve, reject) {
+      http
+        .post(UPLOAD_CAT_IMAGE_POST, data, {
+          headers: {
+            "Content-Type": "multipart/form-data; boundary=something",
+          },
+        })
+        .then((response) => {
+          return resolve(response.data);
+        })
+        .catch((error) => reject(error));
+    });
+  },
 };
+
 export default authApis;

@@ -34,6 +34,7 @@ export const PROPERIIES_GET = "/type/get-properties";
 export const POST_CAT = "/category";
 export const GET_CAT = "/category/get-cat";
 export const GET_CATS = "/category";
+export const UPLOAD_CAT_IMAGE_POST = "/category/upload-category-image";
 
 export const DONT_NEEDED_URLS_FOR_AUTHENTICATION = () => [
   { url: "/auth" + PATHS.login },
