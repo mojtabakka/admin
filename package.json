@@ -38,7 +38,7 @@
     },
     "scripts": {
         "start": "env-cmd -f ./environment/.env.development react-scripts start",
-        "build": " env-cmd  -f ./environment/.env.production  --max_old_space_size=4096  react-scripts build",
+        "build": " env-cmd  -f ./environment/.env.production   react-scripts --max_old_space_size=4096  build",
         "prod": "  npm run build && pm2 delete admin &&  pm2 serve -s build  —-name admin  -- -p 8082",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
